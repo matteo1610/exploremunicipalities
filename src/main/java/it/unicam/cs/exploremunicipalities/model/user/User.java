@@ -6,7 +6,6 @@ public class User {
     private final UUID id;
     private String email;
     private String password;
-    private UserRole role;
 
     public User(String email, String password) {
         this.id = UUID.randomUUID();
@@ -32,13 +31,5 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public UserRole getRole() {
-        return this.role;
-    }
-
-    public void setRole(UserRole role) {
-        this.role = role;
     }
 }
