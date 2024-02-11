@@ -2,8 +2,6 @@ package it.unicam.cs.exploremunicipalities.model.util;
 
 import java.util.UUID;
 
-
-
 /**
  * This class represents a municipality with a name, a province and an identity point.
  */

@@ -2,11 +2,19 @@ package it.unicam.cs.exploremunicipalities.model.user;
 
 import java.util.UUID;
 
+/**
+ * This class represents a user with an email and a password.
+ */
 public class User {
     private final UUID id;
     private String email;
     private String password;
 
+    /**
+     * Creates a new user with the given email and password.
+     * @param email the email of the user
+     * @param password the password of the user
+     */
     public User(String email, String password) {
         this.id = UUID.randomUUID();
         this.email = email;
