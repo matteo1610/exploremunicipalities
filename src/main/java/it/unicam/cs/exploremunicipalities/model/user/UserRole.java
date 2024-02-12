@@ -29,6 +29,6 @@ public enum UserRole {
         return Arrays.stream(UserRole.values())
                 .filter(userRole -> userRole.role.equals(role))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new IllegalArgumentException("Invalid role: " + role));
     }
 }

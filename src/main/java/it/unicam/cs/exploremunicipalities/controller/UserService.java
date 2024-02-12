@@ -1,7 +1,8 @@
 package it.unicam.cs.exploremunicipalities.controller;
 
-import it.unicam.cs.exploremunicipalities.model.user.License;
 import it.unicam.cs.exploremunicipalities.model.user.User;
+import it.unicam.cs.exploremunicipalities.model.user.UserRole;
+import it.unicam.cs.exploremunicipalities.model.util.Municipality;
 
 import java.util.Map;
 import java.util.UUID;
@@ -41,15 +42,17 @@ public class UserService {
 
     /**
      * Adds a user to the repository.
-     * @param user the user to add
+     * @param email the email of the user
+     * @param password the password of the user
      * @return true if the user was added, false otherwise
      */
-    public boolean addUser(User user) {
-        if(this.userExists(user.getEmail())) {
-            return false;
+    public boolean addUser(String email, String password) {
+        if(!this.userExists(email)) {
+            User user = new User(email, password);
+            this.usersRepository.put(user.getId(), user);
+            return true;
         }
-        this.usersRepository.put(user.getId(), user);
-        return true;
+        return false;
     }
 
     private boolean userExists(String email) {
@@ -58,24 +61,24 @@ public class UserService {
 
     /**
      * Removes a user from the repository.
-     * @param user the user to remove
+     * @param id the id of the user to remove
      * @return true if the user was removed, false otherwise
      */
-    public boolean removeUser(User user) {
-        if (this.usersRepository.containsKey(user.getId())) {
-            this.usersRepository.remove(user.getId());
+    public boolean removeUser(UUID id) {
+        if (this.usersRepository.containsKey(id)) {
+            this.usersRepository.remove(id);
             return true;
         }
         return false;
     }
 
     /**
-     * Sets a license for a user.
-     * @param license the license to set
-     * @return true if the license was set, false otherwise
+     * Sets a license for a given user, municipality and role.
+     * @param user the user to set the license for
+     * @param municipality the municipality to set the license for
+     * @param role the role to set the license for
      */
-    public boolean setLicense(License license) {
-        license.getUser().setEnabled(true);
-        return this.roleService.setLicense(license);
+    public void setUserLicense(User user, Municipality municipality, UserRole role) {
+        this.roleService.setLicense(user, municipality, role);
     }
 }

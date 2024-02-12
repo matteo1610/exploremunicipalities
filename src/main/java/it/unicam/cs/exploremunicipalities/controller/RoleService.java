@@ -2,12 +2,11 @@ package it.unicam.cs.exploremunicipalities.controller;
 
 import it.unicam.cs.exploremunicipalities.model.user.License;
 import it.unicam.cs.exploremunicipalities.model.user.User;
+import it.unicam.cs.exploremunicipalities.model.user.UserRole;
 import it.unicam.cs.exploremunicipalities.model.util.Municipality;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * A service for managing the roles of users in municipalities. This class is a singleton.
@@ -35,13 +34,25 @@ public class RoleService {
     }
 
     /**
-     * Returns a list of licenses for a given municipality.
+     * Returns a set of licenses for a given municipality.
      * @param municipality the municipality to get the licenses for
      * @return a list of licenses for the given municipality
      */
-    public List<License> getLicenses(Municipality municipality) {
+    public Set<License> getLicensesForMunicipality(Municipality municipality) {
         return this.licensesRepository.values().stream().filter(license -> license.getMunicipality()
-                .equals(municipality)).toList();
+                .equals(municipality)).collect(Collectors.toSet());
+    }
+
+    /**
+     * Returns a set of municipalities for a given user and role.
+     * @param user the user to get the municipalities for
+     * @param role the role to get the municipalities for
+     * @return a set of municipalities for the given user and role
+     */
+    public Set<Municipality> getMunicipalitiesForUser(User user, UserRole role) {
+        return this.licensesRepository.values().stream().filter(license -> license.getUser()
+                .equals(user) && license.getRole().equals(role)).map(License::getMunicipality)
+                .collect(Collectors.toSet());
     }
 
     /**
@@ -56,28 +67,18 @@ public class RoleService {
     }
 
     /**
-     * Sets a license for a user in a municipality.
-     * @param license the license to set
-     * @return true if the license was set, false otherwise
+     * Sets a license for a given user, municipality and role.
+     * @param user the user to set the license for
+     * @param municipality the municipality to set the license for
+     * @param role the role to set the license for
      */
-    public boolean setLicense(License license) {
-        if (this.getLicense(license.getUser(), license.getMunicipality()) != null) {
-            return false;
+    public void setLicense(User user, Municipality municipality, UserRole role) {
+        License license = this.getLicense(user, municipality);
+        if (license == null) {
+            License newLicense = new License(user, municipality, role);
+            this.licensesRepository.put(newLicense.getId(), newLicense);
+        } else {
+            license.setRole(role);
         }
-        this.licensesRepository.put(license.getId(), license);
-        return true;
-    }
-
-    /**
-     * Updates a license for a user in a municipality.
-     * @param license the license to update
-     * @return true if the license was updated, false otherwise
-     */
-    public boolean updateLicense(License license) {
-        if (this.getLicense(license.getUser(), license.getMunicipality()) == null) {
-            return false;
-        }
-        this.licensesRepository.put(license.getId(), license);
-        return true;
     }
 }
