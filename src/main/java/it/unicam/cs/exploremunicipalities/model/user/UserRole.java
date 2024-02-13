@@ -1,34 +1,30 @@
 package it.unicam.cs.exploremunicipalities.model.user;
 
-import java.util.Arrays;
-
 /**
  * This enum represents the roles that a user can have.
  */
 public enum UserRole {
-    AUTHENTICATED_TOURIST("Authenticated Tourist"),
-    CONTRIBUTOR("Contributor"),
-    AUTHORIZED_CONTRIBUTOR("Authorized Contributor"),
-    CURATOR("Curator"),
-    ANIMATOR("Animator"),
-    PLATFORM_MANAGER("Platform Manager");
-
-    public final String role;
-
-    UserRole(String role) {
-        this.role = role;
-    }
+    AUTHENTICATED_TOURIST,
+    CONTRIBUTOR,
+    AUTHORIZED_CONTRIBUTOR,
+    CURATOR,
+    ANIMATOR,
+    PLATFORM_MANAGER;
 
     /**
-     * This method returns the role with the given name.
-     *
-     * @param role the name of the role
-     * @return the role with the given name
+     * This method returns the string representation of the role.
+     * @param role the role
+     * @return the string representation of the role
      */
-    public static UserRole getRole(String role) {
-        return Arrays.stream(UserRole.values())
-                .filter(userRole -> userRole.role.equals(role))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Invalid role: " + role));
+    public UserRole fromString(String role) {
+        return switch (role.toUpperCase()) {
+            case "AUTHENTICATED_TOURIST" -> AUTHENTICATED_TOURIST;
+            case "CONTRIBUTOR" -> CONTRIBUTOR;
+            case "AUTHORIZED_CONTRIBUTOR" -> AUTHORIZED_CONTRIBUTOR;
+            case "CURATOR" -> CURATOR;
+            case "ANIMATOR" -> ANIMATOR;
+            case "PLATFORM_MANAGER" -> PLATFORM_MANAGER;
+            default -> throw new IllegalArgumentException("Invalid role: " + role);
+        };
     }
 }

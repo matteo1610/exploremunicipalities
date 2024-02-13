@@ -11,6 +11,13 @@ public final class Municipality {
     private final String province;
     private final CoordinatePoint identityPoint;
 
+    /**
+     * Creates a new municipality with the given name, province and identity point.
+     *
+     * @param name the name of the municipality
+     * @param province the province of the municipality
+     * @param identityPoint the identity point of the municipality
+     */
     public Municipality(String name, String province, CoordinatePoint identityPoint) {
         this.id = UUID.randomUUID();
         this.name = name;

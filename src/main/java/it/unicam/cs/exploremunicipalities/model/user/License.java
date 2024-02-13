@@ -45,4 +45,28 @@ public class License {
     public void setRole(UserRole role) {
         this.role = role;
     }
+
+    /**
+     * Returns true if the user can request to contribute, false otherwise.
+     * @return true if the user can request to contribute, false otherwise
+     */
+    public boolean canRequestContribute() {
+        return this.role == UserRole.CONTRIBUTOR;
+    }
+
+    /**
+     * Returns true if the user can contribute, false otherwise.
+     * @return true if the user can contribute, false otherwise
+     */
+    public boolean canContribute() {
+        return this.role == UserRole.AUTHORIZED_CONTRIBUTOR || this.role == UserRole.CURATOR;
+    }
+
+    /**
+     * Returns true if the user can create a contest, false otherwise.
+     * @return true if the user can create a contest, false otherwise
+     */
+    public boolean canCreateContest() {
+        return this.role == UserRole.ANIMATOR;
+    }
 }
