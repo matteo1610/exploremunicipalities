@@ -2,17 +2,27 @@ package it.unicam.cs.exploremunicipalities.model.content;
 
 import it.unicam.cs.exploremunicipalities.model.util.CoordinatePoint;
 import it.unicam.cs.exploremunicipalities.model.util.Municipality;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.*;
 
 /**
  * A point of the municipality.
  */
+@Getter
+@NoArgsConstructor
+@Entity
 public class Point {
-    private final UUID id;
-    private final CoordinatePoint position;
-    private final Municipality municipality;
-    private final Set<Contribution> contributions;
+    @Id
+    @GeneratedValue
+    private long id;
+    private CoordinatePoint position;
+    @ManyToOne
+    private Municipality municipality;
+    @OneToMany
+    private Set<Contribution> contributions;
 
     /**
      * Creates a new point.
@@ -21,27 +31,9 @@ public class Point {
      * @param municipality the municipality of the point
      */
     public Point(CoordinatePoint position, Municipality municipality){
-        this.id=UUID.randomUUID();
         this.position=position;
         this.municipality=municipality;
         this.contributions = new HashSet<>();
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public CoordinatePoint getPosition() {
-        return position;
-    }
-
-
-    public Municipality getMunicipality() {
-        return municipality;
-    }
-
-    public Set<Contribution> getContributions() {
-        return contributions;
     }
 
     /**
