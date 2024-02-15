@@ -11,7 +11,7 @@ import java.util.UUID;
 public class Registration {
     private final UUID id;
     private final User user;
-    private Contest contest;
+    private final Contest contest;
     private File file;
 
     /**
@@ -34,6 +34,10 @@ public class Registration {
 
     public User getUser() {
         return this.user;
+    }
+
+    public Contest getContest() {
+        return this.contest;
     }
 
     public File getFile() {
