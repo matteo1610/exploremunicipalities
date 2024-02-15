@@ -1,5 +1,6 @@
 package it.unicam.cs.exploremunicipalities.model.content;
 
+import it.unicam.cs.exploremunicipalities.model.content.contribution.Contribution;
 import it.unicam.cs.exploremunicipalities.model.util.CoordinatePoint;
 import it.unicam.cs.exploremunicipalities.model.util.Municipality;
 import jakarta.persistence.*;

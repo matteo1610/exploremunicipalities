@@ -1,4 +1,4 @@
-package it.unicam.cs.exploremunicipalities.model.content;
+package it.unicam.cs.exploremunicipalities.model.content.contribution;
 
 import it.unicam.cs.exploremunicipalities.model.user.User;
 
