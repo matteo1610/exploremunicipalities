@@ -1,4 +1,4 @@
-package it.unicam.cs.exploremunicipalities.controller;
+package it.unicam.cs.exploremunicipalities.controller.service;
 
 import it.unicam.cs.exploremunicipalities.model.content.contest.Contest;
 import it.unicam.cs.exploremunicipalities.model.content.Contribution;

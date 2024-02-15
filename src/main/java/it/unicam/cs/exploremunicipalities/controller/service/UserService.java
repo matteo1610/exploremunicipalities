@@ -1,4 +1,4 @@
-package it.unicam.cs.exploremunicipalities.controller;
+package it.unicam.cs.exploremunicipalities.controller.service;
 
 import it.unicam.cs.exploremunicipalities.model.user.User;
 import it.unicam.cs.exploremunicipalities.model.user.UserRole;
