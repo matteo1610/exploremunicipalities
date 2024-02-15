@@ -5,7 +5,7 @@ import it.unicam.cs.exploremunicipalities.model.content.contribution.Contributio
 import it.unicam.cs.exploremunicipalities.model.content.Point;
 import it.unicam.cs.exploremunicipalities.model.user.User;
 import it.unicam.cs.exploremunicipalities.model.util.CoordinatePoint;
-import it.unicam.cs.exploremunicipalities.model.util.Municipality;
+import it.unicam.cs.exploremunicipalities.model.content.Municipality;
 
 import java.util.HashMap;
 import java.util.Map;

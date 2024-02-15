@@ -1,10 +1,14 @@
 package it.unicam.cs.exploremunicipalities.controller.service;
 
+import it.unicam.cs.exploremunicipalities.controller.repository.ContributionRepository;
+import it.unicam.cs.exploremunicipalities.controller.repository.MunicipalityRepository;
+import it.unicam.cs.exploremunicipalities.controller.repository.PointRepository;
 import it.unicam.cs.exploremunicipalities.model.content.contest.Contest;
 import it.unicam.cs.exploremunicipalities.model.content.contribution.Contribution;
 import it.unicam.cs.exploremunicipalities.model.content.Point;
 import it.unicam.cs.exploremunicipalities.model.service.OSMService;
-import it.unicam.cs.exploremunicipalities.model.util.Municipality;
+import it.unicam.cs.exploremunicipalities.model.content.Municipality;
+import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -14,21 +18,20 @@ import java.util.UUID;
 /**
  * This class represents a service for managing municipalities.
  */
+@Service
 public class MunicipalityService {
     private final Set<ContentService> contentServices;
-    private final Map<UUID, Municipality> municipalityRepository;
-    private final Map<UUID, Point> pointRepository;
-    private final Map<UUID, Contribution> contributionRepository;
-    private final Map<UUID, Contest> contestRepository;
+    private final MunicipalityRepository municipalityRepository;
+    private final PointRepository pointRepository;
+    private final ContributionRepository contributionRepository;
     private final OSMService osmService;
 
-    public MunicipalityService(Map<UUID, Municipality> municipalityRepository, Map<UUID, Point> pointRepository,
-                               Map<UUID, Contribution> contributionRepository, Map<UUID, Contest> contestRepository) {
+    public MunicipalityService(MunicipalityRepository municipalityRepository, PointRepository pointRepository,
+                               ContributionRepository contributionRepository) {
         this.contentServices = new HashSet<>();
         this.municipalityRepository = municipalityRepository;
         this.pointRepository = pointRepository;
         this.contributionRepository = contributionRepository;
-        this.contestRepository = contestRepository;
         this.osmService = new OSMService();
     }
 

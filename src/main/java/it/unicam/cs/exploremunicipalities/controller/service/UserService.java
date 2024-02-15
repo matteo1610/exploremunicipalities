@@ -1,62 +1,47 @@
 package it.unicam.cs.exploremunicipalities.controller.service;
 
+import it.unicam.cs.exploremunicipalities.controller.repository.UserRepository;
 import it.unicam.cs.exploremunicipalities.model.user.User;
 import it.unicam.cs.exploremunicipalities.model.user.UserRole;
-import it.unicam.cs.exploremunicipalities.model.util.Municipality;
+import it.unicam.cs.exploremunicipalities.model.content.Municipality;
+import org.springframework.stereotype.Service;
 
-import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
  * A service for managing users.
  */
+@Service
 public class UserService {
-    private final RoleService roleService;
-    private final Map<UUID, User> usersRepository;
+    private final UserRepository userRepository;
+    private final LicenseService licenseService;
 
-    /**
-     * Creates a new UserService with the given users' repository.
-     * @param usersRepository the repository of users
-     */
-    public UserService(Map<UUID, User> usersRepository) {
-        this.roleService = RoleService.getInstance();
-        this.usersRepository = usersRepository;
+    public UserService(UserRepository userRepository, LicenseService licenseService) {
+        this.userRepository = userRepository;
+        this.licenseService = licenseService;
     }
 
     /**
-     * Returns the RoleService.
-     * @return the RoleService
+     * Returns a user by its id.
+     * @param id the id of the user
+     * @return the user with the given id
      */
-    public RoleService getRoleService() {
-        return this.roleService;
+    public Optional<User> getUserById(long id) {
+        return this.userRepository.findById(id);
     }
 
-    /**
-     * Returns a user with the given id.
-     * @param id the id of the user to get
-     * @return a user with the given id
-     */
-    public User getUserById(UUID id) {
-        return this.usersRepository.get(id);
-    }
-
-    /**
-     * Adds a user to the repository.
-     * @param email the email of the user
-     * @param password the password of the user
-     * @return true if the user was added, false otherwise
-     */
-    public boolean addUser(String email, String password) {
+    public User addUser(String email, String password, ) {
         if(!this.userExists(email)) {
             User user = new User(email, password);
-            this.usersRepository.put(user.getId(), user);
+            this.userRepository.put(user.getId(), user);
             return true;
         }
         return false;
     }
 
     private boolean userExists(String email) {
-        return this.usersRepository.values().stream().anyMatch(user -> user.getEmail().equals(email));
+        return this.userRepository.values().stream().anyMatch(user -> user.getEmail().equals(email));
     }
 
     /**
@@ -65,8 +50,8 @@ public class UserService {
      * @return true if the user was removed, false otherwise
      */
     public boolean removeUser(UUID id) {
-        if (this.usersRepository.containsKey(id)) {
-            this.usersRepository.remove(id);
+        if (this.userRepository.containsKey(id)) {
+            this.userRepository.remove(id);
             return true;
         }
         return false;
@@ -79,6 +64,6 @@ public class UserService {
      * @param role the role to set the license for
      */
     public void setUserLicense(User user, Municipality municipality, UserRole role) {
-        this.roleService.setLicense(user, municipality, role);
+        this.licenseService.setLicense(user, municipality, role);
     }
 }
