@@ -1,16 +1,26 @@
 package it.unicam.cs.exploremunicipalities.model.user;
 
 import it.unicam.cs.exploremunicipalities.model.util.Municipality;
-
-import java.util.UUID;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * This class represents a license with a user, a municipality and a role.
  */
+@Getter
+@NoArgsConstructor
+@Entity
 public class License {
-    private final UUID id;
-    private final User user;
-    private final Municipality municipality;
+    @Id
+    @GeneratedValue
+    private long id;
+    @ManyToOne
+    private User user;
+    @ManyToOne
+    private Municipality municipality;
+    @Setter
     private UserRole role;
 
     /**
@@ -20,29 +30,8 @@ public class License {
      * @param role the role of the license
      */
     public License(User user, Municipality municipality, UserRole role) {
-        this.id = UUID.randomUUID();
         this.user = user;
         this.municipality = municipality;
-        this.role = role;
-    }
-
-    public UUID getId() {
-        return this.id;
-    }
-
-    public User getUser() {
-        return this.user;
-    }
-
-    public Municipality getMunicipality() {
-        return this.municipality;
-    }
-
-    public UserRole getRole() {
-        return this.role;
-    }
-
-    public void setRole(UserRole role) {
         this.role = role;
     }
 
