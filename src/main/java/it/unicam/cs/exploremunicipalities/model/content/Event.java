@@ -1,11 +1,10 @@
 package it.unicam.cs.exploremunicipalities.model.content;
 
 import it.unicam.cs.exploremunicipalities.model.user.User;
-import it.unicam.cs.exploremunicipalities.model.util.Municipality;
 
 import java.io.File;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 /**
  * An event in the municipality.
@@ -22,9 +21,9 @@ public class Event extends Contribution {
      * @param multimedia  the multimedia files of the contribution
      * @param author      the author of the contribution
      */
-    public Event(String title, String description, List<File> multimedia, ContributionState state, User author,
-                 Municipality municipality, LocalDateTime start, LocalDateTime end) {
-        super(title, description, multimedia, state, author, municipality);
+    public Event(String title, String description, Set<File> multimedia, ContributionState state, User author,
+                 LocalDateTime start, LocalDateTime end) {
+        super(title, description, multimedia, state, author);
         this.start = start;
         this.end = end;
     }

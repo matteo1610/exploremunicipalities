@@ -1,25 +1,23 @@
 package it.unicam.cs.exploremunicipalities.model.content;
 
 import it.unicam.cs.exploremunicipalities.model.user.User;
-import it.unicam.cs.exploremunicipalities.model.util.Municipality;
 
 import java.io.File;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 /**
  * A contribution to the municipality.
  */
-public class Contribution {
+public abstract class Contribution {
     private final UUID id;
     private String title;
     private String description;
-    private final List<File> multimedia;
+    private final Set<File> multimedia;
     private final Date creationDate;
     private ContributionState state;
     private final User author;
-    private final Municipality municipality;
 
     /**
      * Creates a new contribution.
@@ -28,10 +26,8 @@ public class Contribution {
      * @param multimedia the multimedia files of the contribution
      * @param state the state of the contribution
      * @param author the author of the contribution
-     * @param municipality the municipality of the contribution
      */
-    public Contribution(String title, String description, List<File> multimedia, ContributionState state, User author,
-                        Municipality municipality) {
+    public Contribution(String title, String description, Set<File> multimedia, ContributionState state, User author) {
         this.id = UUID.randomUUID();
         this.title = title;
         this.description = description;
@@ -39,7 +35,6 @@ public class Contribution {
         this.creationDate = new Date();
         this.state = state;
         this.author = author;
-        this.municipality = municipality;
     }
 
     public UUID getId() {
@@ -62,7 +57,7 @@ public class Contribution {
         this.description = description;
     }
 
-    public List<File> getMultimedia() {
+    public Set<File> getMultimedia() {
         return this.multimedia;
     }
 
@@ -70,7 +65,7 @@ public class Contribution {
      * Add files to the contribution
      * @param files the files to add
      */
-    public void addFiles(List<File> files) {
+    public void addFiles(Set<File> files) {
         this.multimedia.addAll(files);
     }
 
@@ -78,7 +73,7 @@ public class Contribution {
      * Remove files from the contribution
      * @param files the files to remove
      */
-    public void removeFiles(List<File> files) {
+    public void removeFiles(Set<File> files) {
         this.multimedia.removeAll(files);
     }
 
@@ -96,9 +91,5 @@ public class Contribution {
 
     public User getAuthor() {
         return this.author;
-    }
-
-    public Municipality getMunicipality() {
-        return this.municipality;
     }
 }
