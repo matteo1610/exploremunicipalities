@@ -1,13 +1,25 @@
 package it.unicam.cs.exploremunicipalities.model.user;
 
-import java.util.UUID;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * This class represents a user with an email and a password.
  */
+@Getter
+@NoArgsConstructor
+@Entity
 public class User {
-    private final UUID id;
+    @Id
+    @GeneratedValue
+    private long id;
+    @Setter
     private String email;
+    @Setter
     private String password;
 
     /**
@@ -16,28 +28,7 @@ public class User {
      * @param password the password of the user
      */
     public User(String email, String password) {
-        this.id = UUID.randomUUID();
         this.email = email;
-        this.password = password;
-    }
-
-    public UUID getId() {
-        return this.id;
-    }
-
-    public String getEmail() {
-        return this.email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return this.password;
-    }
-
-    public void setPassword(String password) {
         this.password = password;
     }
 }

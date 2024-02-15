@@ -1,8 +1,7 @@
 package it.unicam.cs.exploremunicipalities.model.service;
 
-import it.unicam.cs.exploremunicipalities.model.service.OSMServiceInterface;
 import it.unicam.cs.exploremunicipalities.model.util.CoordinatePoint;
-import it.unicam.cs.exploremunicipalities.model.util.Municipality;
+import it.unicam.cs.exploremunicipalities.model.content.Municipality;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;

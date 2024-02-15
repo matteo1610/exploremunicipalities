@@ -1,7 +1,7 @@
 package it.unicam.cs.exploremunicipalities.model.service;
 
 import it.unicam.cs.exploremunicipalities.model.util.CoordinatePoint;
-import it.unicam.cs.exploremunicipalities.model.util.Municipality;
+import it.unicam.cs.exploremunicipalities.model.content.Municipality;
 
 /**
  * This interface represents the service that provides the operations to interact with the OpenStreetMap API.

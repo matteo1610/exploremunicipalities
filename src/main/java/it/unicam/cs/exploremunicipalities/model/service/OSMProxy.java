@@ -2,7 +2,7 @@ package it.unicam.cs.exploremunicipalities.model.service;
 
 import it.unicam.cs.exploremunicipalities.model.content.Point;
 import it.unicam.cs.exploremunicipalities.model.util.CoordinatePoint;
-import it.unicam.cs.exploremunicipalities.model.util.Municipality;
+import it.unicam.cs.exploremunicipalities.model.content.Municipality;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
