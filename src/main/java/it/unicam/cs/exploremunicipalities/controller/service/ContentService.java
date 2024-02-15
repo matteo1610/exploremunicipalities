@@ -2,6 +2,9 @@ package it.unicam.cs.exploremunicipalities.controller.service;
 
 import it.unicam.cs.exploremunicipalities.model.content.*;
 import it.unicam.cs.exploremunicipalities.model.content.contest.Contest;
+import it.unicam.cs.exploremunicipalities.model.content.contribution.Contribution;
+import it.unicam.cs.exploremunicipalities.model.content.contribution.ContributionState;
+import it.unicam.cs.exploremunicipalities.model.content.contribution.PointOfInterest;
 import it.unicam.cs.exploremunicipalities.model.service.OSMProxy;
 import it.unicam.cs.exploremunicipalities.model.service.OSMService;
 import it.unicam.cs.exploremunicipalities.model.service.OSMServiceInterface;

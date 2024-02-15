@@ -1,6 +1,8 @@
-package it.unicam.cs.exploremunicipalities.model.content;
+package it.unicam.cs.exploremunicipalities.model.content.contribution;
 
 import it.unicam.cs.exploremunicipalities.model.user.User;
+import jakarta.persistence.Entity;
+import lombok.NoArgsConstructor;
 
 import java.io.File;
 import java.util.Set;
@@ -8,6 +10,8 @@ import java.util.Set;
 /**
  * A point of interest of the municipality.
  */
+@NoArgsConstructor
+@Entity
 public class PointOfInterest extends Contribution {
     /**
      * Creates a new contribution.

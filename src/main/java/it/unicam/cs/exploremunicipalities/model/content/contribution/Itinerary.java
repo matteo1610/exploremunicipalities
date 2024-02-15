@@ -1,6 +1,10 @@
-package it.unicam.cs.exploremunicipalities.model.content;
+package it.unicam.cs.exploremunicipalities.model.content.contribution;
 
 import it.unicam.cs.exploremunicipalities.model.user.User;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.io.File;
 import java.util.Set;
@@ -8,8 +12,12 @@ import java.util.Set;
 /**
  * An itinerary in the municipality.
  */
+@Getter
+@NoArgsConstructor
+@Entity
 public class Itinerary extends Contribution {
-    private final Set<Contribution> contributions;
+    @ManyToMany
+    private Set<Contribution> contributions;
 
     /**
      * Creates a new contribution.
@@ -24,10 +32,6 @@ public class Itinerary extends Contribution {
                      Set<Contribution> contributions) {
         super(title, description, multimedia, state, author);
         this.contributions = contributions;
-    }
-
-    public Set<Contribution> getContributions() {
-        return contributions;
     }
 
     /**

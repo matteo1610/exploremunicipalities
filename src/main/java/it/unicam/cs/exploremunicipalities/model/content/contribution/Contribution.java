@@ -1,23 +1,37 @@
-package it.unicam.cs.exploremunicipalities.model.content;
+package it.unicam.cs.exploremunicipalities.model.content.contribution;
 
 import it.unicam.cs.exploremunicipalities.model.user.User;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.File;
 import java.util.Date;
 import java.util.Set;
-import java.util.UUID;
 
 /**
  * A contribution to the municipality.
  */
+@Getter
+@NoArgsConstructor
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Contribution {
-    private final UUID id;
+    @Id
+    @GeneratedValue
+    private long id;
+    @Setter
     private String title;
+    @Setter
     private String description;
-    private final Set<File> multimedia;
-    private final Date creationDate;
+    @ElementCollection
+    private Set<File> multimedia;
+    private Date creationDate;
+    @Setter
     private ContributionState state;
-    private final User author;
+    @ManyToOne
+    private User author;
 
     /**
      * Creates a new contribution.
@@ -28,37 +42,12 @@ public abstract class Contribution {
      * @param author the author of the contribution
      */
     public Contribution(String title, String description, Set<File> multimedia, ContributionState state, User author) {
-        this.id = UUID.randomUUID();
         this.title = title;
         this.description = description;
         this.multimedia = multimedia;
         this.creationDate = new Date();
         this.state = state;
         this.author = author;
-    }
-
-    public UUID getId() {
-        return this.id;
-    }
-
-    public String getTitle() {
-        return this.title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Set<File> getMultimedia() {
-        return this.multimedia;
     }
 
     /**
@@ -75,21 +64,5 @@ public abstract class Contribution {
      */
     public void removeFiles(Set<File> files) {
         this.multimedia.removeAll(files);
-    }
-
-    public Date getCreationDate() {
-        return this.creationDate;
-    }
-
-    public ContributionState getState() {
-        return this.state;
-    }
-
-    public void setState(ContributionState state) {
-        this.state = state;
-    }
-
-    public User getAuthor() {
-        return this.author;
     }
 }

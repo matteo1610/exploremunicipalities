@@ -1,7 +1,7 @@
 package it.unicam.cs.exploremunicipalities.controller.service;
 
 import it.unicam.cs.exploremunicipalities.model.content.contest.Contest;
-import it.unicam.cs.exploremunicipalities.model.content.Contribution;
+import it.unicam.cs.exploremunicipalities.model.content.contribution.Contribution;
 import it.unicam.cs.exploremunicipalities.model.content.Point;
 import it.unicam.cs.exploremunicipalities.model.service.OSMService;
 import it.unicam.cs.exploremunicipalities.model.util.Municipality;

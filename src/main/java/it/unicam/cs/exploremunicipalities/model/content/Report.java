@@ -1,5 +1,6 @@
 package it.unicam.cs.exploremunicipalities.model.content;
 
+import it.unicam.cs.exploremunicipalities.model.content.contribution.Contribution;
 import it.unicam.cs.exploremunicipalities.model.user.User;
 
 import java.util.UUID;
