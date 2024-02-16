@@ -2,7 +2,6 @@ package it.unicam.cs.exploremunicipalities.controller.repository;
 
 import it.unicam.cs.exploremunicipalities.model.content.Municipality;
 import it.unicam.cs.exploremunicipalities.model.user.License;
-import it.unicam.cs.exploremunicipalities.model.user.UserRole;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

@@ -40,29 +40,18 @@ public class RoleService {
     }
 
     /**
-     * Adds a role to a user in a municipality.
-     * @param license The role to be added.
-     * @throws IllegalArgumentException if the user already has a role in the municipality.
-     */
-    public void addLicense(License license) {
-        if (this.getLicense(license.getUser(), license.getMunicipality()) != null) {
-            throw new IllegalArgumentException("The user already has a role in the municipality");
-        }
-        this.licenseRepository.save(license);
-    }
-
-    /**
      * Sets the role of a user in a municipality.
-     * @param user The user whose role is to be set.
-     * @param municipality The municipality in which the user's role is to be set.
-     * @param role The role to be set.
+     * If the user already has a role in the municipality, the role is updated.
+     * @param license The license to be set.
      */
-    public void setRole(User user, Municipality municipality, UserRole role) {
-        License license = this.getLicense(user, municipality);
-        if (license == null) {
-            throw new IllegalArgumentException("The user does not have a role in the municipality");
+    public void setLicense(License license) {
+        // TODO: controllare se il ruolo  assegnato è "assegnabile"
+        License l = this.getLicense(license.getUser(), license.getMunicipality());
+        if (l == null) {
+            this.licenseRepository.save(license);
+        } else {
+            l.setRole(license.getRole());
+            this.licenseRepository.save(l);
         }
-        license.setRole(role);
-        this.licenseRepository.save(license);
     }
 }
