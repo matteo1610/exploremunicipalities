@@ -1,4 +1,4 @@
-package it.unicam.cs.exploremunicipalities.model.util;
+package it.unicam.cs.exploremunicipalities.model.content;
 
 import it.unicam.cs.exploremunicipalities.model.util.CoordinatePoint;
 import jakarta.persistence.Entity;
