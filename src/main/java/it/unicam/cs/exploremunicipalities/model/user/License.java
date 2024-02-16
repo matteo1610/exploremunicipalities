@@ -1,6 +1,6 @@
 package it.unicam.cs.exploremunicipalities.model.user;
 
-import it.unicam.cs.exploremunicipalities.model.util.Municipality;
+import it.unicam.cs.exploremunicipalities.model.content.Municipality;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
