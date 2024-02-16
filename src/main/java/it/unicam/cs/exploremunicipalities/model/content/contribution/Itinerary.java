@@ -40,8 +40,8 @@ public class Itinerary extends Contribution {
      * @param contribution the contribution to add
      * @return true if the contribution is added, false otherwise
      */
-    public boolean addContribution(Contribution contribution) {
-        return contributions.add(contribution);
+    public boolean addContribution(Set<Contribution> contribution) {
+        return contributions.addAll(contribution);
     }
 
     /**
@@ -50,7 +50,7 @@ public class Itinerary extends Contribution {
      * @param contribution the contribution to remove
      * @return true if the contribution is removed, false otherwise
      */
-    public boolean removeContribution(Contribution contribution) {
-        return contributions.remove(contribution);
+    public boolean removeContribution(Set<Contribution> contribution) {
+        return contributions.removeAll(contribution);
     }
 }
