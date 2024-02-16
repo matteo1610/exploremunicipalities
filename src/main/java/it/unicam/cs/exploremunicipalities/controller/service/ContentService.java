@@ -12,10 +12,10 @@ import it.unicam.cs.exploremunicipalities.model.service.OSMService;
 import it.unicam.cs.exploremunicipalities.model.service.OSMServiceInterface;
 import it.unicam.cs.exploremunicipalities.model.user.User;
 import it.unicam.cs.exploremunicipalities.model.util.CoordinatePoint;
+import it.unicam.cs.exploremunicipalities.model.content.Municipality;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -24,18 +24,13 @@ import java.util.UUID;
  */
 @Service
 public class ContentService {
-    private final Municipality municipality;
     private final PointRepository pointRepository;
     private final ContributionRepository contributionRepository;
-    private final LicenseService licenseService;
     private final OSMServiceInterface osmService;
 
-    public ContentService(Municipality municipality, PointRepository pointRepository,
-                          ContributionRepository contributionRepository, LicenseService licenseService) {
-        this.municipality = municipality;
+    public ContentService(PointRepository pointRepository, ContributionRepository contributionRepository) {
         this.pointRepository = pointRepository;
         this.contributionRepository = contributionRepository;
-        this.licenseService = licenseService;
         this.osmService = new OSMProxy(new OSMService());
     }
 

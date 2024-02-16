@@ -3,24 +3,18 @@ package it.unicam.cs.exploremunicipalities.controller.service;
 import it.unicam.cs.exploremunicipalities.controller.repository.ContributionRepository;
 import it.unicam.cs.exploremunicipalities.controller.repository.MunicipalityRepository;
 import it.unicam.cs.exploremunicipalities.controller.repository.PointRepository;
-import it.unicam.cs.exploremunicipalities.model.content.contest.Contest;
-import it.unicam.cs.exploremunicipalities.model.content.contribution.Contribution;
-import it.unicam.cs.exploremunicipalities.model.content.Point;
 import it.unicam.cs.exploremunicipalities.model.service.OSMService;
 import it.unicam.cs.exploremunicipalities.model.content.Municipality;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * This class represents a service for managing municipalities.
  */
 @Service
 public class MunicipalityService {
-    private final Set<ContentService> contentServices;
+    private final ContentService contentServices;
     private final MunicipalityRepository municipalityRepository;
     private final PointRepository pointRepository;
     private final ContributionRepository contributionRepository;
@@ -28,28 +22,29 @@ public class MunicipalityService {
 
     public MunicipalityService(MunicipalityRepository municipalityRepository, PointRepository pointRepository,
                                ContributionRepository contributionRepository) {
-        this.contentServices = new HashSet<>();
         this.municipalityRepository = municipalityRepository;
         this.pointRepository = pointRepository;
         this.contributionRepository = contributionRepository;
         this.osmService = new OSMService();
+        this.contentServices = new ContentService(this.pointRepository, this.contributionRepository);
     }
 
     /**
      * Returns a municipality with the given id.
      * @param id the id of the municipality to get
      * @return a municipality with the given id
+     * @throws IllegalArgumentException if the municipality does not exist
      */
-    public Municipality getMunicipalityById(UUID id) {
-        return this.municipalityRepository.get(id);
+    public Municipality getMunicipality(long id) {
+        return this.municipalityRepository.findById(id).orElseThrow();
     }
 
     /**
      * Returns all the municipalities.
      * @return all the municipalities
      */
-    public Set<Municipality> getAllMunicipalities() {
-        return new HashSet<>(this.municipalityRepository.values());
+    public <Municipality> getAllMunicipalities() {
+        return this.municipalityRepository.findAll();
     }
 
     /**
