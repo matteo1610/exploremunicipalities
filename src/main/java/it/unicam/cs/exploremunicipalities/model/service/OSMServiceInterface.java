@@ -12,7 +12,7 @@ public interface OSMServiceInterface {
      * @param point the point
      * @param municipality the municipality
      * @return true if the point is in the municipality, false otherwise
-     * @throws Exception if an error occurs
+     * @throws Exception if an error occurs while getting the response
      */
     boolean isPointInMunicipality(CoordinatePoint point, Municipality municipality) throws Exception;
 }

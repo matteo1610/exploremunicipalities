@@ -2,6 +2,7 @@ package it.unicam.cs.exploremunicipalities.model.service;
 
 import it.unicam.cs.exploremunicipalities.model.util.CoordinatePoint;
 import it.unicam.cs.exploremunicipalities.model.content.Municipality;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -21,31 +22,41 @@ public class OSMService implements OSMServiceInterface {
 
     /**
      * Returns the coordinate point of the municipality with the given name.
-     * @param municipalityName the name of the municipality
+     * @param name the name of the municipality
+     * @param province the province of the municipality
      * @return the coordinate point of the municipality
-     * @throws Exception if an error occurs
+     * @throws Exception if an error occurs while getting the response
+     * @throws IllegalArgumentException if the municipality does not exist
      */
-    public CoordinatePoint getCoordinatePointOfMunicipality(String municipalityName) throws Exception {
-        String encodedQuery = encode(municipalityName, StandardCharsets.UTF_8);
-        JSONObject response = this.getResponse(NOMINATIM_API_URL + "search?q=" + encodedQuery + "&format=json");
-        return new CoordinatePoint(response.getDouble("lat"), response.getDouble("lon"));
+    public CoordinatePoint getCoordinatePointOfMunicipality(String name, String province) throws Exception {
+        String encodedQuery = encode(name, StandardCharsets.UTF_8);
+        JSONArray response = this.getResponse(NOMINATIM_API_URL + "search?q=" + encodedQuery + "&format=json");
+        for (int i = 0; i < response.length(); i++) {
+            JSONObject result = response.getJSONObject(i);
+            String displayName = result.getString("display_name").toLowerCase();
+            if (displayName.contains(name.toLowerCase()) && displayName.contains(province.toLowerCase())) {
+                return new CoordinatePoint(result.getDouble("lat"), result.getDouble("lon"));
+            }
+        }
+        throw new IllegalArgumentException("Municipality not found");
     }
 
     @Override
     public boolean isPointInMunicipality(CoordinatePoint point, Municipality municipality) throws Exception {
         String lat = String.format("%.6f", point.latitude());
         String lon = String.format("%.6f", point.longitude());
-        JSONObject response = this.getResponse(NOMINATIM_API_URL + "reverse?lat=" + lat + "&lon="
+        JSONArray response = this.getResponse(NOMINATIM_API_URL + "reverse?lat=" + lat + "&lon="
                 + lon + "&format=json");
-        return response.getString("display_name").contains(municipality.getName());
+        JSONObject result = response.getJSONObject(0);
+        return result.getString("display_name").toLowerCase().contains(municipality.getName().toLowerCase());
     }
 
-    private JSONObject getResponse(String apiUrl) throws Exception{
+    private JSONArray getResponse(String apiUrl) throws Exception{
         URL url = new URL(apiUrl);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
-            return new JSONObject(reader.lines().collect(Collectors.joining()));
+            return new JSONArray(reader.lines().collect(Collectors.joining()));
         }
     }
 }
