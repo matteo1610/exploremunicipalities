@@ -3,6 +3,7 @@ package it.unicam.cs.exploremunicipalities.model.user;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @Entity
+@Table(name = "AUTH_USER")
 public class User {
     @Id
     @GeneratedValue

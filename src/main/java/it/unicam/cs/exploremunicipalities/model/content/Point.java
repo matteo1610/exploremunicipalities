@@ -5,6 +5,7 @@ import it.unicam.cs.exploremunicipalities.model.util.CoordinatePoint;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.NaturalId;
 
 import java.util.*;
 
@@ -21,7 +22,7 @@ public class Point {
     private CoordinatePoint position;
     @ManyToOne
     private Municipality municipality;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.REMOVE)
     private Set<Contribution> contributions;
 
     /**

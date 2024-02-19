@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @Entity
-public final class Municipality {
+public class Municipality {
     @Id
     @GeneratedValue
     private long id;
