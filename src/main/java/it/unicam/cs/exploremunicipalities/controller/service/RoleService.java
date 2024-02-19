@@ -3,7 +3,6 @@ package it.unicam.cs.exploremunicipalities.controller.service;
 import it.unicam.cs.exploremunicipalities.controller.repository.LicenseRepository;
 import it.unicam.cs.exploremunicipalities.model.user.License;
 import it.unicam.cs.exploremunicipalities.model.user.User;
-import it.unicam.cs.exploremunicipalities.model.user.UserRole;
 import it.unicam.cs.exploremunicipalities.model.content.Municipality;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +14,11 @@ import java.util.*;
 @Service
 public class RoleService {
     private final LicenseRepository licenseRepository;
+    private final MunicipalityService municipalityService;
 
-    public RoleService(LicenseRepository licenseRepository) {
+    public RoleService(LicenseRepository licenseRepository, MunicipalityService municipalityService) {
         this.licenseRepository = licenseRepository;
+        this.municipalityService = municipalityService;
     }
 
     /**
@@ -41,13 +42,17 @@ public class RoleService {
 
     /**
      * Sets the role of a user in a municipality.
-     * If the user already has a role in the municipality, the role is updated.
+     * If the user already has a role in the municipality, the role is updated. Otherwise, a new license is created.
      * @param license The license to be set.
+     * @throws IllegalArgumentException if the municipality does not exist.
      */
     public void setLicense(License license) {
         // TODO: controllare se il ruolo  assegnato è "assegnabile"
         License l = this.getLicense(license.getUser(), license.getMunicipality());
         if (l == null) {
+            if (this.municipalityService.getMunicipality(license.getMunicipality().getId()) == null) {
+                throw new IllegalArgumentException("The municipality does not exist");
+            }
             this.licenseRepository.save(license);
         } else {
             l.setRole(license.getRole());
