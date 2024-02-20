@@ -23,6 +23,8 @@ public class User {
     private String email;
     @Setter
     private String password;
+    @Setter
+    private boolean isAdmin;
 
     /**
      * Creates a new user with the given email and password.

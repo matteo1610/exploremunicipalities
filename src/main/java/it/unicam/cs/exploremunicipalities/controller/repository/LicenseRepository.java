@@ -11,7 +11,7 @@ import java.util.Set;
 @Repository
 public interface LicenseRepository extends CrudRepository<License, Long> {
     @Query("SELECT l FROM License l WHERE l.user.id = ?1 AND l.municipality.id = ?2")
-    License findUserRoleByUserIdAndMunicipalityId(Long userId, Long municipalityId);
+    License findByUserIdAndMunicipalityId(Long userId, Long municipalityId);
     @Query("SELECT l.municipality FROM License l WHERE l.user.id = ?1")
-    Set<Municipality> findMunicipalitiesByUserId(Long userId);
+    Set<License> findByUserId(Long userId);
 }

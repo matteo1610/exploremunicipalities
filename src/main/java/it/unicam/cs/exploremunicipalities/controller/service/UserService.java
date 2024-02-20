@@ -1,17 +1,17 @@
 package it.unicam.cs.exploremunicipalities.controller.service;
 
 import it.unicam.cs.exploremunicipalities.controller.repository.UserRepository;
-import it.unicam.cs.exploremunicipalities.model.user.License;
+import it.unicam.cs.exploremunicipalities.controller.service.abstractions.RoleServiceInterface;
+import it.unicam.cs.exploremunicipalities.controller.service.abstractions.UserServiceInterface;
 import it.unicam.cs.exploremunicipalities.model.user.User;
 import it.unicam.cs.exploremunicipalities.model.user.UserRole;
-import it.unicam.cs.exploremunicipalities.model.content.Municipality;
 import org.springframework.stereotype.Service;
 
 /**
  * A service for managing users.
  */
 @Service
-public class UserService {
+public class UserService implements UserServiceInterface {
     private final UserRepository userRepository;
     private final RoleService roleService;
 
@@ -41,27 +41,40 @@ public class UserService {
     /**
      * Adds a user to the repository.
      * @param user the user to add
-     * @param municipality the municipality in which the user is to be added
-     * @param role the role of the user in the municipality
      * @throws IllegalArgumentException if the user is already in the repository
+     * @throws IllegalArgumentException if the municipality does not exist
      */
-    public void addUser(User user, Municipality municipality, UserRole role) {
+    public void addUser(User user) {
         if (this.userRepository.findByEmail(user.getEmail()) != null) {
             throw new IllegalArgumentException("This email is already in use");
         }
-        User newUser = this.userRepository.save(user);
-        this.roleService.setLicense(new License(newUser, municipality, role));
+        this.userRepository.save(new User(user.getEmail(), user.getPassword()));
     }
 
     /**
-     * Removes a user from the repository.
+     * Removes a user from the repository. Also removes all the licenses of the user.
      * @param userId the id of the user to remove
      * @throws IllegalArgumentException if the user does not exist
      */
     public void removeUser(long userId) {
-        if (!this.userRepository.existsById(userId)) {
+        User user = this.getUser(userId);
+        this.roleService.removeLicenses(user);
+        this.userRepository.delete(user);
+    }
+
+    /**
+     * Set the role of a user in a municipality.
+     * @param userId the id of the user
+     * @param municipalityId the id of the municipality
+     * @param newRole the new role of the user
+     * @throws IllegalArgumentException if the user does not exist
+     * @throws IllegalArgumentException if the municipality does not exist
+     * @throws IllegalArgumentException if the role does not exist
+     */
+    public void setLicense(long userId, long municipalityId, String newRole) {
+        if (this.getUser(userId) == null) {
             throw new IllegalArgumentException("The user does not exist");
         }
-        this.userRepository.delete(this.getUser(userId));
+        this.roleService.setLicense(this.getUser(userId), municipalityId, newRole);
     }
 }

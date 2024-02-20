@@ -3,6 +3,7 @@ package it.unicam.cs.exploremunicipalities.controller.service;
 import it.unicam.cs.exploremunicipalities.controller.repository.ContributionRepository;
 import it.unicam.cs.exploremunicipalities.controller.repository.MunicipalityRepository;
 import it.unicam.cs.exploremunicipalities.controller.repository.PointRepository;
+import it.unicam.cs.exploremunicipalities.controller.service.abstractions.MunicipalityServiceInterface;
 import it.unicam.cs.exploremunicipalities.model.service.OSMService;
 import it.unicam.cs.exploremunicipalities.model.content.Municipality;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
  * A service for managing municipalities.
  */
 @Service
-public class MunicipalityService {
+public class MunicipalityService implements MunicipalityServiceInterface {
     private final MunicipalityRepository municipalityRepository;
     private final ContributionService contributionService;
     private final OSMService osmService;
@@ -53,7 +54,7 @@ public class MunicipalityService {
             throw new IllegalArgumentException("Municipality already exists");
         }
         Municipality municipality = new Municipality(name, province, this.osmService
-                .getCoordinatePointOfMunicipality(name));
+                .getCoordinatePointOfMunicipality(name, province));
         this.municipalityRepository.save(municipality);
     }
 
