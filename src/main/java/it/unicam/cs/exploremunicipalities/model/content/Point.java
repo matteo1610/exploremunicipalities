@@ -1,11 +1,12 @@
 package it.unicam.cs.exploremunicipalities.model.content;
 
+import it.unicam.cs.exploremunicipalities.controller.dto.PointDTO;
 import it.unicam.cs.exploremunicipalities.model.content.contribution.Contribution;
+import it.unicam.cs.exploremunicipalities.model.content.contribution.ContributionState;
 import it.unicam.cs.exploremunicipalities.model.util.CoordinatePoint;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.NaturalId;
 
 import java.util.*;
 
@@ -38,13 +39,30 @@ public class Point {
     }
 
     /**
+     * Returns the DTO of the point.
+     * @return the DTO of the point
+     */
+    public PointDTO toDTO() {
+        return new PointDTO(this.id, this.position);
+    }
+
+    /**
      * Adds a contribution to the point.
      *
      * @param contribution the contribution to add
-     * @return true if the contribution is added, false otherwise
      */
-    public boolean addContribution(Contribution contribution) {
-        return contributions.add(contribution);
+    public void addContribution(Contribution contribution) {
+        this.contributions.add(contribution);
+    }
+
+    /**
+     * Adds a contribution in pending to the point.
+     *
+     * @param contribution the contribution to add
+     */
+    public void addPendingContribution(Contribution contribution) {
+        contribution.setState(ContributionState.PENDING);
+        this.contributions.add(contribution);
     }
 
     /**
@@ -54,7 +72,7 @@ public class Point {
      * @return true if the contribution is removed, false otherwise
      */
     public boolean removeContribution(Contribution contribution) {
-        return contributions.remove(contribution);
+        return this.contributions.remove(contribution);
     }
 
     @Override
