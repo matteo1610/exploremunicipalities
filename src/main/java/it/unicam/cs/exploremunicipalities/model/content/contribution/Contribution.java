@@ -1,5 +1,6 @@
 package it.unicam.cs.exploremunicipalities.model.content.contribution;
 
+import it.unicam.cs.exploremunicipalities.controller.dto.ContributionDTO;
 import it.unicam.cs.exploremunicipalities.model.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -28,6 +29,7 @@ public abstract class Contribution {
     @ElementCollection
     private Set<File> multimedia;
     private Date creationDate;
+    private ContributionType type;
     @Setter
     private ContributionState state;
     @ManyToOne
@@ -37,16 +39,16 @@ public abstract class Contribution {
      * Creates a new contribution.
      * @param title the title of the contribution
      * @param description the description of the contribution
+     * @param type the type of the contribution
      * @param multimedia the multimedia files of the contribution
-     * @param state the state of the contribution
      * @param author the author of the contribution
      */
-    public Contribution(String title, String description, Set<File> multimedia, ContributionState state, User author) {
+    public Contribution(String title, String description, Set<File> multimedia, ContributionType type, User author) {
         this.title = title;
         this.description = description;
         this.multimedia = multimedia;
+        this.type = type;
         this.creationDate = new Date();
-        this.state = state;
         this.author = author;
     }
 
@@ -64,5 +66,9 @@ public abstract class Contribution {
      */
     public void removeFiles(Set<File> files) {
         this.multimedia.removeAll(files);
+    }
+
+    public ContributionDTO toDTO() {
+        return new ContributionDTO(this.id, this.title, this.type, this.state);
     }
 }

@@ -20,17 +20,17 @@ public class Itinerary extends Contribution {
     private Set<Contribution> contributions;
 
     /**
-     * Creates a new contribution.
+     * Creates a new itinerary.
      *
      * @param title       the title of the contribution
      * @param description the description of the contribution
      * @param multimedia  the multimedia files of the contribution
-     * @param state       the state of the contribution
      * @param author      the author of the contribution
+     * @param contributions the contributions of the itinerary
      */
-    public Itinerary(String title, String description, Set<File> multimedia, ContributionState state, User author,
-                     Set<Contribution> contributions) {
-        super(title, description, multimedia, state, author);
+    public Itinerary(String title, String description, Set<File> multimedia, User author, Set<Contribution>
+            contributions) {
+        super(title, description, multimedia, ContributionType.ITINERARY, author);
         this.contributions = contributions;
     }
 

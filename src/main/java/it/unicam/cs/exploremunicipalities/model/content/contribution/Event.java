@@ -24,16 +24,18 @@ public class Event extends Contribution {
     private LocalDateTime end;
 
     /**
-     * Creates a new contribution.
+     * Creates a new event.
      *
      * @param title       the title of the contribution
      * @param description the description of the contribution
      * @param multimedia  the multimedia files of the contribution
      * @param author      the author of the contribution
+     * @param start       the start date and time of the event
+     * @param end         the end date and time of the event
      */
-    public Event(String title, String description, Set<File> multimedia, ContributionState state, User author,
-                 LocalDateTime start, LocalDateTime end) {
-        super(title, description, multimedia, state, author);
+    public Event(String title, String description, Set<File> multimedia, User author, LocalDateTime start,
+                 LocalDateTime end) {
+        super(title, description, multimedia, ContributionType.EVENT, author);
         this.start = start;
         this.end = end;
     }
