@@ -1,12 +1,11 @@
 package it.unicam.cs.exploremunicipalities.model.user;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 /**
  * This class represents a user with an email and a password.
@@ -25,6 +24,8 @@ public class User {
     private String password;
     @Setter
     private boolean isAdmin;
+    @OneToMany(cascade = CascadeType.REMOVE)
+    List<Notification> notifications;
 
     /**
      * Creates a new user with the given email and password.
@@ -34,5 +35,21 @@ public class User {
     public User(String email, String password) {
         this.email = email;
         this.password = password;
+    }
+
+    /**
+     * Adds a notification to the user.
+     * @param notification the notification to add
+     */
+    public void addNotification(Notification notification) {
+        this.notifications.add(notification);
+    }
+
+    /**
+     * Removes a notification from the user.
+     * @param notification the notification to remove
+     */
+    public void removeNotification(Notification notification) {
+        this.notifications.remove(notification);
     }
 }
