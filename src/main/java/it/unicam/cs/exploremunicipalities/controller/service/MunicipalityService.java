@@ -1,12 +1,14 @@
 package it.unicam.cs.exploremunicipalities.controller.service;
 
-import it.unicam.cs.exploremunicipalities.controller.repository.ContributionRepository;
+import it.unicam.cs.exploremunicipalities.controller.dto.MunicipalityDTO;
 import it.unicam.cs.exploremunicipalities.controller.repository.MunicipalityRepository;
-import it.unicam.cs.exploremunicipalities.controller.repository.PointRepository;
 import it.unicam.cs.exploremunicipalities.controller.service.abstractions.MunicipalityServiceInterface;
 import it.unicam.cs.exploremunicipalities.model.service.OSMService;
 import it.unicam.cs.exploremunicipalities.model.content.Municipality;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A service for managing municipalities.
@@ -14,14 +16,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class MunicipalityService implements MunicipalityServiceInterface {
     private final MunicipalityRepository municipalityRepository;
-    private final ContributionService contributionService;
     private final OSMService osmService;
 
-    public MunicipalityService(MunicipalityRepository municipalityRepository,
-                               ContributionRepository contributionRepository, PointRepository pointRepository) {
+    public MunicipalityService(MunicipalityRepository municipalityRepository) {
         this.municipalityRepository = municipalityRepository;
-        this.contributionService = new ContributionService(contributionRepository, pointRepository);
         this.osmService = new OSMService();
+    }
+
+    /**
+     * Returns the details of all the municipalities.
+     * @return the details of all the municipalities
+     */
+    public Set<MunicipalityDTO> getMunicipalities() {
+        Set<MunicipalityDTO> municipalities = new HashSet<>();
+        for (Municipality m : this.municipalityRepository.findAll()) {
+            municipalities.add(m.toDTO());
+        }
+        return municipalities;
     }
 
     /**
@@ -34,13 +45,15 @@ public class MunicipalityService implements MunicipalityServiceInterface {
         return this.municipalityRepository.findById(id).orElseThrow();
     }
 
-    /**
-     * Returns all the municipalities.
-     * @return all the municipalities
-     */
-    public Iterable<Municipality> getAllMunicipalities() {
-        return this.municipalityRepository.findAll();
-    }
+
+
+
+
+
+
+
+
+
 
     /**
      * Adds a municipality with the given name, province and identity point.
@@ -64,7 +77,6 @@ public class MunicipalityService implements MunicipalityServiceInterface {
      * @throws IllegalArgumentException if the municipality does not exist
      */
     public void removeMunicipality(long municipalityId) {
-        this.contributionService.removeAllPointOfMunicipality(this.getMunicipality(municipalityId));
         this.municipalityRepository.deleteById(municipalityId);
     }
 }
