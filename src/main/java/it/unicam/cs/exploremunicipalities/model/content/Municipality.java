@@ -1,11 +1,13 @@
 package it.unicam.cs.exploremunicipalities.model.content;
 
+import it.unicam.cs.exploremunicipalities.controller.dto.MunicipalityDTO;
 import it.unicam.cs.exploremunicipalities.model.util.CoordinatePoint;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * This class represents a municipality with a name, a province and an identity point.
@@ -20,6 +22,8 @@ public class Municipality {
     private String name;
     private String province;
     private CoordinatePoint identityPoint;
+    @OneToMany(cascade = CascadeType.REMOVE)
+    private Set<Point> points;
 
     /**
      * Creates a new municipality with the given name, province and identity point.
@@ -32,5 +36,33 @@ public class Municipality {
         this.name = name;
         this.province = province;
         this.identityPoint = identityPoint;
+        this.points = new HashSet<>();
+    }
+
+    /**
+     * Returns the DTO of the municipality.
+     *
+     * @return the DTO of the municipality
+     */
+    public MunicipalityDTO toDTO() {
+        return new MunicipalityDTO(this.id, this.name, this.province);
+    }
+
+    /**
+     * Adds a point to the municipality.
+     *
+     * @param point the point to add
+     */
+    public void addPoint(Point point) {
+        this.points.add(point);
+    }
+
+    /**
+     * Removes a point from the municipality.
+     *
+     * @param point the point to remove
+     */
+    public void removePoint(Point point) {
+        this.points.remove(point);
     }
 }
