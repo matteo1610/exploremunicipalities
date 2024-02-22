@@ -13,6 +13,4 @@ import java.util.Set;
 public interface PointRepository extends CrudRepository<Point, Long> {
     @Query("SELECT p FROM Point p WHERE p.position = ?1 AND p.municipality.id = ?2")
     Point findByCoordinateAndMunicipality(CoordinatePoint position, long municipalityId);
-    @Query("SELECT p FROM Point p WHERE p.municipality.id = ?1")
-    Set<Point> findByMunicipality(long municipalityId);
 }
