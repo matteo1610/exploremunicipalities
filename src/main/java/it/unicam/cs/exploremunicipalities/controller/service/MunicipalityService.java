@@ -37,23 +37,13 @@ public class MunicipalityService implements MunicipalityServiceInterface {
 
     /**
      * Returns a municipality with the given id.
-     * @param id the id of the municipality to get
+     * @param municipalityId the id of the municipality to get
      * @return a municipality with the given id
      * @throws IllegalArgumentException if the municipality does not exist
      */
-    public Municipality getMunicipality(long id) {
-        return this.municipalityRepository.findById(id).orElseThrow();
+    public Municipality getMunicipality(long municipalityId) {
+        return this.municipalityRepository.findById(municipalityId).orElseThrow();
     }
-
-
-
-
-
-
-
-
-
-
 
     /**
      * Adds a municipality with the given name, province and identity point.
@@ -62,7 +52,7 @@ public class MunicipalityService implements MunicipalityServiceInterface {
      * @throws IllegalArgumentException if the municipality already exists
      * @throws Exception if the identity point of the municipality cannot be found
      */
-    public void addMunicipality(String name, String province) throws Exception {
+    public void createMunicipality(String name, String province) throws Exception {
         if (this.municipalityRepository.findByName(name) != null) {
             throw new IllegalArgumentException("Municipality already exists");
         }
@@ -76,7 +66,7 @@ public class MunicipalityService implements MunicipalityServiceInterface {
      * @param municipalityId the id of the municipality to remove
      * @throws IllegalArgumentException if the municipality does not exist
      */
-    public void removeMunicipality(long municipalityId) {
-        this.municipalityRepository.deleteById(municipalityId);
+    public void deleteMunicipality(long municipalityId) {
+        this.municipalityRepository.delete(this.getMunicipality(municipalityId));
     }
 }

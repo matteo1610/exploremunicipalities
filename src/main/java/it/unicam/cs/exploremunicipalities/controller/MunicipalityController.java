@@ -25,20 +25,10 @@ public class MunicipalityController {
         }
     }
 
-
-
-
-
-
-
-
-
-
-
     @PostMapping()
-    public ResponseEntity<Object> addMunicipality(@RequestBody CreateMunicipalityRequest request) {
+    public ResponseEntity<Object> createMunicipality(@RequestBody CreateMunicipalityRequest request) {
         try {
-            this.municipalityService.addMunicipality(request.name(), request.province());
+            this.municipalityService.createMunicipality(request.name(), request.province());
             return ResponseEntity.ok().body("Municipality created successfully");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -48,7 +38,7 @@ public class MunicipalityController {
     @DeleteMapping("/{municipalityId}")
     public ResponseEntity<Object> deleteMunicipality(@PathVariable long municipalityId) {
         try {
-            this.municipalityService.removeMunicipality(municipalityId);
+            this.municipalityService.deleteMunicipality(municipalityId);
             return ResponseEntity.ok().body("Municipality deleted successfully");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
