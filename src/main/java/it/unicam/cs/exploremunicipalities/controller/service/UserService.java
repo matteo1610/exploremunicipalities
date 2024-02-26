@@ -1,11 +1,14 @@
 package it.unicam.cs.exploremunicipalities.controller.service;
 
+import it.unicam.cs.exploremunicipalities.controller.dto.UserDTO;
 import it.unicam.cs.exploremunicipalities.controller.repository.UserRepository;
-import it.unicam.cs.exploremunicipalities.controller.service.abstractions.RoleServiceInterface;
 import it.unicam.cs.exploremunicipalities.controller.service.abstractions.UserServiceInterface;
 import it.unicam.cs.exploremunicipalities.model.user.User;
 import it.unicam.cs.exploremunicipalities.model.user.UserRole;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A service for managing users.
@@ -21,6 +24,18 @@ public class UserService implements UserServiceInterface {
     }
 
     /**
+     * Returns the details of all the users.
+     * @return the details of all the users
+     */
+    public Set<UserDTO> getUsers() {
+        Set<UserDTO> users = new HashSet<>();
+        for (User u : this.userRepository.findAll()) {
+            users.add(u.toDTO());
+        }
+        return users;
+    }
+
+    /**
      * Returns a user with the given id.
      * @param userId the id of the user to get
      * @return a user with the given id
@@ -31,20 +46,11 @@ public class UserService implements UserServiceInterface {
     }
 
     /**
-     * Returns all the users in the repository.
-     * @return all the users in the repository
-     */
-    public Iterable<User> getAllUsers() {
-        return this.userRepository.findAll();
-    }
-
-    /**
      * Adds a user to the repository.
      * @param user the user to add
      * @throws IllegalArgumentException if the user is already in the repository
-     * @throws IllegalArgumentException if the municipality does not exist
      */
-    public void addUser(User user) {
+    public void createUser(User user) {
         if (this.userRepository.findByEmail(user.getEmail()) != null) {
             throw new IllegalArgumentException("This email is already in use");
         }
@@ -52,29 +58,25 @@ public class UserService implements UserServiceInterface {
     }
 
     /**
-     * Removes a user from the repository. Also removes all the licenses of the user.
+     * Removes a user from the repository. Also remove the license of the user.
      * @param userId the id of the user to remove
      * @throws IllegalArgumentException if the user does not exist
      */
-    public void removeUser(long userId) {
-        User user = this.getUser(userId);
-        this.roleService.removeLicenses(user);
-        this.userRepository.delete(user);
+    public void deleteUser(long userId) {
+        this.userRepository.delete(this.getUser(userId));
     }
 
     /**
-     * Set the role of a user in a municipality.
-     * @param userId the id of the user
-     * @param municipalityId the id of the municipality
-     * @param newRole the new role of the user
-     * @throws IllegalArgumentException if the user does not exist
-     * @throws IllegalArgumentException if the municipality does not exist
-     * @throws IllegalArgumentException if the role does not exist
+     * Set the license for a user in a municipality
+     * @param userId id of user to set the license
+     * @param municipalityId id of the municipality
+     * @param role role of the user
+     * @throws IllegalArgumentException if the municipality not exists
+     * @throws IllegalArgumentException if the user not exists
+     * @throws IllegalArgumentException if the user role not exists
+     * @throws IllegalArgumentException if the municipality already has a curator or an animator
      */
-    public void setLicense(long userId, long municipalityId, String newRole) {
-        if (this.getUser(userId) == null) {
-            throw new IllegalArgumentException("The user does not exist");
-        }
-        this.roleService.setLicense(this.getUser(userId), municipalityId, newRole);
+    public void setLicense(long userId, long municipalityId, UserRole role) {
+        this.roleService.setLicense(this.getUser(userId), municipalityId, role);
     }
 }
