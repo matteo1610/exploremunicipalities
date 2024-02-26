@@ -42,6 +42,10 @@ public class User {
      * @return the DTO of the user
      */
     public UserDTO toDTO() {
-        return new UserDTO(this.id, this.email, this.password, license.toDTO());
+        if (this.license == null)
+            return new UserDTO(this.id, this.email, this.password, null);
+        else {
+            return new UserDTO(this.id, this.email, this.password, license.toDTO());
+        }
     }
 }
