@@ -1,6 +1,6 @@
 package it.unicam.cs.exploremunicipalities.model.service;
 
-import it.unicam.cs.exploremunicipalities.model.util.CoordinatePoint;
+import it.unicam.cs.exploremunicipalities.model.util.Coordinate;
 import it.unicam.cs.exploremunicipalities.model.content.Municipality;
 
 /**
@@ -14,5 +14,5 @@ public interface OSMServiceInterface {
      * @return true if the point is in the municipality, false otherwise
      * @throws Exception if an error occurs while getting the response
      */
-    boolean isPointInMunicipality(CoordinatePoint point, Municipality municipality) throws Exception;
+    boolean isPointInMunicipality(Coordinate point, Municipality municipality) throws Exception;
 }

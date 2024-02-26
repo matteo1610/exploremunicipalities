@@ -1,7 +1,7 @@
 package it.unicam.cs.exploremunicipalities.model.service;
 
 import it.unicam.cs.exploremunicipalities.model.content.Point;
-import it.unicam.cs.exploremunicipalities.model.util.CoordinatePoint;
+import it.unicam.cs.exploremunicipalities.model.util.Coordinate;
 import it.unicam.cs.exploremunicipalities.model.content.Municipality;
 
 import java.util.LinkedHashMap;
@@ -31,7 +31,7 @@ public class OSMProxy implements OSMServiceInterface {
     }
 
     @Override
-    public boolean isPointInMunicipality(CoordinatePoint point, Municipality municipality) throws Exception {
+    public boolean isPointInMunicipality(Coordinate point, Municipality municipality) throws Exception {
         Point p = new Point(point, municipality);
         if(this.cache.containsKey(p)) {
             return this.cache.get(p);

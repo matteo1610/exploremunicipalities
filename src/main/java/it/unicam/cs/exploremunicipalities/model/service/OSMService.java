@@ -1,6 +1,6 @@
 package it.unicam.cs.exploremunicipalities.model.service;
 
-import it.unicam.cs.exploremunicipalities.model.util.CoordinatePoint;
+import it.unicam.cs.exploremunicipalities.model.util.Coordinate;
 import it.unicam.cs.exploremunicipalities.model.content.Municipality;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -28,21 +28,21 @@ public class OSMService implements OSMServiceInterface {
      * @throws Exception if an error occurs while getting the response
      * @throws IllegalArgumentException if the municipality does not exist
      */
-    public CoordinatePoint getCoordinatePointOfMunicipality(String name, String province) throws Exception {
+    public Coordinate getCoordinatePointOfMunicipality(String name, String province) throws Exception {
         String encodedQuery = encode(name, StandardCharsets.UTF_8);
         JSONArray response = this.getResponse(NOMINATIM_API_URL + "search?q=" + encodedQuery + "&format=json");
         for (int i = 0; i < response.length(); i++) {
             JSONObject result = response.getJSONObject(i);
             String displayName = result.getString("display_name").toLowerCase();
             if (displayName.contains(name.toLowerCase()) && displayName.contains(province.toLowerCase())) {
-                return new CoordinatePoint(result.getDouble("lat"), result.getDouble("lon"));
+                return new Coordinate(result.getDouble("lat"), result.getDouble("lon"));
             }
         }
         throw new IllegalArgumentException("Municipality not found");
     }
 
     @Override
-    public boolean isPointInMunicipality(CoordinatePoint point, Municipality municipality) throws Exception {
+    public boolean isPointInMunicipality(Coordinate point, Municipality municipality) throws Exception {
         String lat = String.format("%.6f", point.latitude());
         String lon = String.format("%.6f", point.longitude());
         JSONArray response = this.getResponse(NOMINATIM_API_URL + "reverse?lat=" + lat + "&lon="
