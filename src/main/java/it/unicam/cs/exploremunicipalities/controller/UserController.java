@@ -1,9 +1,11 @@
 package it.unicam.cs.exploremunicipalities.controller;
 
-import it.unicam.cs.exploremunicipalities.controller.dto.request.UpdateUserRoleRequest;
+import it.unicam.cs.exploremunicipalities.controller.dto.request.CreateLicenseRequest;
+import it.unicam.cs.exploremunicipalities.controller.dto.request.CreateMunicipalityRequest;
 import it.unicam.cs.exploremunicipalities.controller.dto.request.CreateUserRequest;
 import it.unicam.cs.exploremunicipalities.controller.service.UserService;
 import it.unicam.cs.exploremunicipalities.model.user.User;
+import it.unicam.cs.exploremunicipalities.model.user.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,46 +20,36 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<Object> getUserById(@PathVariable long userId) {
-        try {
-            return ResponseEntity.ok().body(this.userService.getUser(userId));
-        } catch (IllegalArgumentException ex) {
-            return ResponseEntity.badRequest().body(ex.getMessage());
-        }
+    @GetMapping("/getUsers")
+    public ResponseEntity<Object> getUsers() {
+        return ResponseEntity.ok().body(this.userService.getUsers());
     }
 
-    @GetMapping()
-    public ResponseEntity<Object> getAllUsers() {
-        return ResponseEntity.ok().body(this.userService.getAllUsers());
-    }
-
-    @PostMapping()
+    @PostMapping("/createUser")
     public ResponseEntity<Object> createUser(@RequestBody CreateUserRequest request) {
         try {
-            this.userService.addUser(new User(request.email(), request.password()));
+            this.userService.createUser(new User(request.email(), request.password()));
             return ResponseEntity.ok().body("User created successfully.");
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
 
-    @DeleteMapping("/{userId}")
+    @DeleteMapping("deleteUser/{userId}")
     public ResponseEntity<Object> deleteUser(@PathVariable long userId) {
         try {
-            this.userService.removeUser(userId);
+            this.userService.deleteUser(userId);
             return ResponseEntity.ok().body("User deleted successfully.");
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
 
-    @PutMapping("/license/{userId}")
-    public ResponseEntity<Object> setLicense(@PathVariable long userId,
-                                             @RequestBody UpdateUserRoleRequest request) {
+    @PostMapping("/setLicense/{userId}")
+    public ResponseEntity<Object> setLicense(@PathVariable long userId, @RequestBody CreateLicenseRequest request) {
         try {
-            this.userService.setLicense(userId, request.municipalityId(), request.role());
-            return ResponseEntity.ok().body("Role updated successfully.");
+            this.userService.setLicense(userId, request.municipalityId(), UserRole.valueOf(request.role()));
+            return ResponseEntity.ok().body("License set successfully.");
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }

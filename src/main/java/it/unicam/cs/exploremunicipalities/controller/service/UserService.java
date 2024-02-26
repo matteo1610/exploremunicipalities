@@ -71,9 +71,9 @@ public class UserService implements UserServiceInterface {
      * @param userId id of user to set the license
      * @param municipalityId id of the municipality
      * @param role role of the user
-     * @throws IllegalArgumentException if the municipality not exists
-     * @throws IllegalArgumentException if the user not exists
-     * @throws IllegalArgumentException if the user role not exists
+     * @throws IllegalArgumentException if the municipality doesn't exist
+     * @throws IllegalArgumentException if the user doesn't exist
+     * @throws IllegalArgumentException if the user role doesn't exist
      * @throws IllegalArgumentException if the municipality already has a curator or an animator
      */
     public void setLicense(long userId, long municipalityId, UserRole role) {
