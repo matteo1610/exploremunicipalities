@@ -23,10 +23,7 @@ public class UserService implements UserServiceInterface {
         this.roleService = roleService;
     }
 
-    /**
-     * Returns the details of all the users.
-     * @return the details of all the users
-     */
+    @Override
     public Set<UserDTO> getUsers() {
         Set<UserDTO> users = new HashSet<>();
         for (User u : this.userRepository.findAll()) {
@@ -35,21 +32,12 @@ public class UserService implements UserServiceInterface {
         return users;
     }
 
-    /**
-     * Returns a user with the given id.
-     * @param userId the id of the user to get
-     * @return a user with the given id
-     * @throws IllegalArgumentException if the user does not exist
-     */
+    @Override
     public User getUser(long userId) {
         return this.userRepository.findById(userId).orElseThrow();
     }
 
-    /**
-     * Adds a user to the repository.
-     * @param user the user to add
-     * @throws IllegalArgumentException if the user is already in the repository
-     */
+    @Override
     public void createUser(User user) {
         if (this.userRepository.findByEmail(user.getEmail()) != null) {
             throw new IllegalArgumentException("This email is already in use");
@@ -57,25 +45,12 @@ public class UserService implements UserServiceInterface {
         this.userRepository.save(new User(user.getEmail(), user.getPassword()));
     }
 
-    /**
-     * Removes a user from the repository. Also remove the license of the user.
-     * @param userId the id of the user to remove
-     * @throws IllegalArgumentException if the user does not exist
-     */
+    @Override
     public void deleteUser(long userId) {
         this.userRepository.delete(this.getUser(userId));
     }
 
-    /**
-     * Set the license for a user in a municipality
-     * @param userId id of user to set the license
-     * @param municipalityId id of the municipality
-     * @param role role of the user
-     * @throws IllegalArgumentException if the municipality doesn't exist
-     * @throws IllegalArgumentException if the user doesn't exist
-     * @throws IllegalArgumentException if the user role doesn't exist
-     * @throws IllegalArgumentException if the municipality already has a curator or an animator
-     */
+    @Override
     public void setLicense(long userId, long municipalityId, UserRole role) {
         this.roleService.setLicense(this.getUser(userId), municipalityId, role);
     }
