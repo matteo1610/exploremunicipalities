@@ -45,7 +45,7 @@ public class Municipality {
      * @return the DTO of the municipality
      */
     public MunicipalityDTO toDTO() {
-        return new MunicipalityDTO(this.id, this.name, this.province);
+        return new MunicipalityDTO(this.id, this.name, this.province, this.identityPoint);
     }
 
     /**
