@@ -23,10 +23,7 @@ public class MunicipalityService implements MunicipalityServiceInterface {
         this.osmService = new OSMService();
     }
 
-    /**
-     * Returns the details of all the municipalities.
-     * @return the details of all the municipalities
-     */
+    @Override
     public Set<MunicipalityDTO> getMunicipalities() {
         Set<MunicipalityDTO> municipalities = new HashSet<>();
         for (Municipality m : this.municipalityRepository.findAll()) {
@@ -35,23 +32,12 @@ public class MunicipalityService implements MunicipalityServiceInterface {
         return municipalities;
     }
 
-    /**
-     * Returns a municipality with the given id.
-     * @param municipalityId the id of the municipality to get
-     * @return a municipality with the given id
-     * @throws IllegalArgumentException if the municipality does not exist
-     */
+    @Override
     public Municipality getMunicipality(long municipalityId) {
         return this.municipalityRepository.findById(municipalityId).orElseThrow();
     }
 
-    /**
-     * Adds a municipality with the given name, province and identity point.
-     * @param name the name of the municipality
-     * @param province the province of the municipality
-     * @throws IllegalArgumentException if the municipality already exists
-     * @throws Exception if the identity point of the municipality cannot be found
-     */
+    @Override
     public void createMunicipality(String name, String province) throws Exception {
         if (this.municipalityRepository.findByName(name) != null) {
             throw new IllegalArgumentException("Municipality already exists");
@@ -61,11 +47,7 @@ public class MunicipalityService implements MunicipalityServiceInterface {
         this.municipalityRepository.save(municipality);
     }
 
-    /**
-     * Removes a municipality with the given id. All the points of the municipality are removed.
-     * @param municipalityId the id of the municipality to remove
-     * @throws IllegalArgumentException if the municipality does not exist
-     */
+    @Override
     public void deleteMunicipality(long municipalityId) {
         this.municipalityRepository.delete(this.getMunicipality(municipalityId));
     }
