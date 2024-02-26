@@ -2,6 +2,7 @@ package it.unicam.cs.exploremunicipalities.controller;
 
 import it.unicam.cs.exploremunicipalities.controller.dto.request.CreateMunicipalityRequest;
 import it.unicam.cs.exploremunicipalities.controller.service.MunicipalityService;
+import it.unicam.cs.exploremunicipalities.controller.service.PointService;
 import it.unicam.cs.exploremunicipalities.controller.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,9 +38,12 @@ public class MunicipalityController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
+    
     @DeleteMapping("/deleteMunicipality/{municipalityId}")
     public ResponseEntity<Object> deleteMunicipality(@PathVariable long municipalityId) {
+        if (!this.roleService.getRoles(municipalityId).isEmpty()) {
+            return ResponseEntity.badRequest().body("The municipality has roles associated with it");
+        }
         try {
             this.municipalityService.deleteMunicipality(municipalityId);
             return ResponseEntity.ok().body("Municipality deleted successfully");
