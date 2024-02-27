@@ -54,4 +54,9 @@ public class UserService implements UserServiceInterface {
     public void setLicense(long userId, long municipalityId, UserRole role) {
         this.roleService.setLicense(this.getUser(userId), municipalityId, role);
     }
+
+    @Override
+    public void removeLicense(long userId) {
+        this.roleService.removeLicense(this.getUser(userId));
+    }
 }

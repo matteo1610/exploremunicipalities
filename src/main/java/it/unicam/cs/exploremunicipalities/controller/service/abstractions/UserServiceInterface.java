@@ -47,4 +47,10 @@ public interface UserServiceInterface {
      * @throws IllegalArgumentException if the municipality already has a curator or an animator
      */
     void setLicense(long userId, long municipalityId, UserRole role);
+
+    /**
+     * Removes the license of the user with the given id.
+     * @param userId the id of the user
+     */
+    void removeLicense(long userId) throws IllegalArgumentException;
 }
