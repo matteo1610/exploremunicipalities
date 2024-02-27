@@ -6,7 +6,7 @@ package it.unicam.cs.exploremunicipalities.model.content.contribution;
 public enum ContributionState {
     PENDING,
     APPROVED,
-    REJECTED;
+    INTO_CONTEST;
 
     /**
      * This method returns the string representation of the state.
@@ -17,7 +17,7 @@ public enum ContributionState {
         return switch (state.toUpperCase()) {
             case "PENDING" -> PENDING;
             case "APPROVED" -> APPROVED;
-            case "REJECTED" -> REJECTED;
+            case "INTO_CONTEST" -> INTO_CONTEST;
             default -> throw new IllegalArgumentException("Invalid state: " + state);
         };
     }

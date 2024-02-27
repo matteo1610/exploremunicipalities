@@ -17,7 +17,7 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public abstract class Contribution {
     @Id
     @GeneratedValue
