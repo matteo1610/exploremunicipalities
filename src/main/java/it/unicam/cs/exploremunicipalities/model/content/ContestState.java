@@ -1,4 +1,4 @@
-package it.unicam.cs.exploremunicipalities.model.content.contest;
+package it.unicam.cs.exploremunicipalities.model.content;
 
 /**
  * This enum represents the state of a contest.
