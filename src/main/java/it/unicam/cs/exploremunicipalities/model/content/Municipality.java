@@ -1,7 +1,8 @@
 package it.unicam.cs.exploremunicipalities.model.content;
 
 import it.unicam.cs.exploremunicipalities.controller.dto.MunicipalityDTO;
-import it.unicam.cs.exploremunicipalities.model.util.CoordinatePoint;
+import it.unicam.cs.exploremunicipalities.model.content.contribution.Contribution;
+import it.unicam.cs.exploremunicipalities.model.util.Coordinate;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,9 +22,12 @@ public class Municipality {
     private long id;
     private String name;
     private String province;
-    private CoordinatePoint identityPoint;
+    @Embedded
+    private Coordinate identityPoint;
     @OneToMany(cascade = CascadeType.REMOVE)
     private Set<Point> points;
+    @OneToMany(cascade = CascadeType.REMOVE)
+    private Set<Contest> contests;
 
     /**
      * Creates a new municipality with the given name, province and identity point.
@@ -32,7 +36,7 @@ public class Municipality {
      * @param province the province of the municipality
      * @param identityPoint the identity point of the municipality
      */
-    public Municipality(String name, String province, CoordinatePoint identityPoint) {
+    public Municipality(String name, String province, Coordinate identityPoint) {
         this.name = name;
         this.province = province;
         this.identityPoint = identityPoint;
@@ -58,11 +62,11 @@ public class Municipality {
     }
 
     /**
-     * Removes a point from the municipality.
+     * Adds a contest to the municipality.
      *
-     * @param point the point to remove
+     * @param contest the contest to add
      */
-    public void removePoint(Point point) {
-        this.points.remove(point);
+    public void addContest(Contest contest) {
+        this.contests.add(contest);
     }
 }

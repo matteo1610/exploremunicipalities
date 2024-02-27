@@ -3,7 +3,7 @@ package it.unicam.cs.exploremunicipalities.model.content;
 import it.unicam.cs.exploremunicipalities.controller.dto.PointDTO;
 import it.unicam.cs.exploremunicipalities.model.content.contribution.Contribution;
 import it.unicam.cs.exploremunicipalities.model.content.contribution.ContributionState;
-import it.unicam.cs.exploremunicipalities.model.util.CoordinatePoint;
+import it.unicam.cs.exploremunicipalities.model.util.Coordinate;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +20,8 @@ public class Point {
     @Id
     @GeneratedValue
     private long id;
-    private CoordinatePoint position;
+    @Embedded
+    private Coordinate position;
     @ManyToOne
     private Municipality municipality;
     @OneToMany(cascade = CascadeType.REMOVE)
@@ -32,7 +33,7 @@ public class Point {
      * @param position the position of the point
      * @param municipality the municipality of the point
      */
-    public Point(CoordinatePoint position, Municipality municipality){
+    public Point(Coordinate position, Municipality municipality){
         this.position=position;
         this.municipality=municipality;
         this.contributions = new HashSet<>();
@@ -52,6 +53,7 @@ public class Point {
      * @param contribution the contribution to add
      */
     public void addContribution(Contribution contribution) {
+        contribution.setState(ContributionState.APPROVED);
         this.contributions.add(contribution);
     }
 
