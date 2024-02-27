@@ -35,9 +35,12 @@ public class Contest {
     private LocalDateTime end;
     @Setter
     private ContestState state;
+    @Setter
+    @OneToOne
+    private Contribution winner;
 
     /**
-     * Creates a new contest.
+     * Creates a new temporary contest.
      * @param title the title of the contest
      * @param description the description of the contest
      * @param start the start date of the contest
@@ -54,12 +57,22 @@ public class Contest {
     }
 
     /**
+     * Creates a new contest.
+     * @param title the title of the contest
+     * @param description the description of the contest
+     * @param position the position of the contest
+     */
+    public Contest(String title, String description, Coordinate position) {
+        this(title, description, position, null, null);
+    }
+
+    /**
      * Returns the DTO of the contest.
      * @return the DTO of the contest
      */
     public ContestDTO toDTO() {
         return new ContestDTO(this.id, this.title, this.description, this.position, this.start.toString(),
-                this.end.toString(), this.state);
+                this.end.toString(), this.state, this.winner != null ? this.winner.getId() : -1);
     }
 
     /**

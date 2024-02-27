@@ -10,6 +10,7 @@ public record ContestDTO(
         Coordinate position,
         String start,
         String end,
-        ContestState state
+        ContestState state,
+        long winnerContributionId // se non c'è vincitore è -1
 ) {
 }
