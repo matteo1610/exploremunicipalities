@@ -1,6 +1,7 @@
 package it.unicam.cs.exploremunicipalities.controller;
 
 import it.unicam.cs.exploremunicipalities.controller.dto.request.CreateMunicipalityRequest;
+import it.unicam.cs.exploremunicipalities.controller.repository.MunicipalityRepository;
 import it.unicam.cs.exploremunicipalities.controller.service.MunicipalityService;
 import it.unicam.cs.exploremunicipalities.controller.service.PointService;
 import it.unicam.cs.exploremunicipalities.controller.service.RoleService;

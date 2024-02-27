@@ -3,10 +3,7 @@ package it.unicam.cs.exploremunicipalities.controller;
 import it.unicam.cs.exploremunicipalities.controller.service.PointService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/points")
@@ -18,10 +15,20 @@ public class PointController {
         this.pointService = pointService;
     }
 
-    @GetMapping("{municipalityId}")
+    @GetMapping("/getPoints/{municipalityId}")
     public ResponseEntity<Object> getPoints(@PathVariable long municipalityId) {
         try {
             return ResponseEntity.ok(this.pointService.getPoints(municipalityId));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/deletePoint/{pointId}")
+    public ResponseEntity<Object> deletePoint(@PathVariable long pointId) {
+        try {
+            this.pointService.deletePoint(pointId);
+            return ResponseEntity.ok().body("Point deleted successfully.");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

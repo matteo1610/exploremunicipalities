@@ -22,8 +22,6 @@ public class User {
     @Setter
     private String password;
     @Setter
-    private boolean isAdmin;
-    @Setter
     @OneToOne(cascade = CascadeType.REMOVE)
     private License license;
 

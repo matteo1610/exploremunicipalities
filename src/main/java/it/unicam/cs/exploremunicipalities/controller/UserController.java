@@ -54,4 +54,14 @@ public class UserController {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
+
+    @DeleteMapping("/removeLicense/{userId}")
+    public ResponseEntity<Object> removeLicense(@PathVariable long userId) {
+        try {
+            this.userService.removeLicense(userId);
+            return ResponseEntity.ok().body("License removed successfully.");
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+    }
 }

@@ -30,7 +30,7 @@ public class OSMService implements OSMServiceInterface {
      */
     public Coordinate getCoordinatePointOfMunicipality(String name, String province) throws Exception {
         String encodedQuery = encode(name, StandardCharsets.UTF_8);
-        JSONArray response = this.getResponse(NOMINATIM_API_URL + "search?q=" + encodedQuery + "&format=json");
+        JSONArray response = this.getArrayResponse(NOMINATIM_API_URL + "search?q=" + encodedQuery + "&format=json");
         for (int i = 0; i < response.length(); i++) {
             JSONObject result = response.getJSONObject(i);
             String displayName = result.getString("display_name").toLowerCase();
@@ -45,18 +45,26 @@ public class OSMService implements OSMServiceInterface {
     public boolean isPointInMunicipality(Coordinate point, Municipality municipality) throws Exception {
         String lat = String.format("%.6f", point.latitude());
         String lon = String.format("%.6f", point.longitude());
-        JSONArray response = this.getResponse(NOMINATIM_API_URL + "reverse?lat=" + lat + "&lon="
-                + lon + "&format=json");
-        JSONObject result = response.getJSONObject(0);
+        JSONObject result = this.getResponseObject(NOMINATIM_API_URL + "reverse?lat=" + lat + "&lon=" + lon
+                + "&format=json");
         return result.getString("display_name").toLowerCase().contains(municipality.getName().toLowerCase());
     }
 
-    private JSONArray getResponse(String apiUrl) throws Exception{
+    private JSONArray getArrayResponse(String apiUrl) throws Exception{
         URL url = new URL(apiUrl);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
             return new JSONArray(reader.lines().collect(Collectors.joining()));
+        }
+    }
+
+    private JSONObject getResponseObject(String apiUrl) throws Exception{
+        URL url = new URL(apiUrl);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+            return new JSONObject(reader.lines().collect(Collectors.joining()));
         }
     }
 }
