@@ -20,6 +20,12 @@ public class RoleService implements RoleServiceInterface {
     }
 
     @Override
+    public License getLicense(long licenseId) {
+        return this.licenseRepository.findById(licenseId).orElseThrow(() -> new IllegalArgumentException(
+                "The license does not exist"));
+    }
+
+    @Override
     public Set<UserRole> getRoles(long municipalityId) {
         return this.licenseRepository.findRolesByMunicipality(municipalityId);
     }
@@ -55,5 +61,12 @@ public class RoleService implements RoleServiceInterface {
 
     private boolean hasAnimator(long municipalityId) {
         return this.licenseRepository.findRolesByMunicipality(municipalityId).contains(UserRole.ANIMATOR);
+    }
+
+    @Override
+    public void removeLicense(User user) {
+        License l = user.getLicense();
+        user.setLicense(null);
+        this.licenseRepository.delete(l);
     }
 }
