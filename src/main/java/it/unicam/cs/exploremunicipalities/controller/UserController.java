@@ -1,9 +1,8 @@
 package it.unicam.cs.exploremunicipalities.controller;
 
-import it.unicam.cs.exploremunicipalities.controller.dto.request.CreateLicenseRequest;
-import it.unicam.cs.exploremunicipalities.controller.dto.request.CreateMunicipalityRequest;
-import it.unicam.cs.exploremunicipalities.controller.dto.request.CreateUserRequest;
-import it.unicam.cs.exploremunicipalities.controller.service.UserService;
+import it.unicam.cs.exploremunicipalities.dto.request.CreateLicenseRequest;
+import it.unicam.cs.exploremunicipalities.dto.request.CreateUserRequest;
+import it.unicam.cs.exploremunicipalities.service.UserService;
 import it.unicam.cs.exploremunicipalities.model.user.User;
 import it.unicam.cs.exploremunicipalities.model.user.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;

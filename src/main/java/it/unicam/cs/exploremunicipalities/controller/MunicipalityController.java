@@ -1,10 +1,8 @@
 package it.unicam.cs.exploremunicipalities.controller;
 
-import it.unicam.cs.exploremunicipalities.controller.dto.request.CreateMunicipalityRequest;
-import it.unicam.cs.exploremunicipalities.controller.repository.MunicipalityRepository;
-import it.unicam.cs.exploremunicipalities.controller.service.MunicipalityService;
-import it.unicam.cs.exploremunicipalities.controller.service.PointService;
-import it.unicam.cs.exploremunicipalities.controller.service.RoleService;
+import it.unicam.cs.exploremunicipalities.dto.request.CreateMunicipalityRequest;
+import it.unicam.cs.exploremunicipalities.service.MunicipalityService;
+import it.unicam.cs.exploremunicipalities.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

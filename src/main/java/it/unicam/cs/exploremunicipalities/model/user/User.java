@@ -1,6 +1,6 @@
 package it.unicam.cs.exploremunicipalities.model.user;
 
-import it.unicam.cs.exploremunicipalities.controller.dto.UserDTO;
+import it.unicam.cs.exploremunicipalities.dto.UserDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

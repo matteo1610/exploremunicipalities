@@ -1,9 +1,11 @@
 package it.unicam.cs.exploremunicipalities.controller;
 
-import it.unicam.cs.exploremunicipalities.controller.dto.request.CreateEventRequest;
-import it.unicam.cs.exploremunicipalities.controller.dto.request.CreateItineraryRequest;
-import it.unicam.cs.exploremunicipalities.controller.dto.request.CreatePOIRequest;
+import it.unicam.cs.exploremunicipalities.dto.request.CreateEventRequest;
+import it.unicam.cs.exploremunicipalities.dto.request.CreateItineraryRequest;
+import it.unicam.cs.exploremunicipalities.dto.request.CreatePOIRequest;
 import it.unicam.cs.exploremunicipalities.controller.service.*;
+import it.unicam.cs.exploremunicipalities.service.ContributionService;
+import it.unicam.cs.exploremunicipalities.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

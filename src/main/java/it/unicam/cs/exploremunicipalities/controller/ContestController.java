@@ -1,8 +1,8 @@
 package it.unicam.cs.exploremunicipalities.controller;
 
-import it.unicam.cs.exploremunicipalities.controller.dto.request.CreateContestRequest;
-import it.unicam.cs.exploremunicipalities.controller.service.ContestService;
-import it.unicam.cs.exploremunicipalities.controller.service.UserService;
+import it.unicam.cs.exploremunicipalities.dto.request.CreateContestRequest;
+import it.unicam.cs.exploremunicipalities.service.ContestService;
+import it.unicam.cs.exploremunicipalities.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

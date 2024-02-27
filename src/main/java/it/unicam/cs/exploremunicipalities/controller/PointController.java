@@ -1,6 +1,6 @@
 package it.unicam.cs.exploremunicipalities.controller;
 
-import it.unicam.cs.exploremunicipalities.controller.service.PointService;
+import it.unicam.cs.exploremunicipalities.service.PointService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
