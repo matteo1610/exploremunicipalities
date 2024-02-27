@@ -8,7 +8,7 @@ import it.unicam.cs.exploremunicipalities.model.content.Point;
 import it.unicam.cs.exploremunicipalities.model.service.OSMProxy;
 import it.unicam.cs.exploremunicipalities.model.service.OSMService;
 import it.unicam.cs.exploremunicipalities.model.service.OSMServiceInterface;
-import it.unicam.cs.exploremunicipalities.model.util.CoordinatePoint;
+import it.unicam.cs.exploremunicipalities.model.util.Coordinate;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -26,11 +26,7 @@ public class PointService implements PointServiceInterface {
         this.osmService = new OSMProxy(new OSMService());
     }
 
-    /**
-     * Returns the details of the points associated to the municipality with the given id.
-     *
-     * @return the details of the points associated to the municipality with the given id
-     */
+    @Override
     public Set<PointDTO> getPoints(long municipalityId) {
         Set<PointDTO> points = new HashSet<>();
         for (Point point : this.municipalityService.getMunicipality(municipalityId).getPoints()) {
@@ -39,47 +35,33 @@ public class PointService implements PointServiceInterface {
         return points;
     }
 
-    /**
-     * Returns a point with the given id.
-     * @param pointId the id of the point to get
-     * @return a point with the given id
-     * @throws IllegalArgumentException if the point does not exist
-     */
+    @Override
     public Point getPoint(long pointId) {
         return this.pointRepository.findById(pointId).orElseThrow();
     }
 
-
-
-
-
-
-
-
-
-
-
-    private Point checkPoint(CoordinatePoint position, Municipality municipality) throws Exception {
-        Point p = this.pointRepository.findByCoordinateAndMunicipality(position, municipality.getId());
-        if (p == null) {
-            if (this.osmService.isPointInMunicipality(position, municipality)) {
-                p = this.pointRepository.save(new Point(position, municipality));
-            } else {
-                throw new IllegalArgumentException("The point is not in the municipality");
-            }
+    @Override
+    public Point associatePoint(Coordinate position, long municipalityId) throws Exception {
+        Municipality municipality = this.municipalityService.getMunicipality(municipalityId);
+        Point point = municipality.getPoints().stream().filter(p -> p.getPosition().equals(position)).findFirst()
+                .orElse(null);
+        if (point == null) {
+            point = this.createPoint(position, municipality);
         }
-        return p;
+        return point;
     }
 
-    /**
-     * Removes a point in the repository. All contributions associated with the point are removed as well.
-     * @param pointId the id of the point to remove
-     * @throws IllegalArgumentException if the point does not exist
-     */
-    public void removePointById(long pointId) {
-        if (!this.pointRepository.existsById(pointId)) {
-            throw new IllegalArgumentException("Point does not exist");
+    private Point createPoint(Coordinate position, Municipality municipality) throws Exception {
+        if (!this.osmService.isPointInMunicipality(position, municipality)) {
+            throw new IllegalArgumentException("The point is not in the municipality");
         }
-        this.pointRepository.deleteById(pointId);
+        Point p = new Point(position, municipality);
+        municipality.addPoint(p);
+        return this.pointRepository.save(p);
+    }
+
+    @Override
+    public void deletePoint(long pointId) {
+        this.pointRepository.delete(this.getPoint(pointId));
     }
 }
