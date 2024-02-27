@@ -39,7 +39,7 @@ public class MunicipalityService implements MunicipalityServiceInterface {
 
     @Override
     public void createMunicipality(String name, String province) throws Exception {
-        if (this.municipalityRepository.findByName(name) != null) {
+        if (this.municipalityRepository.findByNameAndProvince(name, province) != null) {
             throw new IllegalArgumentException("Municipality already exists");
         }
         Municipality municipality = new Municipality(name, province, this.osmService

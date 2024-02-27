@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MunicipalityRepository extends CrudRepository<Municipality, Long> {
-    @Query("SELECT m FROM Municipality m WHERE m.name = ?1")
-    Municipality findByName(String name);
+    @Query("SELECT m FROM Municipality m WHERE m.name = ?1 AND m.province = ?2")
+    Municipality findByNameAndProvince(String name, String province);
 }
