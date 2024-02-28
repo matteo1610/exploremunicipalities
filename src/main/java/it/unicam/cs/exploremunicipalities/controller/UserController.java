@@ -1,7 +1,9 @@
 package it.unicam.cs.exploremunicipalities.controller;
 
 import it.unicam.cs.exploremunicipalities.dto.request.CreateLicenseRequest;
+import it.unicam.cs.exploremunicipalities.dto.request.CreateNotificationRequest;
 import it.unicam.cs.exploremunicipalities.dto.request.CreateUserRequest;
+import it.unicam.cs.exploremunicipalities.service.NotificationService;
 import it.unicam.cs.exploremunicipalities.service.UserService;
 import it.unicam.cs.exploremunicipalities.model.user.User;
 import it.unicam.cs.exploremunicipalities.model.user.UserRole;
@@ -59,6 +61,55 @@ public class UserController {
         try {
             this.userService.removeLicense(userId);
             return ResponseEntity.ok().body("License removed successfully.");
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+    }
+
+    @GetMapping("/getNotifications/{userId}")
+    public ResponseEntity<Object> getNotifications(@PathVariable long userId) {
+        try {
+            return ResponseEntity.ok().body(this.userService.getNotifications(userId));
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+    }
+
+    @PostMapping("/sendNotification/{userId}")
+    public ResponseEntity<Object> sendNotification(@PathVariable long userId,
+                                                   @RequestBody CreateNotificationRequest request) {
+        try {
+            this.userService.sendNotification(userId, request.message());
+            return ResponseEntity.ok().body("Notification sent successfully.");
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+    }
+
+    @GetMapping("/getFavorites/{userId}")
+    public ResponseEntity<Object> getFavorites(@PathVariable long userId) {
+        try {
+            return ResponseEntity.ok().body(this.userService.getFavorites(userId));
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+    }
+
+    @PostMapping("/addFavorite/{userId}/{contributionId}")
+    public ResponseEntity<Object> addFavorite(@PathVariable long userId, @PathVariable long contributionId) {
+        try {
+            this.userService.addFavorite(userId, contributionId);
+            return ResponseEntity.ok().body("Favorite added successfully.");
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+    }
+
+    @DeleteMapping("/removeFavorite/{userId}/{contributionId}")
+    public ResponseEntity<Object> removeFavorite(@PathVariable long userId, @PathVariable long contributionId) {
+        try {
+            this.userService.removeFavorite(userId, contributionId);
+            return ResponseEntity.ok().body("Favorite removed successfully.");
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
