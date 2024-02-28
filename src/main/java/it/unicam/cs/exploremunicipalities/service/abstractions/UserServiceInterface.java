@@ -1,5 +1,7 @@
 package it.unicam.cs.exploremunicipalities.service.abstractions;
 
+import it.unicam.cs.exploremunicipalities.dto.ContributionDTO;
+import it.unicam.cs.exploremunicipalities.dto.NotificationDTO;
 import it.unicam.cs.exploremunicipalities.dto.UserDTO;
 import it.unicam.cs.exploremunicipalities.model.user.User;
 import it.unicam.cs.exploremunicipalities.model.user.UserRole;
@@ -53,4 +55,40 @@ public interface UserServiceInterface {
      * @param userId the id of the user
      */
     void removeLicense(long userId) throws IllegalArgumentException;
+
+    /**
+     * Returns all the notifications of the user.
+     * @param userId the id of user to get the notifications from
+     * @return all the notifications of the user
+     */
+    Set<NotificationDTO> getNotifications(long userId);
+
+    /**
+     * Creates a new notification with the given message and adds it to the user.
+     * @param userId the id of user to add the notification to
+     * @param message the message of the notification
+     */
+    void sendNotification(long userId, String message);
+
+    /**
+     * Returns all the contributions of the user.
+     * @param userId the id of user to get the contributions from
+     * @return all the contributions of the user
+     */
+    Set<ContributionDTO> getFavorites(long userId);
+
+    /**
+     * Adds a contribution to the user's list of favorites.
+     * @param userId the id of user to add the favorite to
+     * @param contributionId the id of the contribution to be added to the user
+     */
+    void addFavorite(long userId, long contributionId);
+
+    /**
+     * Removes a contribution from the user's list of favorites.
+     * @param userId the id of user to remove the favorite from
+     * @param contributionId the id of the contribution to be removed from the user
+     * @throws IllegalArgumentException if the contribution does not exist in the user's favorites
+     */
+    void removeFavorite(long userId, long contributionId);
 }

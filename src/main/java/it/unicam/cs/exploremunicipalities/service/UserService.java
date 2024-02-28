@@ -71,48 +71,27 @@ public class UserService implements UserServiceInterface {
         this.roleService.removeLicense(this.getUser(userId));
     }
 
-    /**
-     * Returns all the notifications of the user.
-     * @param userId the id of user to get the notifications from
-     * @return all the notifications of the user
-     */
+    @Override
     public Set<NotificationDTO> getNotifications(long userId) {
         return this.notificationService.getNotifications(this.getUser(userId));
     }
 
-    /**
-     * Creates a new notification with the given message and adds it to the user.
-     * @param userId the id of user to add the notification to
-     * @param message the message of the notification
-     */
+    @Override
     public void sendNotification(long userId, String message) {
         this.notificationService.createNotification(this.getUser(userId), new Notification(message));
     }
 
-    /**
-     * Returns all the contributions of the user.
-     * @param userId the id of user to get the contributions from
-     * @return all the contributions of the user
-     */
+    @Override
     public Set<ContributionDTO> getFavorites(long userId) {
         return this.getUser(userId).getFavorites().stream().map(Contribution::toDTO).collect(Collectors.toSet());
     }
 
-    /**
-     * Adds a contribution to the user's list of favorites.
-     * @param userId the id of user to add the favorite to
-     * @param contributionId the id of the contribution to be added to the user
-     */
+    @Override
     public void addFavorite(long userId, long contributionId) {
         this.getUser(userId).addFavorite(this.contibutionService.getContribution(contributionId));
     }
 
-    /**
-     * Removes a contribution from the user's list of favorites.
-     * @param userId the id of user to remove the favorite from
-     * @param contributionId the id of the contribution to be removed from the user
-     * @throws IllegalArgumentException if the contribution does not exist in the user's favorites
-     */
+    @Override
     public void removeFavorite(long userId, long contributionId) {
         Contribution c = this.getUser(userId).getFavorites().stream()
                 .filter(contribution -> contribution.getId() == contributionId).findFirst().orElseThrow(
