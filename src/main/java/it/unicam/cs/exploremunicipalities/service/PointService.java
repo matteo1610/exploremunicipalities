@@ -5,9 +5,9 @@ import it.unicam.cs.exploremunicipalities.service.repository.PointRepository;
 import it.unicam.cs.exploremunicipalities.service.abstractions.PointServiceInterface;
 import it.unicam.cs.exploremunicipalities.model.content.Municipality;
 import it.unicam.cs.exploremunicipalities.model.content.Point;
-import it.unicam.cs.exploremunicipalities.model.service.OSMProxy;
-import it.unicam.cs.exploremunicipalities.model.service.OSMService;
-import it.unicam.cs.exploremunicipalities.model.service.OSMServiceInterface;
+import it.unicam.cs.exploremunicipalities.model.osm.OSMProxy;
+import it.unicam.cs.exploremunicipalities.model.osm.OSMService;
+import it.unicam.cs.exploremunicipalities.model.osm.OSMServiceInterface;
 import it.unicam.cs.exploremunicipalities.model.util.Coordinate;
 import org.springframework.stereotype.Service;
 
@@ -41,8 +41,7 @@ public class PointService implements PointServiceInterface {
     }
 
     @Override
-    public Point associatePoint(Coordinate position, long municipalityId) throws Exception {
-        Municipality municipality = this.municipalityService.getMunicipality(municipalityId);
+    public Point associatePoint(Coordinate position, Municipality municipality) throws Exception {
         Point point = municipality.getPoints().stream().filter(p -> p.getPosition().equals(position)).findFirst()
                 .orElse(null);
         if (point == null) {

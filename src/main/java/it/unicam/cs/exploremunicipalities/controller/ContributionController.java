@@ -33,7 +33,7 @@ public class ContributionController {
     @GetMapping("/getContribution/{contributionId}")
     public ResponseEntity<Object> getContribution(@PathVariable long contributionId) {
         try {
-            return ResponseEntity.ok(this.contributionService.getContribution(contributionId));
+            return ResponseEntity.ok(this.contributionService.getContributionDetails(contributionId));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

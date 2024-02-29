@@ -23,14 +23,14 @@ public class UserService implements UserServiceInterface {
     private final UserRepository userRepository;
     private final RoleService roleService;
     private final NotificationService notificationService;
-    private final ContributionService contibutionService;
+    private final ContributionService contributionService;
 
     public UserService(UserRepository userRepository, RoleService roleService, NotificationService notificationService,
-                       ContributionService contibutionService) {
+                       ContributionService contributionService) {
         this.userRepository = userRepository;
         this.roleService = roleService;
         this.notificationService = notificationService;
-        this.contibutionService = contibutionService;
+        this.contributionService = contributionService;
     }
 
     @Override
@@ -88,7 +88,7 @@ public class UserService implements UserServiceInterface {
 
     @Override
     public void addFavorite(long userId, long contributionId) {
-        this.getUser(userId).addFavorite(this.contibutionService.getContribution(contributionId));
+        this.getUser(userId).addFavorite(this.contributionService.getContribution(contributionId));
     }
 
     @Override

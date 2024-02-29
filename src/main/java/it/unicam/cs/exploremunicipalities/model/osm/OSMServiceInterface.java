@@ -1,4 +1,4 @@
-package it.unicam.cs.exploremunicipalities.model.service;
+package it.unicam.cs.exploremunicipalities.model.osm;
 
 import it.unicam.cs.exploremunicipalities.model.util.Coordinate;
 import it.unicam.cs.exploremunicipalities.model.content.Municipality;
