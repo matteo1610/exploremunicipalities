@@ -1,6 +1,7 @@
 package it.unicam.cs.exploremunicipalities.service;
 
 import it.unicam.cs.exploremunicipalities.dto.ContributionDTO;
+import it.unicam.cs.exploremunicipalities.dto.PointDTO;
 import it.unicam.cs.exploremunicipalities.service.repository.ContributionRepository;
 import it.unicam.cs.exploremunicipalities.service.abstractions.ContributionServiceInterface;
 import it.unicam.cs.exploremunicipalities.model.content.Contest;
@@ -53,8 +54,17 @@ public class ContributionService implements ContributionServiceInterface {
                 "The contribution does not exist"));
     }
 
+    /**
+     * Returns the details of the contribution with the given id.
+     * @param contributionId the id of the contribution
+     * @return the details of the contribution with the given id
+     */
+    public ContributionDTO getContributionDetails(long contributionId) {
+        return this.getContribution(contributionId).getDetails();
+    }
+
     private void createContribution(License license, Coordinate position, Contribution contribution) throws Exception {
-        Point p = this.pointService.associatePoint(position, license.getMunicipality().getId());
+        Point p = this.pointService.associatePoint(position, license.getMunicipality());
         if (license.getRole() == UserRole.CURATOR || license.getRole() == UserRole.AUTHORIZED_CONTRIBUTOR) {
             p.addContribution(contribution);
         } else if (license.getRole() == UserRole.CONTRIBUTOR) {
@@ -62,6 +72,7 @@ public class ContributionService implements ContributionServiceInterface {
         } else {
             throw new Exception("The user is not authorized to create a contribution");
         }
+        this.contributionRepository.save(contribution);
     }
 
     /**
@@ -77,7 +88,6 @@ public class ContributionService implements ContributionServiceInterface {
     public void createPointOfInterest(User user, Coordinate position, String title, String description) throws Exception {
         PointOfInterest poi = new PointOfInterest(title, description, null, user);
         this.createContribution(user.getLicense(), position, poi);
-        this.contributionRepository.save(poi);
     }
 
     /**
@@ -96,7 +106,6 @@ public class ContributionService implements ContributionServiceInterface {
                             LocalDateTime endDate) throws Exception {
         Event event = new Event(title, description, null, user, startDate, endDate);
         this.createContribution(user.getLicense(), position, event);
-        this.contributionRepository.save(event);
     }
 
     /**
@@ -123,7 +132,6 @@ public class ContributionService implements ContributionServiceInterface {
         }
         Itinerary itinerary = new Itinerary(title, description, null, user, c);
         this.createContribution(user.getLicense(), position, itinerary);
-        this.contributionRepository.save(itinerary);
     }
 
     /**
@@ -136,9 +144,11 @@ public class ContributionService implements ContributionServiceInterface {
             throw new IllegalArgumentException("The user is not authorized to get the pending contributions");
         }
         Set<ContributionDTO> contributions = new HashSet<>();
-        for (Contribution c : this.pointService.getPoint(license.getMunicipality().getId()).getContributions()) {
-            if (c.getState() == ContributionState.PENDING) {
-                contributions.add(c.toDTO());
+        for (Point p : license.getMunicipality().getPoints()) {
+            for (ContributionDTO c : this.getContributions(p.getId())) {
+                if (c.getState() == ContributionState.PENDING) {
+                    contributions.add(c);
+                }
             }
         }
         return contributions;
@@ -156,10 +166,11 @@ public class ContributionService implements ContributionServiceInterface {
         }
         Contribution contribution = this.getContribution(contributionId);
         contribution.setState(ContributionState.APPROVED);
+        this.contributionRepository.save(contribution);
     }
 
     private boolean checkAuthorization(License license, long contributionId) {
-        return this.getPendingContributions(license).stream().anyMatch(c -> c.id() == contributionId);
+        return this.getPendingContributions(license).stream().anyMatch(c -> c.getId() == contributionId);
     }
 
     /**
@@ -167,7 +178,7 @@ public class ContributionService implements ContributionServiceInterface {
      * @param contributionId the id of the contribution to remove
      * @throws IllegalArgumentException if the contribution does not exist
      */
-    public void removeContribution(long contributionId) {
+    public void deleteContribution(long contributionId) {
         this.contributionRepository.delete(this.getContribution(contributionId));
     }
 

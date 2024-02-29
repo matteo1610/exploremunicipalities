@@ -1,5 +1,7 @@
 package it.unicam.cs.exploremunicipalities.model.content.contribution;
 
+import it.unicam.cs.exploremunicipalities.dto.ContributionDTO;
+import it.unicam.cs.exploremunicipalities.dto.PointOfInterestDTO;
 import it.unicam.cs.exploremunicipalities.model.user.User;
 import jakarta.persistence.Entity;
 import lombok.NoArgsConstructor;
@@ -23,5 +25,11 @@ public class PointOfInterest extends Contribution {
      */
     public PointOfInterest(String title, String description, Set<File> multimedia, User author) {
         super(title, description, multimedia, ContributionType.POINT_OF_INTEREST, author);
+    }
+
+    @Override
+    public ContributionDTO getDetails() {
+        return new PointOfInterestDTO(this.getId(), this.getTitle(), this.getDescription(), this.getType(),
+                this.getState());
     }
 }

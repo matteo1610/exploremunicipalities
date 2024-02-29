@@ -2,6 +2,8 @@ package it.unicam.cs.exploremunicipalities.service;
 
 import it.unicam.cs.exploremunicipalities.dto.ContestDTO;
 import it.unicam.cs.exploremunicipalities.dto.ContributionDTO;
+import it.unicam.cs.exploremunicipalities.model.content.Municipality;
+import it.unicam.cs.exploremunicipalities.model.user.Notification;
 import it.unicam.cs.exploremunicipalities.service.repository.ContestRepository;
 import it.unicam.cs.exploremunicipalities.model.content.Contest;
 import it.unicam.cs.exploremunicipalities.model.content.ContestState;
@@ -17,9 +19,11 @@ import java.util.Set;
 @Service
 public class ContestService {
     private final ContestRepository contestRepository;
+    private final NotificationService notificationService;
 
-    public ContestService(ContestRepository contestRepository) {
+    public ContestService(ContestRepository contestRepository, NotificationService notificationService) {
         this.contestRepository = contestRepository;
+        this.notificationService = notificationService;
     }
 
     /**
@@ -90,6 +94,8 @@ public class ContestService {
         if (contest.getState() != ContestState.CREATED) {
             throw new IllegalArgumentException("The contest is already open or closed");
         }
+        contest.setState(ContestState.OPEN);
+        this.contestRepository.save(contest);
     }
 
     /**
@@ -104,6 +110,8 @@ public class ContestService {
         if (contest.getState() != ContestState.OPEN) {
             throw new IllegalArgumentException("The contest is not open or already closed");
         }
+        contest.setState(ContestState.CLOSED);
+        this.contestRepository.save(contest);
     }
 
     /**
@@ -133,7 +141,9 @@ public class ContestService {
         }
         contest.setWinner(contest.getContributions().stream().filter(c -> c.getId() == contributionId).findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("The contribution does not exist")));
-        // TODO: notificare il vincitore
+        this.contestRepository.save(contest);
+        this.notificationService.createNotification(contest.getWinner().getAuthor(), new Notification(
+                "You won the contest " + contest.getTitle() + " (id: " + contest.getId() + ")"));
     }
 
     /**

@@ -68,7 +68,17 @@ public abstract class Contribution {
         this.multimedia.removeAll(files);
     }
 
+    /**
+     * Returns the DTO of the contribution.
+     * @return the DTO of the contribution
+     */
     public ContributionDTO toDTO() {
         return new ContributionDTO(this.id, this.title, this.type, this.state);
     }
+
+    /**
+     * Returns the details of the contribution.
+     * @return the details of the contribution
+     */
+    public abstract ContributionDTO getDetails();
 }

@@ -70,11 +70,12 @@ public class Contest {
      * @return the DTO of the contest
      */
     public ContestDTO toDTO() {
-        return new ContestDTO(this.id, this.title, this.description, this.position, this.start.toString(),
-                this.end.toString(), this.state, this.winner != null ? this.winner.getId() : -1);
+        return new ContestDTO(this.id, this.title, this.description, this.position, this.start != null ?
+                this.start.toString() : null, this.end != null ? this.end.toString() : null,
+                this.state, this.winner != null ? this.winner.getId() : -1);
     }
 
-    /**
+    /**g
      * Adds a contribution to the contest.
      * @param contribution the contribution to add
      * @throws IllegalArgumentException if the contest is not open

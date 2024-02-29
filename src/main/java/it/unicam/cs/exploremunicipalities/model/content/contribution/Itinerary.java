@@ -1,5 +1,7 @@
 package it.unicam.cs.exploremunicipalities.model.content.contribution;
 
+import it.unicam.cs.exploremunicipalities.dto.ContributionDTO;
+import it.unicam.cs.exploremunicipalities.dto.ItineraryDTO;
 import it.unicam.cs.exploremunicipalities.model.user.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
@@ -52,5 +54,11 @@ public class Itinerary extends Contribution {
      */
     public boolean removeContribution(Set<Contribution> contribution) {
         return contributions.removeAll(contribution);
+    }
+
+    @Override
+    public ContributionDTO getDetails() {
+        return new ItineraryDTO(this.getId(), this.getTitle(), this.getDescription(), this.getType(), this.getState(),
+                this.contributions);
     }
 }

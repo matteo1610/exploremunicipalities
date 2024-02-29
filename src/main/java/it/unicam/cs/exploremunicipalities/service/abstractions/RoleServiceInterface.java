@@ -7,8 +7,6 @@ import it.unicam.cs.exploremunicipalities.model.user.UserRole;
 import java.util.Set;
 
 public interface RoleServiceInterface {
-
-
     /**
      * Returns the license with the given id.
      * @param licenseId the id of the license to get
@@ -40,7 +38,4 @@ public interface RoleServiceInterface {
      * @param user the user to remove the license from
      */
     void removeLicense(User user);
-
-
-
 }
