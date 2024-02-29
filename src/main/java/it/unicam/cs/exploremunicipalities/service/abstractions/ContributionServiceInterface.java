@@ -104,4 +104,40 @@ public interface ContributionServiceInterface {
      * @throws IllegalArgumentException if the contribution does not belong to the selected contest
      */
     void publishWinningContribution(License license, long contestId) throws Exception;
+
+    /**
+     * Create a point of interest for a contest
+     * @param user the user who creates the contribution
+     * @param contestId the contest id
+     * @param title the title of the point of interest
+     * @param description the description of the point of interest
+     * @throws Exception if the user is not authorized to create the contribution
+     */
+    void createPointOfInterestForContest(User user, long contestId, String title, String description) throws Exception;
+
+    /**
+     * Create an event for a contest
+     * @param user the user who creates the contribution
+     * @param contestId the contest id
+     * @param title the title of the event
+     * @param description the description of the event
+     * @param startDate the start date of the event
+     * @param endDate the end date of the event
+     * @throws Exception if the user is not authorized to create the contribution
+     */
+    void createEventForContest(User user, long contestId, String title, String description, LocalDateTime startDate,
+                                      LocalDateTime endDate) throws Exception;
+
+
+    /**
+     * Create an itinerary for a contest
+     * @param user the user who creates the contribution
+     * @param contestId the contest id
+     * @param title the title of the itinerary
+     * @param description the description of the itinerary
+     * @param contributions the contributions of the itinerary
+     * @throws Exception if the user is not authorized to create the contribution
+     */
+    void createItineraryForContest(User user, long contestId, String title, String description,
+                                   Set<Long> contributions) throws Exception;
 }

@@ -1,7 +1,6 @@
 package it.unicam.cs.exploremunicipalities.service;
 
 import it.unicam.cs.exploremunicipalities.dto.ContributionDTO;
-import it.unicam.cs.exploremunicipalities.dto.PointDTO;
 import it.unicam.cs.exploremunicipalities.service.repository.ContributionRepository;
 import it.unicam.cs.exploremunicipalities.service.abstractions.ContributionServiceInterface;
 import it.unicam.cs.exploremunicipalities.model.content.Contest;
@@ -34,7 +33,9 @@ public class ContributionService implements ContributionServiceInterface {
     public Set<ContributionDTO> getContributions(long pointId) {
         Set<ContributionDTO> contributions = new HashSet<>();
         for (Contribution c : this.pointService.getPoint(pointId).getContributions()) {
-            contributions.add(c.toDTO());
+            if (c.getState() == ContributionState.APPROVED) {
+                contributions.add(c.toDTO());
+            }
         }
         return contributions;
     }
@@ -78,14 +79,7 @@ public class ContributionService implements ContributionServiceInterface {
     @Override
     public void createItinerary(User user, Coordinate position, String title, String description,
                                 Set<Long> contributions) throws Exception {
-        if (contributions.size() < 2) {
-            throw new IllegalArgumentException("An itinerary must have at least two contributions");
-        }
-        Set<Contribution> c = new HashSet<>();
-        for (long id : contributions) {
-            c.add(this.getContribution(id));
-        }
-        Itinerary itinerary = new Itinerary(title, description, null, user, c);
+        Itinerary itinerary = itineraryFactory(user, title, description, contributions);
         this.createContribution(user.getLicense(), position, itinerary);
     }
 
@@ -122,6 +116,48 @@ public class ContributionService implements ContributionServiceInterface {
     @Override
     public void deleteContribution(long contributionId) {
         this.contributionRepository.delete(this.getContribution(contributionId));
+    }
+
+    private void createContributionForContest(License license, long contestId, Contribution contribution) throws Exception {
+        Contest c = this.contestService.getContest(contestId);
+        if (license.getRole() == UserRole.CURATOR || license.getRole() == UserRole.AUTHORIZED_CONTRIBUTOR ||
+                license.getRole() == UserRole.CONTRIBUTOR) {
+            c.addContribution(contribution);
+        } else {
+            throw new Exception("The user is not authorized to create a contribution");
+        }
+        this.contributionRepository.save(contribution);
+    }
+
+    @Override
+    public void createPointOfInterestForContest(User user, long contestId, String title, String description) throws Exception {
+        PointOfInterest poi = new PointOfInterest(title, description, null, user);
+        this.createContributionForContest(user.getLicense(), contestId, poi);
+    }
+
+    @Override
+    public void createEventForContest(User user, long contestId, String title, String description, LocalDateTime startDate,
+                            LocalDateTime endDate) throws Exception {
+        Event event = new Event(title, description, null, user, startDate, endDate);
+        this.createContributionForContest(user.getLicense(), contestId, event);
+    }
+
+    @Override
+    public void createItineraryForContest(User user, long contestId, String title, String description,
+                                Set<Long> contributions) throws Exception {
+        Itinerary itinerary = itineraryFactory(user, title, description, contributions);
+        this.createContributionForContest(user.getLicense(), contestId, itinerary);
+    }
+
+    private Itinerary itineraryFactory(User user, String title, String description, Set<Long> contributions) {
+        if (contributions.size() < 2) {
+            throw new IllegalArgumentException("An itinerary must have at least two contributions");
+        }
+        Set<Contribution> c = new HashSet<>();
+        for (long id : contributions) {
+            c.add(this.getContribution(id));
+        }
+        return new Itinerary(title, description, null, user, c);
     }
 
     @Override
