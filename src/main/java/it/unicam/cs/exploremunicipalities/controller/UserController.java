@@ -85,33 +85,4 @@ public class UserController {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
-
-    @GetMapping("/getFavorites/{userId}")
-    public ResponseEntity<Object> getFavorites(@PathVariable long userId) {
-        try {
-            return ResponseEntity.ok().body(this.userService.getFavorites(userId));
-        } catch (IllegalArgumentException ex) {
-            return ResponseEntity.badRequest().body(ex.getMessage());
-        }
-    }
-
-    @PostMapping("/addFavorite/{userId}/{contributionId}")
-    public ResponseEntity<Object> addFavorite(@PathVariable long userId, @PathVariable long contributionId) {
-        try {
-            this.userService.addFavorite(userId, contributionId);
-            return ResponseEntity.ok().body("Favorite added successfully.");
-        } catch (IllegalArgumentException ex) {
-            return ResponseEntity.badRequest().body(ex.getMessage());
-        }
-    }
-
-    @DeleteMapping("/removeFavorite/{userId}/{contributionId}")
-    public ResponseEntity<Object> removeFavorite(@PathVariable long userId, @PathVariable long contributionId) {
-        try {
-            this.userService.removeFavorite(userId, contributionId);
-            return ResponseEntity.ok().body("Favorite removed successfully.");
-        } catch (IllegalArgumentException ex) {
-            return ResponseEntity.badRequest().body(ex.getMessage());
-        }
-    }
 }

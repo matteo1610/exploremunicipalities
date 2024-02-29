@@ -74,4 +74,24 @@ public class ContributionController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @GetMapping("/getPendingContributions/{userId}")
+    public ResponseEntity<Object> getPendingContributions(@PathVariable long userId) {
+        try {
+            return ResponseEntity.ok(this.contributionService.getPendingContributions(this.userService.getUser(userId)
+                    .getLicense()));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/approveContribution/{userId}/{contributionId}")
+    public ResponseEntity<Object> approveContribution(@PathVariable long userId, @PathVariable long contributionId) {
+        try {
+            this.contributionService.approveContribution(this.userService.getUser(userId).getLicense(), contributionId);
+            return ResponseEntity.ok("Contribution approved successfully");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }
