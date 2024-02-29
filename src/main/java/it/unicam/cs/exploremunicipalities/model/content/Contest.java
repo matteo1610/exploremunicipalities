@@ -2,6 +2,7 @@ package it.unicam.cs.exploremunicipalities.model.content;
 
 import it.unicam.cs.exploremunicipalities.dto.ContestDTO;
 import it.unicam.cs.exploremunicipalities.model.content.contribution.Contribution;
+import it.unicam.cs.exploremunicipalities.model.content.contribution.ContributionState;
 import it.unicam.cs.exploremunicipalities.model.util.Coordinate;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -84,6 +85,7 @@ public class Contest {
         if (this.state != ContestState.OPEN) {
             throw new IllegalArgumentException("The contest is not open");
         }
+        contribution.setState(ContributionState.INTO_CONTEST);
         this.contributions.add(contribution);
     }
 }

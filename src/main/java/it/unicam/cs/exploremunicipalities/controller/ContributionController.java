@@ -1,8 +1,6 @@
 package it.unicam.cs.exploremunicipalities.controller;
 
-import it.unicam.cs.exploremunicipalities.dto.request.CreateEventRequest;
-import it.unicam.cs.exploremunicipalities.dto.request.CreateItineraryRequest;
-import it.unicam.cs.exploremunicipalities.dto.request.CreatePOIRequest;
+import it.unicam.cs.exploremunicipalities.dto.request.*;
 import it.unicam.cs.exploremunicipalities.service.ContributionService;
 import it.unicam.cs.exploremunicipalities.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,4 +92,51 @@ public class ContributionController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @DeleteMapping("/deleteContribution/{contributionId}")
+    public ResponseEntity<Object> deleteContribution(@PathVariable long contributionId) {
+        try {
+            this.contributionService.deleteContribution(contributionId);
+            return ResponseEntity.ok("Contribution deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/createContribution/contest/pointOfInterest/{userId}")
+    public ResponseEntity<Object> createPointOfInterestForContest(@PathVariable long userId ,
+                                                                  @RequestBody CreatePOIContestRequest request) {
+        try {
+            this.contributionService.createPointOfInterestForContest(this.userService.getUser(userId),
+                    request.contestId(), request.title(), request.description());
+            return ResponseEntity.ok("Point of interest added successfully");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/createContribution/contest/event/{userId}")
+    public ResponseEntity<Object> createEventForContest(@PathVariable long userId,
+                                                       @RequestBody CreateEventForContestRequest request) {
+        try {
+            this.contributionService.createEventForContest(this.userService.getUser(userId), request.contestId(),
+                    request.title(), request.description(), request.startDate(), request.endDate());
+            return ResponseEntity.ok("Event added successfully");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/createContribution/contest/itinerary/{userId}")
+    public ResponseEntity<Object> createItineraryForContest(@PathVariable long userId,
+                                                           @RequestBody CreateItineraryForContestRequest request) {
+        try {
+            this.contributionService.createItineraryForContest(this.userService.getUser(userId), request.contestId(),
+                    request.title(), request.description(), request.contributions());
+            return ResponseEntity.ok("Itinerary added successfully");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 }
