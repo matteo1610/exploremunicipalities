@@ -139,4 +139,16 @@ public class ContributionController {
         }
     }
 
+    @PostMapping("/publishWinningContribution/{userId}/{contestId}")
+    public ResponseEntity<Object> publishWinningContribution(@PathVariable long userId,
+                                                             @PathVariable long contestId) {
+        try {
+            this.contributionService.publishWinningContribution(this.userService.getUser(userId).getLicense(),
+                    contestId);
+            return ResponseEntity.ok("Winning contribution published successfully");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 }
