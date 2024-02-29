@@ -11,5 +11,5 @@ Frequentati il corso di Informatica e Informatica per la Comunicazione Digitale 
 
 Il progetto è stato sviluppato in Java 17 con l'ausilio del framework Spring Boot e del database H2.
 
-# Testare il progetto
+## Testare il progetto
 Per Testare le API fornite, è stata aggiunta la dipendenza Swagger  (http://localhost:8080/swagger-ui/index.html).
