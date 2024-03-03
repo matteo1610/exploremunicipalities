@@ -43,8 +43,8 @@ public class OSMService implements OSMServiceInterface {
 
     @Override
     public boolean isPointInMunicipality(Coordinate point, Municipality municipality) throws Exception {
-        String lat = String.format("%.6f", point.latitude());
-        String lon = String.format("%.6f", point.longitude());
+        String lat = String.format("%.6f", point.latitude()).replace(",", ".");
+        String lon = String.format("%.6f", point.longitude()).replace(",", ".");
         JSONObject result = this.getResponseObject(NOMINATIM_API_URL + "reverse?lat=" + lat + "&lon=" + lon
                 + "&format=json");
         return result.getString("display_name").toLowerCase().contains(municipality.getName().toLowerCase());

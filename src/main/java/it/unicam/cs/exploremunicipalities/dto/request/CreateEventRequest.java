@@ -1,15 +1,17 @@
 package it.unicam.cs.exploremunicipalities.dto.request;
 
-import it.unicam.cs.exploremunicipalities.model.util.Coordinate;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 
 public record CreateEventRequest(
-        Coordinate coordinate,
+        @NotNull(message = "Title of the event cannot be null")
         String title,
+        @NotNull(message = "Description of the event cannot be null")
         String description,
         LocalDateTime startDate,
         LocalDateTime endDate
+
         // TODO aggiungere il campo per inserire i file multimediali
 ) {
 }

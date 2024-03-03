@@ -93,7 +93,7 @@ public class ContestService implements ContestServiceInterface {
         this.checkAuthorization(license, contestId);
         Set<ContributionDTO> contributions = new HashSet<>();
         for (Contribution c : this.getContest(contestId).getContributions()) {
-            contributions.add(c.toDTO());
+            contributions.add(c.getDetails());
         }
         return contributions;
     }

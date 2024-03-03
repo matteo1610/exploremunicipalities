@@ -90,9 +90,9 @@ public class ContributionService implements ContributionServiceInterface {
         }
         Set<ContributionDTO> contributions = new HashSet<>();
         for (Point p : license.getMunicipality().getPoints()) {
-            for (ContributionDTO c : this.getContributions(p.getId())) {
+            for (Contribution c : p.getContributions()) {
                 if (c.getState() == ContributionState.PENDING) {
-                    contributions.add(c);
+                    contributions.add(c.toDTO());
                 }
             }
         }

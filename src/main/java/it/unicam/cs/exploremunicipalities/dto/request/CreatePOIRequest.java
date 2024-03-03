@@ -1,11 +1,13 @@
 package it.unicam.cs.exploremunicipalities.dto.request;
 
-import it.unicam.cs.exploremunicipalities.model.util.Coordinate;
+import jakarta.validation.constraints.NotNull;
 
 public record CreatePOIRequest(
-        Coordinate coordinate,
+        @NotNull(message = "Title of POI cannot be null")
         String title,
+        @NotNull(message = "Description of POI cannot be null")
         String description
+
         // TODO aggiungere il campo per inserire i file multimediali
 ) {
 }
