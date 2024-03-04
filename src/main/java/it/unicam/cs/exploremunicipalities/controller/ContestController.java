@@ -39,7 +39,7 @@ public class ContestController {
         }
     }
 
-    @PutMapping("/openClosed/{userId}/{contestId}")
+    @PutMapping("/openContest/{userId}/{contestId}")
     public ResponseEntity<Object> openContest(@PathVariable long userId, @PathVariable long contestId) {
         try {
             this.contestService.openContest(this.userService.getUser(userId).getLicense(), contestId);
