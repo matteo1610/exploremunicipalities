@@ -1,0 +1,11 @@
+### IntelliJ IDEA ###
+.idea/*
+*.iws
+*.iml
+*.ipr
+
+### Mac OS ###
+.DS_Store
+
+# Ignore macOS Icon files
+Icon?
