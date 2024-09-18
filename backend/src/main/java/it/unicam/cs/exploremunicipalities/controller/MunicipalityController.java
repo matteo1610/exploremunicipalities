@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/municipalities")
+@RequestMapping("api/municipalities")
 public class MunicipalityController {
     private final MunicipalityService municipalityService;
     private final RoleService roleService;
@@ -19,7 +19,7 @@ public class MunicipalityController {
         this.roleService = roleService;
     }
 
-    @GetMapping("api/getMunicipalities")
+    @GetMapping("/getMunicipalities")
     public ResponseEntity<Object> getMunicipalities() {
         try {
             return ResponseEntity.ok().body(this.municipalityService.getMunicipalities());
