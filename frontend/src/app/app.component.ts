@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
@@ -10,4 +11,8 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'frontend';
+
+  constructor(httpClient: HttpClient) {
+    httpClient.get("http://localhost:4200/api/municipalities/getMunicipalities").subscribe();
+  }
 }

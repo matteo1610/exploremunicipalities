@@ -19,7 +19,7 @@ public class MunicipalityController {
         this.roleService = roleService;
     }
 
-    @GetMapping("/getMunicipalities")
+    @GetMapping("api/getMunicipalities")
     public ResponseEntity<Object> getMunicipalities() {
         try {
             return ResponseEntity.ok().body(this.municipalityService.getMunicipalities());
