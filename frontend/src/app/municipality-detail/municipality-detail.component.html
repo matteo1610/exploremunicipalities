@@ -1,0 +1,14 @@
+<h2>Dettagli del comune</h2>
+@if (points.length > 0) {
+  <ul>
+    @for (point of points; track point.id) {
+      <li>
+        ID: {{ point.id }} - 
+        Lat: {{ point.position.latitude }}, 
+        Lon: {{ point.position.longitude }}
+      </li>
+    }
+  </ul>
+} @else {
+  <p>Nessun punto trovato per questo comune.</p>
+}

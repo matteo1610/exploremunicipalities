@@ -1,5 +1,9 @@
-
-<ul class="list-group">
-    <li class="list-group-item">{{municipality.name}}, Provincia di {{municipality.province}}</li>
-</ul>
-
+<li class="list-group-item d-flex justify-content-between align-items-center">
+    <!-- Informazioni del comune -->
+    <span>{{ municipality.name }}, {{ municipality.province }}</span>
+  
+    <!-- Pulsante di dettaglio con stile Bootstrap -->
+    <button class="btn btn-primary" [routerLink]="['/list', municipality.id]">
+      Dettagli
+    </button>
+  </li>
