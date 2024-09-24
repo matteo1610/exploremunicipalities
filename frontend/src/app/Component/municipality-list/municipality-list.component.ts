@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Municipality } from '../../Model/municipality';
-import { MunicipalitiesService } from '../../Service/municipalities.service';
+import { MunicipalitiesService } from '../../municipalities.service';
 import { MunicipalityComponent } from '../municipality/municipality.component';
 import { CommonModule } from '@angular/common';
 

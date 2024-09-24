@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/contributions")
+@RequestMapping("api/contributions")
 public class ContributionController {
     private final ContributionService contributionService;
     private final UserService userService;

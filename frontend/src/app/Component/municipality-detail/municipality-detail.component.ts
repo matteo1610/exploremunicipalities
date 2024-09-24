@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MunicipalitiesService } from '../../Service/municipalities.service';
+import { MunicipalitiesService } from '../../municipalities.service';
 import { Point } from '../../Model/point';
 import * as L from 'leaflet';
 import { CommonModule } from '@angular/common';
 import { MunicipalityComponent } from '../municipality/municipality.component';
+import { ContributionService } from '../../contribution.service';
 
 @Component({
   selector: 'app-municipality-detail',
@@ -23,7 +24,8 @@ export class MunicipalityDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private municipalitiesService: MunicipalitiesService
+    private municipalitiesService: MunicipalitiesService,
+    private contributionService: ContributionService
   ) {}
 
   ngOnInit(): void {
@@ -71,9 +73,20 @@ export class MunicipalityDetailComponent implements OnInit {
     });
 
     this.points.forEach(point => {
-      L.marker([point.position.latitude, point.position.longitude], { icon: customIcon }).addTo(this.map)
-        .bindPopup(`Point ID: ${point.id}`)
-        .openPopup();
+      const marker = L.marker([point.position.latitude, point.position.longitude], { icon: customIcon }).addTo(this.map);
+
+      // Aggiungi i dettagli del contributo al popup
+      let popupContent = `Point ID: ${point.id}`;
+      if (point.contributions && point.contributions.length > 0) {
+        point.contributions.forEach(contribution => {
+          popupContent += `<br>Title: ${contribution.title}<br>Description: ${contribution.description}<br>Author: ${contribution.author.name}`;
+          contribution.multimedia.forEach(media => {
+            popupContent += `<br><img src="${media}" alt="Multimedia" style="width:100px;height:auto;">`;
+          });
+        });
+      }
+
+      marker.bindPopup(popupContent).openPopup();
     });
   }
 }
