@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
-import { Municipality } from '../municipality';
+import { Municipality } from '../../Model/municipality';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 

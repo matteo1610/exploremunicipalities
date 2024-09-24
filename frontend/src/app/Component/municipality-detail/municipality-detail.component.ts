@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MunicipalitiesService } from '../municipalities.service';
-import { Point } from '../point';
+import { MunicipalitiesService } from '../../Service/municipalities.service';
+import { Point } from '../../Model/point';
 import * as L from 'leaflet';
 import { CommonModule } from '@angular/common';
 import { MunicipalityComponent } from '../municipality/municipality.component';
