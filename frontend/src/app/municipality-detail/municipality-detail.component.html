@@ -1,14 +1,5 @@
-<h2>Dettagli del comune</h2>
-@if (points.length > 0) {
-  <ul>
-    @for (point of points; track point.id) {
-      <li>
-        ID: {{ point.id }} - 
-        Lat: {{ point.position.latitude }}, 
-        Lon: {{ point.position.longitude }}
-      </li>
-    }
-  </ul>
-} @else {
-  <p>Nessun punto trovato per questo comune.</p>
-}
+<div class="municipality-detail">
+  <h2>Comune di {{ name }}, provincia di {{province}}</h2>
+  <div id="map" style="height: 600px;"></div> <!-- Imposta l'altezza della mappa -->
+  <p *ngIf="!hasPoints">{{ message }}</p>
+</div>
