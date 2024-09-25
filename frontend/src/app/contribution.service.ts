@@ -11,7 +11,15 @@ export class ContributionService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public getContributions(pointId: number): Observable<Contribution[]> {
-    return this.httpClient.get<Contribution[]>(`${environment.baseUrl}/api/getContributions/${pointId}`);
+  // Ottieni tutte le contribuzioni associate ad un punto
+  public getContributionsOfPoint(pointId: number): Observable<Contribution[]> {
+    return this.httpClient.get<Contribution[]>(`${environment.baseUrl}/api/contributions/getContributions/${pointId}`);
   }
+
+
+    // Ottieni i dettagli di una singola contribuzione
+    public getContributions(contributionId: number): Observable<Contribution[]> {
+      return this.httpClient.get<Contribution[]>(`${environment.baseUrl}/api/contributions/getContributionDetail/${contributionId}`);
+    }
+   
 }

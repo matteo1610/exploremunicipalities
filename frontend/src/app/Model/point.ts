@@ -4,7 +4,7 @@ import { Municipality } from "./municipality";
 export interface Point {
     id: number;
     municipality: Municipality;
-    contributions: Contribution[];
+    contributions?: Contribution[];
     position: {
       latitude: number;
       longitude: number;

@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MunicipalitiesService } from '../../municipalities.service';
 import { Point } from '../../Model/point';
+import { Municipality } from '../../Model/municipality';
 import * as L from 'leaflet';
 import { CommonModule } from '@angular/common';
 import { MunicipalityComponent } from '../municipality/municipality.component';
 import { ContributionService } from '../../contribution.service';
+import { Contribution } from '../../Model/contribution';
 
 @Component({
   selector: 'app-municipality-detail',
@@ -21,6 +23,7 @@ export class MunicipalityDetailComponent implements OnInit {
   message: string = '';
   name: string = '';
   province: string = '';
+  municipality!: Municipality;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,61 +35,94 @@ export class MunicipalityDetailComponent implements OnInit {
     const municipalityId = +this.route.snapshot.paramMap.get('id')!;
     console.log(`ID Comune: ${municipalityId}`);
 
-    // Ottieni la lista dei comuni
+    // Ottieni i dettagli del comune
     this.municipalitiesService.getMunicipalities().subscribe(municipalities => {
-      // Trova il comune con l'ID corrispondente
       const municipality = municipalities.find(m => m.id === municipalityId);
       if (municipality) {
+        this.municipality = municipality;
         this.name = municipality.name;
         this.province = municipality.province;
+        this.loadPoints(municipalityId);
       } else {
         this.name = 'Comune non trovato';
       }
     });
+  }
 
-    this.municipalitiesService.getPointsForMunicipality(municipalityId).subscribe((points) => {
+  loadPoints(municipalityId: number): void {
+    // Ottieni i punti associati al comune
+    this.municipalitiesService.getPointsForMunicipality(municipalityId).subscribe((points: Point[]) => {
       this.points = points;
 
       if (this.points.length > 0) {
         this.hasPoints = true;
-        this.initMap();
+        this.initMapWithPoints();
       } else {
-        this.message = "Non ci sono punti presenti nella piattaforma per il comune selezionato.";
         this.hasPoints = false;
+        this.initMapCenteredOnMunicipality();
+        this.message = "Non ci sono punti presenti nella piattaforma per il comune selezionato.";
       }
     });
   }
 
-  initMap(): void {
+  initMapWithPoints(): void {
+    // Inizializza la mappa con i punti se ci sono punti disponibili
     this.map = L.map('map').setView([this.points[0].position.latitude, this.points[0].position.longitude], 13);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors'
     }).addTo(this.map);
 
-    // Crea un'icona personalizzata
     const customIcon = L.icon({
-      iconUrl: 'assets/custom-marker-icon.png', // Percorso all'immagine dell'icona
-      iconSize: [32, 32], // Dimensioni dell'icona
-      iconAnchor: [16, 32], // Punto dell'icona che corrisponde alla posizione del marker
-      popupAnchor: [0, -32] // Punto da cui si apre il popup rispetto all'icona
+      iconUrl: 'assets/geo-alt-fill.svg', 
+      iconSize: [32, 32],
+      iconAnchor: [16, 32],
+      popupAnchor: [0, -32]
     });
 
     this.points.forEach(point => {
       const marker = L.marker([point.position.latitude, point.position.longitude], { icon: customIcon }).addTo(this.map);
 
-      // Aggiungi i dettagli del contributo al popup
-      let popupContent = `Point ID: ${point.id}`;
-      if (point.contributions && point.contributions.length > 0) {
-        point.contributions.forEach(contribution => {
-          popupContent += `<br>Title: ${contribution.title}<br>Description: ${contribution.description}<br>Author: ${contribution.author.name}`;
-          contribution.multimedia.forEach(media => {
-            popupContent += `<br><img src="${media}" alt="Multimedia" style="width:100px;height:auto;">`;
-          });
-        });
-      }
+      // Ottieni i contributi per ogni punto
+      this.contributionService.getContributions(point.id).subscribe(contributions => {
+        console.log('Contributions for point', point.id, contributions); // Debug
+        point.contributions = contributions;
 
-      marker.bindPopup(popupContent).openPopup();
+        // Verifica se ci sono contributi
+        const popupContent = this.createPopupContent(point);
+        marker.bindPopup(popupContent);
+
+        // Aggiungi listener per aprire il popup quando il marker viene cliccato
+        marker.on('click', () => {
+          marker.openPopup();
+        });
+      });
     });
+  }
+
+  initMapCenteredOnMunicipality(): void {
+    // Inizializza la mappa centrata sull'identityPoint del comune se non ci sono punti
+    if (this.municipality && this.municipality.identityPoint) {
+      this.map = L.map('map').setView([this.municipality.identityPoint.latitude, this.municipality.identityPoint.longitude], 13);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(this.map);
+    }
+  }
+
+  createPopupContent(point: Point): string {
+    // Crea il contenuto del popup per un punto
+    let popupContent = `Punto: ${point.id}`;
+    
+    if (point.contributions && point.contributions.length > 0) {
+      point.contributions.forEach((contribution: Contribution) => {
+        popupContent += `<br><strong>Title:</strong> ${contribution.title}<br><strong>Description:</strong> ${contribution.type}`;
+      });
+    } else {
+      popupContent += '<br>Nessun contributo disponibile';
+    }
+
+    return popupContent;
   }
 }
