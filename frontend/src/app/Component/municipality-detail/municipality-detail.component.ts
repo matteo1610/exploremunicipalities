@@ -84,24 +84,33 @@ export class MunicipalityDetailComponent implements OnInit {
       const marker = L.marker([point.position.latitude, point.position.longitude], { icon: customIcon }).addTo(this.map);
 
       // Ottieni i contributi per ogni punto
-      this.contributionService.getContributions(point.id).subscribe(contributions => {
+      this.contributionService.getContributionsOfPoint(point.id).subscribe(contributions => {
         console.log('Contributions for point', point.id, contributions); // Debug
         point.contributions = contributions;
 
         // Verifica se ci sono contributi
-        const popupContent = this.createPopupContent(point);
-        marker.bindPopup(popupContent);
+        let popupContent = `Punto: ${point.id}`;
+        if (contributions && contributions.length > 0) {
+          const contributionDetails = contributions.map(contribution => 
+            this.contributionService.getContributionDetail(contribution.id).toPromise()
+          );
 
-        // Aggiungi listener per aprire il popup quando il marker viene cliccato
-        marker.on('click', () => {
-          marker.openPopup();
-        });
+          Promise.all(contributionDetails).then(contributions => {
+            contributions.forEach(contributions => {
+              popupContent += `<br><strong>Titolo:</strong> ${contributions?.title}<br><strong>Descrizione:</strong> ${contributions?.description}`;
+            });
+            marker.bindPopup(popupContent);
+          });
+        } else {
+          popupContent += '<br>Nessun contributo disponibile';
+          marker.bindPopup(popupContent);
+        }
       });
     });
   }
 
   initMapCenteredOnMunicipality(): void {
-    // Inizializza la mappa centrata sull'identityPoint del comune se non ci sono punti
+    // Inizializza la mappa centrata sull'identityPoint del comune se non ci sono punti per una vista generale
     if (this.municipality && this.municipality.identityPoint) {
       this.map = L.map('map').setView([this.municipality.identityPoint.latitude, this.municipality.identityPoint.longitude], 13);
 
@@ -126,3 +135,4 @@ export class MunicipalityDetailComponent implements OnInit {
     return popupContent;
   }
 }
+
