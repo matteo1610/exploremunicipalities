@@ -135,4 +135,3 @@ export class MunicipalityDetailComponent implements OnInit {
     return popupContent;
   }
 }
-
