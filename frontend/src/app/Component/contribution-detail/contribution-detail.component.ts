@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { ContributionService } from '../contribution.service';
-import { Contribution } from '../Model/contribution';
-import { Point } from '../Model/point';
+import { ContributionService } from '../../contribution.service';
+import { Contribution } from '../../Model/contribution';
+import { Point } from '../../Model/point';
 import { CommonModule } from '@angular/common';
 
 @Component({

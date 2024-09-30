@@ -6,7 +6,7 @@ import { MunicipalitiesService } from '../../municipalities.service';
 import { Point } from '../../Model/point';
 import { Municipality } from '../../Model/municipality';
 import { MapComponent } from '../map/map.component';
-import { ContributionDetailComponent } from '../../contribution-detail/contribution-detail.component';
+import { ContributionDetailComponent } from '../contribution-detail/contribution-detail.component';
 
 @Component({
   selector: 'app-municipality-detail',
