@@ -55,7 +55,7 @@ export class MapComponent implements OnInit {
               this.contributionService.getContributionDetail(contribution.id).subscribe(detail => {
                 popupContent += `<div class="card mb-2">
                                    <div class="card-body">
-                                     <h6 class="card-subtitle mb-2 text-muted">${detail.title}</h6>
+                                     <h5 class="card-subtitle mb-2 text-muted">${detail.title}</h5>
                                      <p class="card-text">${detail.description}</p>
                                    </div>
                                  </div>`;

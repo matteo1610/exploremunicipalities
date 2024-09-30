@@ -3,5 +3,4 @@
   <div *ngIf="hasPoints">
     <!-- Passa i punti e le coordinate centrali al MapComponent -->
     <app-map [points]="points" [center]="[municipality.identityPoint.latitude, municipality.identityPoint.longitude]" [zoom]="13" (pointSelected)="onPointSelected($event)"></app-map>
-    <!-- Passa il punto selezionato al ContributionDetailComponent -->
   </div>

@@ -20,7 +20,7 @@ export class MunicipalityDetailComponent implements OnInit {
   hasPoints: boolean = false; // Flag per indicare se ci sono punti di interesse
   name: string = ''; // Nome del comune
   province: string = ''; // Provincia del comune
-  municipality!: Municipality; // Dettagli del comune
+  municipality!: Municipality; // Comune
   selectedPoint!: Point; // Punto selezionato
 
   constructor(
@@ -31,8 +31,6 @@ export class MunicipalityDetailComponent implements OnInit {
   ngOnInit(): void {
     // Recupera l'ID del comune dalla route attiva
     const municipalityId = +this.route.snapshot.paramMap.get('id')!;
-    console.log(`ID Comune: ${municipalityId}`);
-
     // Recupera i dettagli del comune
     this.municipalitiesService.getMunicipalities().subscribe(municipalities => {
       const municipality = municipalities.find(m => m.id === municipalityId);
@@ -51,7 +49,7 @@ export class MunicipalityDetailComponent implements OnInit {
   loadPoints(municipalityId: number): void {
     this.municipalitiesService.getPointsForMunicipality(municipalityId).subscribe((points: Point[]) => {
       this.points = points;
-      this.hasPoints = this.points.length >= 0; // Imposta il flag se ci sono punti di interesse
+      this.hasPoints = this.points.length >= 0; // Imposta il flag in base alla presenza di punti
     });
   }
 
