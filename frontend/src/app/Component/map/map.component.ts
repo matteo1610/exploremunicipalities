@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Point } from '../../Model/point';
 import { ContributionService } from '../../contribution.service';
-
 import * as L from 'leaflet';
 
 @Component({
@@ -22,7 +21,9 @@ export class MapComponent implements OnInit {
 
   ngOnInit(): void {
     this.initMap();
-    this.addPoints(this.points);
+    if (this.points.length > 0) {
+      this.addPoints(this.points);
+    }
   }
 
   private initMap(): void {
@@ -48,19 +49,27 @@ export class MapComponent implements OnInit {
       // Aggiunge un evento click al marker per visualizzare i contributi
       marker.on('click', () => {
         this.contributionService.getContributionsOfPoint(point.id).subscribe(contributions => {
-          let popupContent = `<strong>Punto:</strong> ${point.id}`;
+          let popupContent = `<Punto: ${point.id}`;
           if (contributions.length > 0) {
             contributions.forEach(contribution => {
               this.contributionService.getContributionDetail(contribution.id).subscribe(detail => {
-                popupContent += `<br><strong>Titolo:</strong> ${detail.title}<br><strong>Descrizione:</strong> ${detail.description}`;
-                marker.bindPopup(popupContent).openPopup();
+                popupContent += `<div class="card mb-2">
+                                   <div class="card-body">
+                                     <h6 class="card-subtitle mb-2 text-muted">${detail.title}</h6>
+                                     <p class="card-text">${detail.description}</p>
+                                   </div>
+                                 </div>`;
+                marker.bindPopup(popupContent + '</div></div>').openPopup();
               });
             });
           } else {
-            popupContent += '<br>Nessun contributo disponibile';
-            marker.bindPopup(popupContent).openPopup();
+            popupContent += '<p class="card-text">Nessun contributo disponibile</p>';
+            marker.bindPopup(popupContent + '</div></div>').openPopup();
           }
         });
+
+        // Emette l'evento con il punto selezionato
+        this.pointSelected.emit(point);
       });
     });
   }

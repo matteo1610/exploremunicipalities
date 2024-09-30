@@ -1,13 +1,7 @@
-
-  <div class="municipality-detail">
-    <h3 class="bg-light">Comune di {{ name }}, provincia di {{ province }}</h3>
-    <div *ngIf="hasPoints">
-      <!-- Passa i punti e le coordinate centrali al MapComponent -->
-      <app-map [points]="points" [center]="[municipality.identityPoint.latitude, municipality.identityPoint.longitude]" [zoom]="13" (pointSelected)="onPointSelected($event)"></app-map>
-      <!-- Passa il punto selezionato al ContributionDetailComponent -->
-      <app-contribution-detail [point]="selectedPoint"></app-contribution-detail>
-    </div>
-    <ng-template #noPoints>
-      <p>Nessun punto di interesse trovato.</p>
-    </ng-template>
+<div class="municipality-detail">
+  <h2 class="mt-3">Comune di {{ name }}, provincia di {{ province }}</h2>
+  <div *ngIf="hasPoints">
+    <!-- Passa i punti e le coordinate centrali al MapComponent -->
+    <app-map [points]="points" [center]="[municipality.identityPoint.latitude, municipality.identityPoint.longitude]" [zoom]="13" (pointSelected)="onPointSelected($event)"></app-map>
+    <!-- Passa il punto selezionato al ContributionDetailComponent -->
   </div>

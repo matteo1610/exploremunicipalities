@@ -11,7 +11,7 @@ import { ContributionDetailComponent } from '../contribution-detail/contribution
 @Component({
   selector: 'app-municipality-detail',
   standalone: true,
-  imports: [CommonModule, MunicipalityComponent, MapComponent, ContributionDetailComponent], // Use the component directly
+  imports: [CommonModule, MunicipalityComponent, MapComponent, ContributionDetailComponent], 
   templateUrl: './municipality-detail.component.html',
   styleUrls: ['./municipality-detail.component.css']
 })
@@ -51,7 +51,7 @@ export class MunicipalityDetailComponent implements OnInit {
   loadPoints(municipalityId: number): void {
     this.municipalitiesService.getPointsForMunicipality(municipalityId).subscribe((points: Point[]) => {
       this.points = points;
-      this.hasPoints = this.points.length > 0; // Imposta il flag se ci sono punti di interesse
+      this.hasPoints = this.points.length >= 0; // Imposta il flag se ci sono punti di interesse
     });
   }
 
