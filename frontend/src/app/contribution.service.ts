@@ -22,4 +22,7 @@ export class ContributionService {
       return this.httpClient.get<Contribution>(`${environment.baseUrl}/api/contributions/getContributionDetail/${contributionId}`);
     }
    
+    public addPointOfInterest(userId: string, contribution: Contribution): Observable<Contribution> {
+      return this.httpClient.post<Contribution>(`${environment.baseUrl}/api/contributions/createPointOfInterest/${userId}`, contribution);
+    }
 }
