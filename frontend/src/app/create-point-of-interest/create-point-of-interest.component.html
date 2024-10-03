@@ -1,0 +1,25 @@
+<form (ngSubmit)="onSubmit()" class="container mt-5">
+    <div class="form-group">
+      <label for="userId">User ID:</label>
+      <input type="number" id="userId" [(ngModel)]="user.id" name="userId" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="title">Nome del punto di interesse:</label>
+      <input type="text" id="title" [(ngModel)]="request.title" name="title" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="description">Descrizione:</label>
+      <textarea id="description" [(ngModel)]="request.description" name="description" class="form-control" rows="3" required></textarea>
+    </div>
+    <div class="form-group">
+      <label for="latitude">Latitude:</label>
+      <input type="number" id="latitude" [(ngModel)]="position.latitude" name="latitude" class="form-control" required readonly>
+    </div>
+    <div class="form-group">
+      <label for="longitude">Longitude:</label>
+      <input type="number" id="longitude" [(ngModel)]="position.longitude" name="longitude" class="form-control" required readonly>
+    </div>
+    <br>
+    <app-map [center]="[41.8719, 12.5674]" [zoom]="6" (coordinatesSelected)="onCoordinatesSelected($event)"></app-map>
+    <button type="submit" class="btn btn-primary mt-3" [disabled]="isLoading">Crea punto di interesse</button>
+  </form>

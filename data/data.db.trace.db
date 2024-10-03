@@ -330,3 +330,9 @@ Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/leona/D
 	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
 	... 55 more
+2024-10-02 17:39:36.373476+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "DESCRIPTION CHARACTER VARYING(255)": "U&'Il Colosseo, conosciuto anche come Anfiteatro Flavio, \\00e8 uno dei monumenti... (338)"; SQL statement:
+insert into contribution (author_id,creation_date,description,state,title,type,dtype,id) values (?,?,?,?,?,?,'PointOfInterest',?) [22001-224]
+2024-10-02 17:40:16.554859+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "DESCRIPTION CHARACTER VARYING(255)": "U&'Il Colosseo, conosciuto anche come Anfiteatro Flavio, \\00e8 uno dei monumenti... (338)"; SQL statement:
+insert into contribution (author_id,creation_date,description,state,title,type,dtype,id) values (?,?,?,?,?,?,'PointOfInterest',?) [22001-224]
