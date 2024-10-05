@@ -1,10 +1,9 @@
 package it.unicam.cs.exploremunicipalities.model.user;
 
-import it.unicam.cs.exploremunicipalities.dto.NotificationDTO;
+import it.unicam.cs.exploremunicipalities.dto.entities.NotificationDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

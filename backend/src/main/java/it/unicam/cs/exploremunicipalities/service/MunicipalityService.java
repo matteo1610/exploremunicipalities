@@ -1,6 +1,6 @@
 package it.unicam.cs.exploremunicipalities.service;
 
-import it.unicam.cs.exploremunicipalities.dto.MunicipalityDTO;
+import it.unicam.cs.exploremunicipalities.dto.entities.MunicipalityDTO;
 import it.unicam.cs.exploremunicipalities.service.repository.MunicipalityRepository;
 import it.unicam.cs.exploremunicipalities.service.abstractions.MunicipalityServiceInterface;
 import it.unicam.cs.exploremunicipalities.model.osm.OSMService;

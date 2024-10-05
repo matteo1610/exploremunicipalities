@@ -1,6 +1,6 @@
 package it.unicam.cs.exploremunicipalities.service.abstractions;
 
-import it.unicam.cs.exploremunicipalities.dto.ContributionDTO;
+import it.unicam.cs.exploremunicipalities.dto.entities.ContributionDTO;
 import it.unicam.cs.exploremunicipalities.model.content.contribution.Contribution;
 import it.unicam.cs.exploremunicipalities.model.user.License;
 import it.unicam.cs.exploremunicipalities.model.user.User;

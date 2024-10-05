@@ -2,7 +2,7 @@ package it.unicam.cs.exploremunicipalities.service.abstractions;
 
 import it.unicam.cs.exploremunicipalities.model.user.License;
 import it.unicam.cs.exploremunicipalities.model.user.User;
-import it.unicam.cs.exploremunicipalities.model.user.UserRole;
+import it.unicam.cs.exploremunicipalities.model.user.MunicipalityRole;
 
 import java.util.Set;
 
@@ -19,7 +19,7 @@ public interface RoleServiceInterface {
      * @param municipalityId id of the municipality
      * @return the roles associated in a municipality
      */
-    Set<UserRole> getRoles(long municipalityId);
+    Set<MunicipalityRole> getRoles(long municipalityId);
 
     /**
      * Set the license for a user in a municipality
@@ -31,7 +31,7 @@ public interface RoleServiceInterface {
      * @throws IllegalArgumentException if the user role not exists
      * @throws IllegalArgumentException if the municipality already has a curator or an animator
      */
-    void setLicense(User user, long municipalityId, UserRole role);
+    void setLicense(User user, long municipalityId, MunicipalityRole role);
 
     /**
      * Removes the license from the user.

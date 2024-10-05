@@ -3,23 +3,19 @@ package it.unicam.cs.exploremunicipalities.controller;
 import it.unicam.cs.exploremunicipalities.dto.request.CreateMunicipalityRequest;
 import it.unicam.cs.exploremunicipalities.service.MunicipalityService;
 import it.unicam.cs.exploremunicipalities.service.RoleService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@RequiredArgsConstructor
 @RestController
-@RequestMapping("api/municipalities")
+@RequestMapping("api/v1/municipalities")
 public class MunicipalityController {
     private final MunicipalityService municipalityService;
     private final RoleService roleService;
 
-    @Autowired
-    public MunicipalityController(MunicipalityService municipalityService, RoleService roleService) {
-        this.municipalityService = municipalityService;
-        this.roleService = roleService;
-    }
-
-    @GetMapping("/getMunicipalities")
+    @GetMapping
     public ResponseEntity<Object> getMunicipalities() {
         try {
             return ResponseEntity.ok().body(this.municipalityService.getMunicipalities());
@@ -28,7 +24,7 @@ public class MunicipalityController {
         }
     }
 
-    @PostMapping("/createMunicipality")
+    @PostMapping
     public ResponseEntity<Object> createMunicipality(@RequestBody CreateMunicipalityRequest request) {
         try {
             this.municipalityService.createMunicipality(request.name(), request.province());
@@ -38,7 +34,7 @@ public class MunicipalityController {
         }
     }
     
-    @DeleteMapping("/deleteMunicipality/{municipalityId}")
+    @DeleteMapping("/{municipalityId}")
     public ResponseEntity<Object> deleteMunicipality(@PathVariable long municipalityId) {
         if (!this.roleService.getRoles(municipalityId).isEmpty()) {
             return ResponseEntity.badRequest().body("The municipality has roles associated with it");
@@ -51,7 +47,7 @@ public class MunicipalityController {
         }
     }
 
-    @GetMapping("/getRoles/{municipalityId}")
+    @GetMapping("/roles/{municipalityId}")
     public ResponseEntity<Object> getRoles(@PathVariable long municipalityId) {
         try {
             return ResponseEntity.ok().body(this.roleService.getRoles(municipalityId));

@@ -1,4 +1,4 @@
-package it.unicam.cs.exploremunicipalities.dto;
+package it.unicam.cs.exploremunicipalities.dto.entities;
 
 import it.unicam.cs.exploremunicipalities.model.util.Coordinate;
 

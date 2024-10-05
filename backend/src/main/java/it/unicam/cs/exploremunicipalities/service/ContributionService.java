@@ -1,6 +1,6 @@
 package it.unicam.cs.exploremunicipalities.service;
 
-import it.unicam.cs.exploremunicipalities.dto.ContributionDTO;
+import it.unicam.cs.exploremunicipalities.dto.entities.ContributionDTO;
 import it.unicam.cs.exploremunicipalities.service.repository.ContributionRepository;
 import it.unicam.cs.exploremunicipalities.service.abstractions.ContributionServiceInterface;
 import it.unicam.cs.exploremunicipalities.model.content.Contest;
@@ -8,7 +8,7 @@ import it.unicam.cs.exploremunicipalities.model.content.Point;
 import it.unicam.cs.exploremunicipalities.model.content.contribution.*;
 import it.unicam.cs.exploremunicipalities.model.user.License;
 import it.unicam.cs.exploremunicipalities.model.user.User;
-import it.unicam.cs.exploremunicipalities.model.user.UserRole;
+import it.unicam.cs.exploremunicipalities.model.user.MunicipalityRole;
 import it.unicam.cs.exploremunicipalities.model.util.Coordinate;
 import org.springframework.stereotype.Service;
 
@@ -53,9 +53,9 @@ public class ContributionService implements ContributionServiceInterface {
 
     private void createContribution(License license, Coordinate position, Contribution contribution) throws Exception {
         Point p = this.pointService.associatePoint(position, license.getMunicipality());
-        if (license.getRole() == UserRole.CURATOR || license.getRole() == UserRole.AUTHORIZED_CONTRIBUTOR) {
+        if (license.getRole() == MunicipalityRole.CURATOR || license.getRole() == MunicipalityRole.AUTHORIZED_CONTRIBUTOR) {
             p.addContribution(contribution);
-        } else if (license.getRole() == UserRole.CONTRIBUTOR) {
+        } else if (license.getRole() == MunicipalityRole.CONTRIBUTOR) {
             p.addPendingContribution(contribution);
         } else {
             throw new Exception("The user is not authorized to create a contribution");
@@ -85,7 +85,7 @@ public class ContributionService implements ContributionServiceInterface {
 
     @Override
     public Set<ContributionDTO> getPendingContributions(License license) {
-        if (license.getRole() != UserRole.CURATOR) {
+        if (license.getRole() != MunicipalityRole.CURATOR) {
             throw new IllegalArgumentException("The user is not authorized to get the pending contributions");
         }
         Set<ContributionDTO> contributions = new HashSet<>();
@@ -120,8 +120,8 @@ public class ContributionService implements ContributionServiceInterface {
 
     private void createContributionForContest(License license, long contestId, Contribution contribution) throws Exception {
         Contest c = this.contestService.getContest(contestId);
-        if (license.getRole() == UserRole.CURATOR || license.getRole() == UserRole.AUTHORIZED_CONTRIBUTOR ||
-                license.getRole() == UserRole.CONTRIBUTOR) {
+        if (license.getRole() == MunicipalityRole.CURATOR || license.getRole() == MunicipalityRole.AUTHORIZED_CONTRIBUTOR ||
+                license.getRole() == MunicipalityRole.CONTRIBUTOR) {
             c.addContribution(contribution);
         } else {
             throw new Exception("The user is not authorized to create a contribution");

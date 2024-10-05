@@ -1,26 +1,26 @@
 package it.unicam.cs.exploremunicipalities.controller;
 
+import it.unicam.cs.exploremunicipalities.config.JwtService;
 import it.unicam.cs.exploremunicipalities.dto.request.*;
 import it.unicam.cs.exploremunicipalities.model.util.Coordinate;
 import it.unicam.cs.exploremunicipalities.service.ContributionService;
 import it.unicam.cs.exploremunicipalities.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+@RequiredArgsConstructor
 @RestController
-@RequestMapping("api/contributions")
+@RequestMapping("api/v1/contributions")
 public class ContributionController {
     private final ContributionService contributionService;
     private final UserService userService;
 
-    @Autowired
-    public ContributionController(ContributionService contributionService, UserService userService) {
-        this.contributionService = contributionService;
-        this.userService = userService;
-    }
+    private final JwtService jwtService;
 
-    @GetMapping("/getContributions/{pointId}")
+    @GetMapping("/{pointId}")
     public ResponseEntity<Object> getContributions(@PathVariable long pointId) {
         try {
             return ResponseEntity.ok(this.contributionService.getContributions(pointId));
@@ -29,7 +29,7 @@ public class ContributionController {
         }
     }
 
-    @GetMapping("/getContributionDetail/{contributionId}")
+    @GetMapping("/{contributionId}")
     public ResponseEntity<Object> getContribution(@PathVariable long contributionId) {
         try {
             return ResponseEntity.ok(this.contributionService.getContributionDetails(contributionId));
@@ -38,9 +38,10 @@ public class ContributionController {
         }
     }
 
-    @PostMapping("/createPointOfInterest/{userId}")
-    public ResponseEntity<Object> createPointOfInterest(@PathVariable long userId,
-                                                        @RequestBody CreatePOIForPointRequest request) {
+    @PostMapping("/pointOfInterest")
+    public ResponseEntity<Object> createPointOfInterest(@RequestBody CreatePOIForPointRequest request) {
+        String token = SecurityContextHolder.getContext().getAuthentication().getCredentials().toString();
+        long userId = this.jwtService.extractUserId(token);
         try {
             this.contributionService.createPointOfInterest(this.userService.getUser(userId), request.position(),
                     request.request().title(), request.request().description());
@@ -50,9 +51,10 @@ public class ContributionController {
         }
     }
 
-    @PostMapping("/createEvent/{userId}")
-    public ResponseEntity<Object> createEvent(@PathVariable long userId,
-                                              @RequestBody CreateEventForPointRequest request) {
+    @PostMapping("/event")
+    public ResponseEntity<Object> createEvent(@RequestBody CreateEventForPointRequest request) {
+        String token = SecurityContextHolder.getContext().getAuthentication().getCredentials().toString();
+        long userId = this.jwtService.extractUserId(token);
         try {
             this.contributionService.createEvent(this.userService.getUser(userId), request.position(),
                     request.request().title(), request.request().description(), request.request().startDate(),
@@ -63,9 +65,10 @@ public class ContributionController {
         }
     }
 
-    @PostMapping("/createItinerary/{userId}")
-    public ResponseEntity<Object> createItinerary(@PathVariable long userId,
-                                                  @RequestBody CreateItineraryForPointRequest request) {
+    @PostMapping("/itinerary/")
+    public ResponseEntity<Object> createItinerary(@RequestBody CreateItineraryForPointRequest request) {
+        String token = SecurityContextHolder.getContext().getAuthentication().getCredentials().toString();
+        long userId = this.jwtService.extractUserId(token);
         try {
             this.contributionService.createItinerary(this.userService.getUser(userId), request.position(),
                     request.request().title(), request.request().description(), request.request().contributions());
@@ -75,8 +78,10 @@ public class ContributionController {
         }
     }
 
-    @GetMapping("/getPendingContributions/{userId}")
-    public ResponseEntity<Object> getPendingContributions(@PathVariable long userId) {
+    @GetMapping("/pending")
+    public ResponseEntity<Object> getPendingContributions() {
+        String token = SecurityContextHolder.getContext().getAuthentication().getCredentials().toString();
+        long userId = this.jwtService.extractUserId(token);
         try {
             return ResponseEntity.ok(this.contributionService.getPendingContributions(this.userService.getUser(userId)
                     .getLicense()));
@@ -85,8 +90,10 @@ public class ContributionController {
         }
     }
 
-    @PutMapping("/approveContribution/{userId}/{contributionId}")
-    public ResponseEntity<Object> approveContribution(@PathVariable long userId, @PathVariable long contributionId) {
+    @PutMapping("/approve/{contributionId}")
+    public ResponseEntity<Object> approveContribution(@PathVariable long contributionId) {
+        String token = SecurityContextHolder.getContext().getAuthentication().getCredentials().toString();
+        long userId = this.jwtService.extractUserId(token);
         try {
             this.contributionService.approveContribution(this.userService.getUser(userId).getLicense(), contributionId);
             return ResponseEntity.ok("Contribution approved successfully");
@@ -95,7 +102,7 @@ public class ContributionController {
         }
     }
 
-    @DeleteMapping("/deleteContribution/{contributionId}")
+    @DeleteMapping("/{contributionId}")
     public ResponseEntity<Object> deleteContribution(@PathVariable long contributionId) {
         try {
             this.contributionService.deleteContribution(contributionId);
@@ -105,10 +112,11 @@ public class ContributionController {
         }
     }
 
-    @PostMapping("/contest/createPointOfInterest/{userId}/{contestId}")
-    public ResponseEntity<Object> createPointOfInterestForContest(@PathVariable long userId,
-                                                                  @PathVariable long contestId,
+    @PostMapping("/contest/poi/{contestId}")
+    public ResponseEntity<Object> createPointOfInterestForContest(@PathVariable long contestId,
                                                                   @RequestBody CreatePOIRequest request) {
+        String token = SecurityContextHolder.getContext().getAuthentication().getCredentials().toString();
+        long userId = this.jwtService.extractUserId(token);
         try {
             this.contributionService.createPointOfInterestForContest(this.userService.getUser(userId),
                     contestId, request.title(), request.description());
@@ -118,9 +126,11 @@ public class ContributionController {
         }
     }
 
-    @PostMapping("/contest/createEvent/{userId}/{contestId}")
-    public ResponseEntity<Object> createEventForContest(@PathVariable long userId, @PathVariable long contestId,
+    @PostMapping("/contest/event/{contestId}")
+    public ResponseEntity<Object> createEventForContest(@PathVariable long contestId,
                                                         @RequestBody CreateEventRequest request) {
+        String token = SecurityContextHolder.getContext().getAuthentication().getCredentials().toString();
+        long userId = this.jwtService.extractUserId(token);
         try {
             this.contributionService.createEventForContest(this.userService.getUser(userId), contestId,
                     request.title(), request.description(), request.startDate(), request.endDate());
@@ -130,9 +140,11 @@ public class ContributionController {
         }
     }
 
-    @PostMapping("/contest/createItinerary/{userId}/{contestId}")
-    public ResponseEntity<Object> createItineraryForContest(@PathVariable long userId, @PathVariable long contestId,
+    @PostMapping("/contest/itinerary/{contestId}")
+    public ResponseEntity<Object> createItineraryForContest(@PathVariable long contestId,
                                                             @RequestBody CreateItineraryRequest request) {
+        String token = SecurityContextHolder.getContext().getAuthentication().getCredentials().toString();
+        long userId = this.jwtService.extractUserId(token);
         try {
             this.contributionService.createItineraryForContest(this.userService.getUser(userId), contestId,
                     request.title(), request.description(), request.contributions());
@@ -142,8 +154,10 @@ public class ContributionController {
         }
     }
 
-    @PostMapping("/publishWinningContribution/{userId}/{contestId}")
-    public ResponseEntity<Object> publishWinningContribution(@PathVariable long userId, @PathVariable long contestId) {
+    @PostMapping("/publishWinningContribution/{contestId}")
+    public ResponseEntity<Object> publishWinningContribution(@PathVariable long contestId) {
+        String token = SecurityContextHolder.getContext().getAuthentication().getCredentials().toString();
+        long userId = this.jwtService.extractUserId(token);
         try {
             this.contributionService.publishWinningContribution(this.userService.getUser(userId).getLicense(),
                     contestId);

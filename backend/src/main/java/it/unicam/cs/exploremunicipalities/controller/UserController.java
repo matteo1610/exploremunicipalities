@@ -1,62 +1,58 @@
 package it.unicam.cs.exploremunicipalities.controller;
 
-import it.unicam.cs.exploremunicipalities.dto.request.CreateLicenseRequest;
-import it.unicam.cs.exploremunicipalities.dto.request.CreateNotificationRequest;
-import it.unicam.cs.exploremunicipalities.dto.request.CreateUserRequest;
-import it.unicam.cs.exploremunicipalities.service.NotificationService;
+import it.unicam.cs.exploremunicipalities.config.JwtService;
+import it.unicam.cs.exploremunicipalities.dto.entities.UserDTO;
+import it.unicam.cs.exploremunicipalities.dto.request.*;
+import it.unicam.cs.exploremunicipalities.dto.response.AuthenticateResponse;
+import it.unicam.cs.exploremunicipalities.dto.response.RegisterResponse;
 import it.unicam.cs.exploremunicipalities.service.UserService;
-import it.unicam.cs.exploremunicipalities.model.user.User;
-import it.unicam.cs.exploremunicipalities.model.user.UserRole;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Set;
+
+@RequiredArgsConstructor
+@RequestMapping("api/v1/users")
 @RestController
-@RequestMapping("/users")
 public class UserController {
+
     private final UserService userService;
+    private final JwtService jwtService;
 
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
+    @PostMapping("/register")
+    public ResponseEntity<RegisterResponse> register(RegisterRequest register) {
+        return ResponseEntity.ok(this.userService.register(register));
     }
 
-    @GetMapping("/getUsers")
-    public ResponseEntity<Object> getUsers() {
-        return ResponseEntity.ok().body(this.userService.getUsers());
+    @PostMapping("/authenticate")
+    public ResponseEntity<AuthenticateResponse> authenticate(AuthenticateRequest authRequest) {
+        return ResponseEntity.ok(this.userService.authenticate(authRequest));
     }
 
-    @PostMapping("/createUser")
-    public ResponseEntity<Object> createUser(@RequestBody CreateUserRequest request) {
+    @GetMapping()
+    public ResponseEntity<Set<UserDTO>> getUsers() {
+        return ResponseEntity.ok(this.userService.getUsers());
+    }
+
+    @GetMapping("/license/hello")
+    public ResponseEntity<Object> hello() {
+        return ResponseEntity.ok().body("Hello, World!");
+    }
+
+    @PostMapping("/license")
+    public ResponseEntity<Object> setLicense(SetLicenseRequest request) {
         try {
-            this.userService.createUser(new User(request.email(), request.password()));
-            return ResponseEntity.ok().body("User created successfully.");
-        } catch (IllegalArgumentException ex) {
-            return ResponseEntity.badRequest().body(ex.getMessage());
-        }
-    }
-
-    @DeleteMapping("deleteUser/{userId}")
-    public ResponseEntity<Object> deleteUser(@PathVariable long userId) {
-        try {
-            this.userService.deleteUser(userId);
-            return ResponseEntity.ok().body("User deleted successfully.");
-        } catch (IllegalArgumentException ex) {
-            return ResponseEntity.badRequest().body(ex.getMessage());
-        }
-    }
-
-    @PostMapping("/setLicense/{userId}")
-    public ResponseEntity<Object> setLicense(@PathVariable long userId, @RequestBody CreateLicenseRequest request) {
-        try {
-            this.userService.setLicense(userId, request.municipalityId(), UserRole.valueOf(request.role()));
+            this.userService.setLicense(request);
             return ResponseEntity.ok().body("License set successfully.");
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
 
-    @DeleteMapping("/removeLicense/{userId}")
+    @DeleteMapping("/license/{userId}")
     public ResponseEntity<Object> removeLicense(@PathVariable long userId) {
         try {
             this.userService.removeLicense(userId);
@@ -66,8 +62,10 @@ public class UserController {
         }
     }
 
-    @GetMapping("/getNotifications/{userId}")
-    public ResponseEntity<Object> getNotifications(@PathVariable long userId) {
+    @GetMapping("/notifications")
+    public ResponseEntity<Object> getNotifications() {
+        String token = SecurityContextHolder.getContext().getAuthentication().getCredentials().toString();
+        long userId = this.jwtService.extractUserId(token);
         try {
             return ResponseEntity.ok().body(this.userService.getNotifications(userId));
         } catch (IllegalArgumentException ex) {
@@ -75,7 +73,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/sendNotification/{userId}")
+    @PostMapping("/notifications/{userId}")
     public ResponseEntity<Object> sendNotification(@PathVariable long userId,
                                                    @RequestBody CreateNotificationRequest request) {
         try {

@@ -1,10 +1,10 @@
 package it.unicam.cs.exploremunicipalities.service.abstractions;
 
-import it.unicam.cs.exploremunicipalities.dto.ContributionDTO;
-import it.unicam.cs.exploremunicipalities.dto.NotificationDTO;
-import it.unicam.cs.exploremunicipalities.dto.UserDTO;
+import it.unicam.cs.exploremunicipalities.dto.entities.ContributionDTO;
+import it.unicam.cs.exploremunicipalities.dto.entities.NotificationDTO;
+import it.unicam.cs.exploremunicipalities.dto.entities.UserDTO;
 import it.unicam.cs.exploremunicipalities.model.user.User;
-import it.unicam.cs.exploremunicipalities.model.user.UserRole;
+import it.unicam.cs.exploremunicipalities.model.user.MunicipalityRole;
 
 import java.util.Set;
 
@@ -48,7 +48,7 @@ public interface UserServiceInterface {
      * @throws IllegalArgumentException if the user role doesn't exist
      * @throws IllegalArgumentException if the municipality already has a curator or an animator
      */
-    void setLicense(long userId, long municipalityId, UserRole role);
+    void setLicense(long userId, long municipalityId, MunicipalityRole role);
 
     /**
      * Removes the license of the user with the given id.

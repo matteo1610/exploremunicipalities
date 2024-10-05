@@ -1,7 +1,7 @@
 package it.unicam.cs.exploremunicipalities.model.content.contribution;
 
-import it.unicam.cs.exploremunicipalities.dto.ContributionDTO;
-import it.unicam.cs.exploremunicipalities.dto.EventDTO;
+import it.unicam.cs.exploremunicipalities.dto.entities.ContributionDTO;
+import it.unicam.cs.exploremunicipalities.dto.entities.EventDTO;
 import it.unicam.cs.exploremunicipalities.model.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;

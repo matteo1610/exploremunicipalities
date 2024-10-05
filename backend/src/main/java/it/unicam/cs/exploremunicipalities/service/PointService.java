@@ -1,6 +1,6 @@
 package it.unicam.cs.exploremunicipalities.service;
 
-import it.unicam.cs.exploremunicipalities.dto.PointDTO;
+import it.unicam.cs.exploremunicipalities.dto.entities.PointDTO;
 import it.unicam.cs.exploremunicipalities.service.repository.PointRepository;
 import it.unicam.cs.exploremunicipalities.service.abstractions.PointServiceInterface;
 import it.unicam.cs.exploremunicipalities.model.content.Municipality;

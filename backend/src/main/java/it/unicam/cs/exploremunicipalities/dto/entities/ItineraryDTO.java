@@ -1,4 +1,4 @@
-package it.unicam.cs.exploremunicipalities.dto;
+package it.unicam.cs.exploremunicipalities.dto.entities;
 
 import it.unicam.cs.exploremunicipalities.model.content.contribution.Contribution;
 import it.unicam.cs.exploremunicipalities.model.content.contribution.ContributionState;

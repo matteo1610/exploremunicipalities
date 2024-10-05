@@ -1,6 +1,6 @@
 package it.unicam.cs.exploremunicipalities.model.content;
 
-import it.unicam.cs.exploremunicipalities.dto.ContestDTO;
+import it.unicam.cs.exploremunicipalities.dto.entities.ContestDTO;
 import it.unicam.cs.exploremunicipalities.model.content.contribution.Contribution;
 import it.unicam.cs.exploremunicipalities.model.content.contribution.ContributionState;
 import it.unicam.cs.exploremunicipalities.model.util.Coordinate;

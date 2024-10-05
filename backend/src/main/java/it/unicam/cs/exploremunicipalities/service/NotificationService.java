@@ -1,6 +1,6 @@
 package it.unicam.cs.exploremunicipalities.service;
 
-import it.unicam.cs.exploremunicipalities.dto.NotificationDTO;
+import it.unicam.cs.exploremunicipalities.dto.entities.NotificationDTO;
 import it.unicam.cs.exploremunicipalities.model.user.Notification;
 import it.unicam.cs.exploremunicipalities.model.user.User;
 import it.unicam.cs.exploremunicipalities.service.abstractions.NotificationServiceInterface;

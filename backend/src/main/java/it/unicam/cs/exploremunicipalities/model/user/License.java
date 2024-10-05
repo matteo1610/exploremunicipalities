@@ -1,6 +1,5 @@
 package it.unicam.cs.exploremunicipalities.model.user;
 
-import it.unicam.cs.exploremunicipalities.dto.LicenseDTO;
 import it.unicam.cs.exploremunicipalities.model.content.Municipality;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -18,7 +17,7 @@ public class License {
     @GeneratedValue
     private long id;
     @Setter
-    private UserRole role;
+    private MunicipalityRole role;
     @Setter
     @ManyToOne
     private Municipality municipality;
@@ -27,19 +26,10 @@ public class License {
      * Constructs a license with the given role and municipality.
      *
      * @param role         The role of the user.
-     * @param municipality The municipality the user is associated with.
+     * @param municipality The municipality the user is associated with. If this is null, th.
      */
-    public License(UserRole role, Municipality municipality) {
+    public License(MunicipalityRole role, Municipality municipality) {
         this.role = role;
         this.municipality = municipality;
-    }
-
-    /**
-     * Converts the license to a DTO.
-     *
-     * @return The DTO representing the license.
-     */
-    public LicenseDTO toDTO() {
-        return new LicenseDTO(this.role, this.municipality.getId());
     }
 }

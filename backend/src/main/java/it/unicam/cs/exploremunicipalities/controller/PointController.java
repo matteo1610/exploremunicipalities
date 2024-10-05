@@ -1,21 +1,17 @@
 package it.unicam.cs.exploremunicipalities.controller;
 
 import it.unicam.cs.exploremunicipalities.service.PointService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@RequiredArgsConstructor
 @RestController
-@RequestMapping("api/points")
+@RequestMapping("api/v1/points")
 public class PointController {
     private final PointService pointService;
 
-    @Autowired
-    public PointController(PointService pointService) {
-        this.pointService = pointService;
-    }
-
-    @GetMapping("/getPoints/{municipalityId}")
+    @GetMapping("/{municipalityId}")
     public ResponseEntity<Object> getPoints(@PathVariable long municipalityId) {
         try {
             return ResponseEntity.ok(this.pointService.getPoints(municipalityId));

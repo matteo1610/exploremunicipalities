@@ -1,25 +1,23 @@
 package it.unicam.cs.exploremunicipalities.model.user;
 
-import it.unicam.cs.exploremunicipalities.dto.UserDTO;
 import it.unicam.cs.exploremunicipalities.model.content.contribution.Contribution;
 import it.unicam.cs.exploremunicipalities.model.content.contribution.ContributionState;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/**
- * This class represents a user with an email and a password.
- */
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name = "AUTH_USER")
-public class User {
+@Table(name = "USERS")
+public class User implements UserDetails {
     @Id
     @GeneratedValue
     private long id;
@@ -27,6 +25,8 @@ public class User {
     private String email;
     @Setter
     private String password;
+    @Setter
+    private GlobalRole role;
     @Setter
     @OneToOne(cascade = CascadeType.REMOVE)
     private License license;
@@ -43,30 +43,59 @@ public class User {
     public User(String email, String password) {
         this.email = email;
         this.password = password;
+        this.role = GlobalRole.AUTHENTICATED_TOURIST;
+        this.license = null;
         this.notifications = new HashSet<>();
+        this.favorites = new HashSet<>();
     }
 
-    /**
-     * Converts the user to a DTO.
-     * @return the DTO of the user
-     */
-    public UserDTO toDTO() {
-        return new UserDTO(this.id, this.email, this.password, this.license != null ? license.toDTO() : null);
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        /*
+        Set<GrantedAuthority> authorities = new HashSet<>();
+        authorities.add(new SimpleGrantedAuthority(this.role.name()));
+        if (this.role == GlobalRole.MUNICIPALITY_USER && this.license != null) {
+            authorities.add(new SimpleGrantedAuthority(this.license.getRole().name()));
+        }
+        return authorities;
+         */
+        return List.of(new SimpleGrantedAuthority(this.role.name()));
     }
 
-    /**
-     * Adds a notification to the user's list of notifications.
-     * @param notification the notification to be added to the user
-     */
+    @Override
+    public String getPassword() {
+        return this.password;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
     public void addNotification(Notification notification) {
         this.notifications.add(notification);
     }
 
-    /**
-     * Adds a contribution to the user's list of favorites.
-     * @param contribution the contribution to be added to the user
-     * @throws IllegalArgumentException if the contribution is not approved
-     */
     public void addFavorite(Contribution contribution) {
         if (contribution.getState() != ContributionState.APPROVED) {
             throw new IllegalArgumentException("You can save only approved contributions as favorites.");
@@ -74,10 +103,6 @@ public class User {
         this.favorites.add(contribution);
     }
 
-    /**
-     * Removes a contribution from the user's list of favorites.
-     * @param contribution the contribution to be removed from the user
-     */
     public void removeFavorite(Contribution contribution) {
         this.favorites.remove(contribution);
     }

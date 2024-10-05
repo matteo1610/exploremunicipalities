@@ -1,7 +1,7 @@
 package it.unicam.cs.exploremunicipalities.model.content.contribution;
 
-import it.unicam.cs.exploremunicipalities.dto.ContributionDTO;
-import it.unicam.cs.exploremunicipalities.dto.ItineraryDTO;
+import it.unicam.cs.exploremunicipalities.dto.entities.ContributionDTO;
+import it.unicam.cs.exploremunicipalities.dto.entities.ItineraryDTO;
 import it.unicam.cs.exploremunicipalities.model.user.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;

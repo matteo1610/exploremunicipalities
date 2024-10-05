@@ -1,6 +1,6 @@
 package it.unicam.cs.exploremunicipalities.service.abstractions;
 
-import it.unicam.cs.exploremunicipalities.dto.MunicipalityDTO;
+import it.unicam.cs.exploremunicipalities.dto.entities.MunicipalityDTO;
 import it.unicam.cs.exploremunicipalities.model.content.Municipality;
 
 import java.util.Set;

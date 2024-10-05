@@ -1,6 +1,6 @@
 package it.unicam.cs.exploremunicipalities.model.content;
 
-import it.unicam.cs.exploremunicipalities.dto.MunicipalityDTO;
+import it.unicam.cs.exploremunicipalities.dto.entities.MunicipalityDTO;
 import it.unicam.cs.exploremunicipalities.model.util.Coordinate;
 import jakarta.persistence.*;
 import lombok.Getter;

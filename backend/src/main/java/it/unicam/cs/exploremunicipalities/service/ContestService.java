@@ -1,8 +1,7 @@
 package it.unicam.cs.exploremunicipalities.service;
 
-import it.unicam.cs.exploremunicipalities.dto.ContestDTO;
-import it.unicam.cs.exploremunicipalities.dto.ContributionDTO;
-import it.unicam.cs.exploremunicipalities.model.content.Municipality;
+import it.unicam.cs.exploremunicipalities.dto.entities.ContestDTO;
+import it.unicam.cs.exploremunicipalities.dto.entities.ContributionDTO;
 import it.unicam.cs.exploremunicipalities.model.user.Notification;
 import it.unicam.cs.exploremunicipalities.service.abstractions.ContestServiceInterface;
 import it.unicam.cs.exploremunicipalities.service.repository.ContestRepository;
@@ -10,7 +9,7 @@ import it.unicam.cs.exploremunicipalities.model.content.Contest;
 import it.unicam.cs.exploremunicipalities.model.content.ContestState;
 import it.unicam.cs.exploremunicipalities.model.content.contribution.Contribution;
 import it.unicam.cs.exploremunicipalities.model.user.License;
-import it.unicam.cs.exploremunicipalities.model.user.UserRole;
+import it.unicam.cs.exploremunicipalities.model.user.MunicipalityRole;
 import it.unicam.cs.exploremunicipalities.model.util.Coordinate;
 import org.springframework.stereotype.Service;
 
@@ -39,8 +38,8 @@ public class ContestService implements ContestServiceInterface {
         return contests;
     }
 
-    private void checkRole(UserRole role) {
-        if (role != UserRole.ANIMATOR) {
+    private void checkRole(MunicipalityRole role) {
+        if (role != MunicipalityRole.ANIMATOR) {
             throw new IllegalArgumentException("The user is not authorized to create a contest");
         }
     }
