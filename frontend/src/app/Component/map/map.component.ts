@@ -14,6 +14,8 @@ export class MapComponent implements OnInit {
   @Input() center: [number, number] = [0, 0];
   @Input() zoom: number = 13;
   @Output() pointSelected = new EventEmitter<Point>();
+  @Output() coordinatesSelected = new EventEmitter<{ latitude: number, longitude: number }>();
+
 
   private map: any;
 
@@ -32,7 +34,15 @@ export class MapComponent implements OnInit {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(this.map);
-  }
+
+    
+// Aggiungi l'evento di clic sulla mappa
+this.map.on('click', (e: L.LeafletMouseEvent) => {
+  const coords = e.latlng;
+  this.coordinatesSelected.emit({ latitude: coords.lat, longitude: coords.lng });
+});
+}
+  
 
   // Metodo per aggiungere i punti alla mappa
   addPoints(points: Point[]): void {

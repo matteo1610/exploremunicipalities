@@ -11,20 +11,24 @@
 
       <!-- Link di navigazione -->
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav me-auto">
           <li class="nav-item">
             <!-- Link "Comuni" con routerLink -->
             <a routerLink="/list" routerLinkActive="router-link-active" class="btn btn-primary ms-3">Comuni</a> <!-- Spostato verso destra con ms-3 -->
           </li>
           <li class="nav-item">
+            <a routerLink="/create-point-of-interest" routerLinkActive="router-link-active" class="btn btn-primary ms-3">contribuisci</a> <!-- Bottone per creare un punto di interesse -->
+          </li>
+          <li class="nav-item">
             <a routerLink="/contatti" routerLinkActive="router-link-active" class="btn btn-primary ms-3">Contatti</a> <!-- Spostato verso destra con ms-3 -->
           </li>
+        </ul>
+        <ul class="navbar-nav ms-auto">          
         </ul>
       </div>
     </div>
   </nav>
 </header>
-
 
 
 <router-outlet></router-outlet>

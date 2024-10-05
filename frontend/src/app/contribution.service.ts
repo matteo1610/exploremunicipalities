@@ -20,9 +20,12 @@ export class ContributionService {
     // Ottieni i dettagli di una singola contribuzione
     public getContributionDetail(contributionId: number): Observable<Contribution> {
       return this.httpClient.get<Contribution>(`${environment.baseUrl}/api/contributions/getContributionDetail/${contributionId}`);
+    }   
+
+    // Crea un punto di interesse
+    public createPointOfInterest(userId: number, requestBody: { position: { latitude: number, longitude: number }, request: { title: string, description: string } }): Observable<string> {
+      return this.httpClient.post(`${environment.baseUrl}/api/contributions/createPointOfInterest/${userId}`, requestBody, { responseType: 'text' });
     }
-   
-    public addPointOfInterest(userId: string, contribution: Contribution): Observable<Contribution> {
-      return this.httpClient.post<Contribution>(`${environment.baseUrl}/api/contributions/createPointOfInterest/${userId}`, contribution);
-    }
+
+  
 }
