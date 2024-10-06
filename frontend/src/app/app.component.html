@@ -1,29 +1,34 @@
 <header>
-  <nav class="navbar navbar-expand-lg" style="background-color: #ffffff;">
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
     <div class="container-fluid">
-      <!-- Logo o nome della tua applicazione -->
-      <a class="navbar-brand" href="#">
-        ExploreMunicipalities
+      <!-- Logo e nome della tua applicazione -->
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img src="assets/images/logo.jpeg" alt="Logo" style="width: 50px; height: 44px;" class="me-2"> <!-- Aggiunta del logo -->
+        <span>ExploreMunicipalities</span>
       </a>
-      <a href="#">
-        <img src="assets/images/logo.jpeg" alt="Logo" style="width: 50px; height: 44px;" class="d-inline-block align-text-top"> <!-- Aggiunta del logo -->
-      </a>
+
+      <!-- Pulsante per dispositivi mobili -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
       <!-- Link di navigazione -->
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav me-auto">
+        <ul class="navbar-nav ms-3">
           <li class="nav-item">
             <!-- Link "Comuni" con routerLink -->
-            <a routerLink="/list" routerLinkActive="router-link-active" class="btn btn-primary ms-3">Comuni</a> <!-- Spostato verso destra con ms-3 -->
+            <a routerLink="/list" routerLinkActive="router-link-active" class="btn btn-outline-primary mx-2 my-1">Comuni</a>
           </li>
           <li class="nav-item">
-            <a routerLink="/create-point-of-interest" routerLinkActive="router-link-active" class="btn btn-primary ms-3">contribuisci</a> <!-- Bottone per creare un punto di interesse -->
+            <a routerLink="/create-point-of-interest" routerLinkActive="router-link-active" class="btn btn-outline-primary mx-2 my-1">Contribuisci</a>
           </li>
           <li class="nav-item">
-            <a routerLink="/contatti" routerLinkActive="router-link-active" class="btn btn-primary ms-3">Contatti</a> <!-- Spostato verso destra con ms-3 -->
+            <a routerLink="/contatti" routerLinkActive="router-link-active" class="btn btn-outline-primary mx-2 my-1">Contatti</a>
           </li>
         </ul>
-        <ul class="navbar-nav ms-auto">          
+        <!-- Spazio per i futuri bottoni di login -->
+        <ul class="navbar-nav ms-auto">
+          <!-- Futuri bottoni di login andranno qui -->
         </ul>
       </div>
     </div>
@@ -33,17 +38,19 @@
 
 <router-outlet></router-outlet>
 
-<footer class="d-flex flex-wrap justify-content-between align-items-center py-2 my-4 border-top">
-  <div class="col-md-8">
-    ExploreMunicipalities, progetto di Applicazioni web e mobile - Università degli Studi di Camerino
-  </div>
-  <div class="col-md-4 d-flex justify-content-end">
-    <a href="https://github.com/matteo1610/exploremunicipalities.git" target="_blank" class="text-dark mx-2">
-      <i class="fab fa-github fa-lg"></i> <!-- Icona di GitHub -->
-    </a>
-    <a href="https://www.unicam.it/" target="_blank" class="text-dark mx-2">
-      <img src="assets/images/logo-unicam.ico" alt="Logo Università di Camerino" style="width: 30px; height: auto;"> <!-- Logo Università -->
-    </a>
+<footer class="footer mt-auto py-3 bg-white shadow-sm">
+  <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center">
+    <div class="col-md-8">
+      <span class="text-muted"> © ExploreMunicipalities - Università degli Studi di Camerino</span>
+    </div>
+    <div class="col-md-4 d-flex justify-content-end">
+      <a href="https://github.com/matteo1610/exploremunicipalities.git" target="_blank" class="text-dark mx-2">
+        <i class="fab fa-github fa-lg"></i> <!-- Icona di GitHub -->
+      </a>
+      <a href="https://www.unicam.it/" target="_blank" class="text-dark mx-2">
+        <img src="assets/images/logo-unicam.ico" alt="Logo Università di Camerino" style="width: 30px; height: auto;"> <!-- Logo Università -->
+      </a>
+    </div>
   </div>
 </footer>
 
