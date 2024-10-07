@@ -2,11 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MunicipalityComponent } from '../municipality/municipality.component';
-import { MunicipalitiesService } from '../../municipalities.service';
 import { Point } from '../../Model/point';
 import { Municipality } from '../../Model/municipality';
 import { MapComponent } from '../map/map.component';
 import { ContributionDetailComponent } from '../contribution-detail/contribution-detail.component';
+import { MunicipalitiesService } from '../../Services/municipalities.service';
 
 @Component({
   selector: 'app-municipality-detail',

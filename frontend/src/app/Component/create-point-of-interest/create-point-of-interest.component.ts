@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { ContributionService } from '../../contribution.service';
 import { Router } from '@angular/router';
 import { User } from '../../Model/user'; // Importa l'interfaccia User
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MapComponent } from '../map/map.component';
+import { ContributionService } from '../../Services/contribution.service';
 
 @Component({
   selector: 'app-create-point-of-interest',

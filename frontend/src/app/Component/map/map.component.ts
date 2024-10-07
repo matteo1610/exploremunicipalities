@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Point } from '../../Model/point';
-import { ContributionService } from '../../contribution.service';
 import * as L from 'leaflet';
+import { ContributionService } from '../../Services/contribution.service';
 
 @Component({
   selector: 'app-map',

@@ -1,8 +1,8 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { ContributionService } from '../../contribution.service';
 import { Contribution } from '../../Model/contribution';
 import { Point } from '../../Model/point';
 import { CommonModule } from '@angular/common';
+import { ContributionService } from '../../Services/contribution.service';
 
 @Component({
   selector: 'app-contribution-detail',

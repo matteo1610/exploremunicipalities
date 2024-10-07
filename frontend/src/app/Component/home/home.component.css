@@ -3,6 +3,6 @@
     background-size: cover; /* Copre l'intera area */
     background-position: center; /* Centra l'immagine */
     background-repeat: no-repeat; /* Non ripete l'immagine */
-    height: 80vh; /* Imposta l'altezza al 100% della viewport */
+    height: 85vh; /* Imposta l'altezza al 100% della viewport */
     color: white; /* Colore del testo (opzionale) */
 }

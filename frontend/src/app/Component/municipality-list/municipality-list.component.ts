@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Municipality } from '../../Model/municipality';
-import { MunicipalitiesService } from '../../municipalities.service';
 import { MunicipalityComponent } from '../municipality/municipality.component';
 import { CommonModule } from '@angular/common';
+import { MunicipalitiesService } from '../../Services/municipalities.service';
 
 @Component({
   selector: 'app-municipality-list',
