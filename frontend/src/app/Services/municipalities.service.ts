@@ -1,9 +1,9 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Municipality } from './Model/municipality';
 import { Observable } from 'rxjs';
-import { environment } from '../environments/environment.development';
-import { Point } from './Model/point';
+import { environment } from '../../environments/environment.development';
+import { Municipality } from '../Model/municipality';
+import { Point } from '../Model/point';
 
 @Injectable({
   providedIn: 'root'
