@@ -19,7 +19,7 @@ export class ContributionService {
 
     // Ottieni i dettagli di una singola contribuzione
     public getContributionDetail(contributionId: number): Observable<Contribution> {
-      return this.httpClient.get<Contribution>(`${environment.baseUrl}/api/v1/contributions/${contributionId}`);
+      return this.httpClient.get<Contribution>(`${environment.baseUrl}/api/v1/contributions/details/${contributionId}`);
     }   
 
     // Crea un punto di interesse
