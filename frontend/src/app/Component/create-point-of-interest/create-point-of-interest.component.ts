@@ -14,7 +14,7 @@ import { User } from '../../Model/user';
   styleUrls: ['./create-point-of-interest.component.css']
 })
 export class CreatePointOfInterestComponent {
-  user: User = { id: 0, name: '', email: '', password: '' }; // Inizializza l'oggetto User
+  user: User = { id: 0}; // Inizializza l'oggetto User
   position = { latitude: 0, longitude: 0 };
   request = { title: '', description: '' };
   isLoading = false; // Stato di caricamento
