@@ -14,7 +14,7 @@ export class AuthService {
   constructor(private httpClient: HttpClient, private router: Router) { }
 
   public signup(user: User): Observable<any> {
-    return this.httpClient.post(`${environment.baseUrl}/auth/signup`, user, { observe: 'response' })
+    return this.httpClient.post(`${environment.baseUrl}/api/v1/users/register`, user, { observe: 'response' })
       .pipe(
         tap((response: HttpResponse<any>) => {
           this.router.navigate(['/login']);
