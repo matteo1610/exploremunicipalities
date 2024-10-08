@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from '../../Model/user'; // Importa l'interfaccia User
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MapComponent } from '../map/map.component';
 import { ContributionService } from '../../Services/contribution.service';
+import { User } from '../../Model/user';
 
 @Component({
   selector: 'app-create-point-of-interest',
@@ -14,7 +14,7 @@ import { ContributionService } from '../../Services/contribution.service';
   styleUrls: ['./create-point-of-interest.component.css']
 })
 export class CreatePointOfInterestComponent {
-  user: User = { id: 0, name: '', email: '' }; // Inizializza l'oggetto User
+  user: User = { id: 0, name: '', email: '', password: '' }; // Inizializza l'oggetto User
   position = { latitude: 0, longitude: 0 };
   request = { title: '', description: '' };
   isLoading = false; // Stato di caricamento
