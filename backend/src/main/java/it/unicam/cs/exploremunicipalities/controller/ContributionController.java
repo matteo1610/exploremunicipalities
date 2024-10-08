@@ -29,7 +29,7 @@ public class ContributionController {
         }
     }
 
-    @GetMapping("/{contributionId}")
+    @GetMapping("/details/{contributionId}")
     public ResponseEntity<Object> getContribution(@PathVariable long contributionId) {
         try {
             return ResponseEntity.ok(this.contributionService.getContributionDetails(contributionId));

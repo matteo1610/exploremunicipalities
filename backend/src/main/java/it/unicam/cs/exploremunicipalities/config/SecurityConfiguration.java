@@ -41,7 +41,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "api/v1/municipalities").permitAll()
                         .requestMatchers(HttpMethod.GET, "api/v1/points/{municipalityId}").permitAll()
                         .requestMatchers(HttpMethod.GET, "api/v1/contributions/{pointId}").permitAll()
-                        .requestMatchers(HttpMethod.GET, "api/v1/contributions/{contributionId}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "api/v1/contributions/details/{contributionId}").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(this.authenticationProvider)
