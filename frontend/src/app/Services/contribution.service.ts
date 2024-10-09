@@ -23,8 +23,8 @@ export class ContributionService {
     }   
 
     // Crea un punto di interesse
-    public createPointOfInterest(userId: number, requestBody: { position: { latitude: number, longitude: number }, request: { title: string, description: string } }): Observable<string> {
-      return this.httpClient.post(`${environment.baseUrl}/api/v1/contributions/pointOfInterest/${userId}`, requestBody, { responseType: 'text' });
+    createPointOfInterest(requestBody: any): Observable<any> {
+      return this.httpClient.post(`${environment.baseUrl}/api/v1/contributions/pointOfInterest`, requestBody);
     }
 
   

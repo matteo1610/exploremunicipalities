@@ -29,8 +29,9 @@ public class UserController {
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticateResponse> authenticate(AuthenticateRequest authRequest) {
-        return ResponseEntity.ok(this.userService.authenticate(authRequest));
+    public ResponseEntity<AuthenticateResponse> authenticateUser (@RequestBody AuthenticateRequest request) {
+        AuthenticateResponse response = userService.authenticate(request);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping()
