@@ -24,6 +24,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 public class SecurityConfiguration {
 
     private static final String[] WHITE_LIST_URL = {
+            "/api/v1/users/register",
             "/api/v1/users/authenticate",
             "/swagger-ui/**",            // Swagger UI
             "/v3/api-docs/**",           // Swagger API
@@ -41,7 +42,6 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "api/v1/points/{municipalityId}").permitAll()
                         .requestMatchers(HttpMethod.GET, "api/v1/contributions/{pointId}").permitAll()
                         .requestMatchers(HttpMethod.GET, "api/v1/contributions/details/{contributionId}").permitAll()
-                        .requestMatchers(HttpMethod.POST, "api/v1/users/register").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(this.authenticationProvider)

@@ -14,20 +14,25 @@ export class AuthService {
   constructor(private httpClient: HttpClient, private router: Router) { }
 
   public signup(user: User): Observable<any> {
+    const payload = {
+        email: user.email,
+        password: user.password
+    };
+
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      // 'Authorization': `Bearer ${yourToken}` // Aggiungi il token se necessario
+        'Content-Type': 'application/json',
     });
 
-    return this.httpClient.post(`${environment.baseUrl}/api/v1/users/register`, user, { headers: headers, observe: 'response' })
-      .pipe(
-        tap((response: HttpResponse<any>) => {
-          this.router.navigate(['/login']);
-        }),
-        catchError(error => {
-          console.error('Registrazione fallita. Errore:', error);
-          return throwError(() => error);
-        })
-      );
-  }
+    return this.httpClient.post(`${environment.baseUrl}/api/v1/users/register`, payload, { headers: headers, observe: 'response' })
+        .pipe(
+            tap((response: HttpResponse<any>) => {
+                this.router.navigate(['/login']);
+            }),
+            catchError(error => {
+                console.error('Registrazione fallita. Errore:', error);
+                return throwError(() => error);
+            })
+        );
+}
+
 }

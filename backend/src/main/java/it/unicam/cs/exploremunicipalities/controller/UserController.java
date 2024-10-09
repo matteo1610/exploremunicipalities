@@ -23,8 +23,9 @@ public class UserController {
     private final JwtService jwtService;
 
     @PostMapping("/register")
-    public ResponseEntity<RegisterResponse> register(RegisterRequest register) {
-        return ResponseEntity.ok(this.userService.register(register));
+    public ResponseEntity<RegisterResponse> registerUser(@RequestBody RegisterRequest request) {
+        RegisterResponse response = userService.register(request);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/authenticate")
