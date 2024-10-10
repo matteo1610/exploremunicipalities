@@ -41,7 +41,7 @@ export class CreatePointOfInterestComponent {
 
     const token = localStorage.getItem('access_token');
     if (!token) {
-      this.message = 'Token di autenticazione mancante. Effettua il login.';
+      this.message = 'Effettua il login.';
       this.isLoading = false;
       this.isSuccess = false;
       return;

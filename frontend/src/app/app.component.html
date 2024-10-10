@@ -29,18 +29,21 @@
         <!-- Spazio per i futuri bottoni di login -->
         <ul class="navbar-nav ms-auto">
           <!-- Bottoni di login e registrazione -->
-          <li class="nav-item">
+          <li class="nav-item" *ngIf="!isAuthenticated()">
             <a routerLink="/login" routerLinkActive="router-link-active" class="btn btn-outline-secondary mx-2 my-1">Login</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" *ngIf="!isAuthenticated()">
             <a routerLink="/signup" routerLinkActive="router-link-active" class="btn btn-outline-secondary mx-2 my-1">Registrazione</a>
+          </li>
+          <!-- Bottone di logout -->
+          <li class="nav-item" *ngIf="isAuthenticated()">
+            <a (click)="logout()" class="btn btn-outline-secondary mx-2 my-1">Logout</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 </header>
-
 
 <router-outlet></router-outlet>
 
@@ -59,7 +62,3 @@
     </div>
   </div>
 </footer>
-
-  
-
-

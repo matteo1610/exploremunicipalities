@@ -19,3 +19,13 @@
   <app-map [center]="[41.8719, 12.5674]" [zoom]="6" (coordinatesSelected)="onCoordinatesSelected($event)"></app-map>
   <button type="submit" class="btn btn-primary mt-3" [disabled]="isLoading">Crea punto di interesse</button>
 </form>
+
+<!-- Messaggio di successo -->
+<div *ngIf="isSuccess" class="alert alert-success mt-3">
+  {{ message }}
+</div>
+
+<!-- Messaggio di errore -->
+<div *ngIf="!isSuccess && message" class="alert alert-danger mt-3">
+  {{ message }}
+</div>
