@@ -41,9 +41,11 @@ export class AuthService {
 public login(credentials: { email: string; password: string }): Observable<any> {
     return this.httpClient.post(`${environment.baseUrl}/api/v1/users/authenticate`, credentials, {observe: 'response'})
         .pipe(tap((response: HttpResponse<any>) => {
-                const authToken = this.extractAuthToken(response.headers);
+                const authToken = response.body?.token;
+                console.log('Token ricevuto:', authToken); // Log per debug
                 if (authToken) {
                     this.storeToken(authToken);
+                    localStorage.getItem('access_token'); // Log per verificare il salvataggio
                 }
                 const userInfo = JSON.stringify(response.body);
                 localStorage.setItem("user-info", userInfo);
@@ -74,10 +76,6 @@ private storeToken(token: string): void {
 
 private extractAuthToken(headers: HttpHeaders): string | null {
     const authHeader = headers.get('Authorization');
-    if (authHeader && authHeader.startsWith('Bearer ')) {
-        return authHeader.substring(7); // Remove "Bearer " part
-    }
-    return null;
-}
-
+    return authHeader ? authHeader.split(' ')[1] : null;
+  }
 }

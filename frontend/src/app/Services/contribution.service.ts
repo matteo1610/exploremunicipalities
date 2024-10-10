@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
@@ -23,9 +23,13 @@ export class ContributionService {
     }   
 
     // Crea un punto di interesse
-    createPointOfInterest(requestBody: any): Observable<any> {
-      return this.httpClient.post(`${environment.baseUrl}/api/v1/contributions/pointOfInterest`, requestBody);
-    }
+  createPointOfInterest(requestBody: any, token: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+    return this.httpClient.post(`${environment.baseUrl}/api/v1/contributions/pointOfInterest`, requestBody, { headers, responseType: 'text' });
+  }
 
   
 }

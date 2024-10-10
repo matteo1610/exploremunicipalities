@@ -39,7 +39,15 @@ export class CreatePointOfInterestComponent {
       request: this.request
     };
 
-    this.contributionService.createPointOfInterest(requestBody).subscribe(response => {
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+      this.message = 'Token di autenticazione mancante. Effettua il login.';
+      this.isLoading = false;
+      this.isSuccess = false;
+      return;
+    }
+
+    this.contributionService.createPointOfInterest(requestBody, token).subscribe(response => {
       console.log('Point of Interest created:', response);
       this.isLoading = false;
       this.message = 'Punto di interesse creato con successo!';
