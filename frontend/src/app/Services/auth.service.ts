@@ -42,8 +42,9 @@ public login(credentials: { email: string; password: string }): Observable<any> 
     return this.httpClient.post(`${environment.baseUrl}/api/v1/users/authenticate`, credentials, { observe: 'response' })
         .pipe(tap((response: HttpResponse<any>) => {
                 const authToken = response.body?.token;
-                console.log('Token ricevuto:', authToken); // Log per debug
                 if (authToken) {
+                    this.storeToken(authToken);
+                    localStorage.getItem('access_token'); 
                     const userInfo = JSON.stringify(response.body);
                     localStorage.setItem("user-info", userInfo);
                     this.authenticated = true;
@@ -61,6 +62,12 @@ public logout(): void {
     localStorage.removeItem("user-info")
     this.router.navigate(['/home']);
     this.authenticated = false;
+}
+
+
+public getUserInfo() : UserInfo | null {
+    const userInfo = localStorage.getItem("user-info");
+    return JSON.parse(userInfo!);
 }
 
 

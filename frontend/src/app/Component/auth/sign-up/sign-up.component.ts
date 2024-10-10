@@ -52,7 +52,7 @@ export class SignupComponent {
       id: 0,
       email: this.form.get('email')?.value,
       password: this.form.get('password')?.value,
-      role: 'AUTHENTICATED_TOURIST',
+      role: 'MUNICIPALITY_USER',
       license: null,
     };
     return user;

@@ -58,7 +58,7 @@ export class CreatePointOfInterestComponent {
     }, error => {
       console.error('Error creating Point of Interest:', error);
       this.isLoading = false;
-      this.message = 'Errore nella creazione del punto di interesse. Riprova.';
+      this.message = 'Non si hanno le autorizzazioni per creare un punto di interesse in questo comune.';
       this.isSuccess = false;
     });
   }
