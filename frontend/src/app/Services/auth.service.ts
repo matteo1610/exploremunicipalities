@@ -3,9 +3,9 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { User } from './Model/user';
-import { environment } from '../environments/environment.development';
-import { UserInfo } from './Model/user-info';
+import { UserInfo } from '../Model/user-info';
+import { environment } from '../../environments/environment.development';
+import { User } from '../Model/user';
 
 
 @Injectable({

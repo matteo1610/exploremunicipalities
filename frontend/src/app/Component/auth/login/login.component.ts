@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { JwtModule } from '@auth0/angular-jwt';
-import { AuthService } from '../../../auth.service';
+import { AuthService } from '../../../Services/auth.service';
 
 
 @Component({

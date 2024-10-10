@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-import { AuthService } from '../../../auth.service';
 import { User } from '../../../Model/user';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../Services/auth.service';
 
 @Component({
   selector: 'app-signup',
