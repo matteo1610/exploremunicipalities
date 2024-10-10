@@ -9,8 +9,6 @@ Sviluppato da:
 
 Frequentati il corso di Informatica e Informatica per la Comunicazione Digitale (L-31) presso l’università di Camerino.
 
-Il progetto è stato sviluppato in Java 17 con l'ausilio del framework Spring Boot e del database H2.
-
 ## Descrizione del progetto 
 
 Il progetto si propone di creare una piattaforma innovativa dedicata alla valorizzazione e digitalizzazione dei territori
