@@ -57,6 +57,8 @@ Il backend fa affidamento, tra le varie, sulle seguenti librerie:
   uno a uno tra le classi Java e le tabelle relazionali della base di dati, e una generazione automatica delle query da parte del
   framework, rimuovendo la necessità di scrivere ed eseguire manualmente query SQL con conseguenti vulnerabilità di SQL Injection.
 
+- Gestione delle password: le password degli utenti vengono opportunamente protette con l'algoritmo bcrypt
+
 - Richieste cross-origin: per evitare problemi di CORS durante lo sviluppo, il client Angular è stato configurato in modo da inoltrare
   le richieste che vengono effettuate al backend tramite proxy (vedi proxy.conf.json); questa configurazione ha lo scopo di facilitare
  lo sviluppo dati i fini didattici del progetto, mentre in un reale ambiente di produzione è necessario configurare correttamente il
