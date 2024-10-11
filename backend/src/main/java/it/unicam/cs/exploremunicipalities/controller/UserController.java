@@ -9,6 +9,7 @@ import it.unicam.cs.exploremunicipalities.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,11 +40,7 @@ public class UserController {
         return ResponseEntity.ok(this.userService.getUsers());
     }
 
-    @GetMapping("/license/hello")
-    public ResponseEntity<Object> hello() {
-        return ResponseEntity.ok().body("Hello, World!");
-    }
-
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/license")
     public ResponseEntity<Object> setLicense(SetLicenseRequest request) {
         try {
