@@ -1,0 +1,86 @@
+/* Stili per i bottoni */
+.btn-outline-danger.custom-logout-btn {
+    color: #dc3545; /* Colore del testo rosso */
+    background-color: #fff; /* Sfondo bianco */
+    border-color: #dc3545; /* Colore del bordo rosso */
+}
+
+.btn-outline-danger.custom-logout-btn:hover {
+    color: #fff; /* Colore del testo bianco */
+    background-color: #dc3545; /* Sfondo rosso */
+    border-color: #dc3545; /* Colore del bordo rosso */
+}
+
+.btn-outline-success {
+    color: #28a745; /* Colore del testo verde */
+    background-color: #fff; /* Sfondo bianco */
+    border-color: #28a745; /* Colore del bordo verde */
+}
+
+.btn-outline-success:hover {
+    color: #fff; /* Colore del testo bianco */
+    background-color: #28a745; /* Sfondo verde */
+    border-color: #28a745; /* Colore del bordo verde */
+}
+
+.btn-outline-primary {
+    color: #007bff; /* Colore del testo blu */
+    background-color: #fff; /* Sfondo bianco */
+    border-color: #007bff; /* Colore del bordo blu */
+}
+
+.btn-outline-primary:hover {
+    color: #fff; /* Colore del testo bianco */
+    background-color: #007bff; /* Sfondo blu */
+    border-color: #007bff; /* Colore del bordo blu */
+}
+
+/* Layout generale */
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff; /* Colore di sfondo chiaro */
+}
+
+body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background-color: #ffffff; /* Sfondo scuro per l'header */
+    color: #fff; /* Testo bianco */
+    padding: 10px 0;
+    text-align: center;
+}
+
+main {
+    flex: 1;
+    padding: 20px; /* Aggiungi padding per il contenuto principale */
+}
+
+.footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #e7e7e7;
+    padding: 20px 0; /* Aggiungi padding per il footer */
+    width: 100%;
+    margin-top: auto; /* Assicura che il footer sia spinto in fondo */
+    text-align: center; /* Centra il testo nel footer */
+}
+
+.footer .container-fluid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer .col-md-8 {
+    text-align: left;
+}
+
+.footer .col-md-4 {
+    text-align: right;
+}

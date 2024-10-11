@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { User } from '../../../Model/user';
@@ -9,7 +9,7 @@ import { AuthService } from '../../../Services/auth.service';
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [FormsModule, CommonModule, ReactiveFormsModule],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss']
 })

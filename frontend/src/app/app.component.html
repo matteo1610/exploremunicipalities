@@ -1,3 +1,4 @@
+<body>
 <header>
   <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
     <div class="container-fluid">
@@ -30,14 +31,14 @@
         <ul class="navbar-nav ms-auto">
           <!-- Bottoni di login e registrazione -->
           <li class="nav-item" *ngIf="!isAuthenticated()">
-            <a routerLink="/login" routerLinkActive="router-link-active" class="btn btn-outline-secondary mx-2 my-1">Login</a>
+            <a routerLink="/login" routerLinkActive="router-link-active" class="btn btn-outline-success mx-2 my-1">Login</a>
           </li>
           <li class="nav-item" *ngIf="!isAuthenticated()">
-            <a routerLink="/signup" routerLinkActive="router-link-active" class="btn btn-outline-secondary mx-2 my-1">Registrazione</a>
+            <a routerLink="/signup" routerLinkActive="router-link-active" class="btn btn-outline-primary mx-2 my-1">Registrazione</a>
           </li>
           <!-- Bottone di logout -->
           <li class="nav-item" *ngIf="isAuthenticated()">
-            <a (click)="logout()" class="btn btn-outline-secondary mx-2 my-1">Logout</a>
+            <a (click)="logout()" class="btn btn-outline-danger custom-logout-btn mx-2 my-1">Logout</a>          
           </li>
         </ul>
       </div>
@@ -45,12 +46,14 @@
   </nav>
 </header>
 
-<router-outlet></router-outlet>
+<main class="flex-fill">
+  <router-outlet></router-outlet>
+</main>
 
 <footer class="footer mt-auto py-3 bg-white shadow-sm">
   <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center">
     <div class="col-md-8">
-      <span class="text-muted"> © ExploreMunicipalities - Università degli Studi di Camerino</span>
+      <span class="text-muted">© ExploreMunicipalities - Università degli Studi di Camerino</span>
     </div>
     <div class="col-md-4 d-flex justify-content-end">
       <a href="https://github.com/matteo1610/exploremunicipalities.git" target="_blank" class="text-dark mx-2">
@@ -62,3 +65,4 @@
     </div>
   </div>
 </footer>
+</body>
