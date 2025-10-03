@@ -1,70 +1,63 @@
 # Explore Municipalities
 
-Progetto di Ingegneria del Software per la valorizzazione e digitalizzazione dei territori comunali.
+A platform to discover, document, and promote points of interest across municipalities. The app enables local administrations and community contributors to create, manage, and share structured place information and multimedia content. It focuses on the digitalization and enhancement of local heritage and services.
 
-Sviluppato da:
+Contributors:
 
-- Matteo Cardellini (matricola 119137)
-- Leonardo Pigliacampo (matricola 119405)
+- Matteo Cardellini
+- Leonardo Pigliacampo
 
-Frequentati il corso di Informatica e Informatica per la Comunicazione Digitale (L-31) presso l’università di Camerino.
+## Overview
 
-## Descrizione del progetto 
+Explore Municipalities helps municipalities showcase local attractions and services through crowdsourced points of interest. The platform combines an interactive map-based frontend with a RESTful backend to deliver a responsive, secure, and extensible experience for administrators, contributors and third-party integrators.
 
-Il progetto si propone di creare una piattaforma innovativa dedicata alla valorizzazione e digitalizzazione dei territori
-comunali, dove ogni comune può raccontare e promuovere le proprie bellezze attraverso la segnalazione dei punti di interesse.
+The system is collaborative by design: verified community contributors can submit new points of interest and multimedia content. Submissions are reviewed and approved by municipal managers or designated administrators before going live.
 
-La piattaforma è pensata come uno spazio collaborativo, in cui i cittadini, una volta registrati e approvati dal gestore comunale,
-possono contribuire attivamente inserendo nuovi punti di interesse, valorizzando così il territorio  in cui vivono.
+## Key features
 
-## Frontend 
+- Create and manage points of interest with descriptions, images and location data
+- Role-based access for municipal managers and verified contributors
+- Interactive maps and geolocation features for discovery and navigation
+- REST API for integrations and third-party clients
+
+## Frontend
 
 ![image](https://github.com/user-attachments/assets/7d91401a-e5b4-47f1-9339-6c87f3c5a02a)
 ![image](https://github.com/user-attachments/assets/5348101b-fe08-4bc8-9b3f-35d43e633c93)
 
-Lato frontend l'applicazione è stata realizzata utilizzando il framework Angular, implementa un pattern Single Page Application 
-ed è stata sviluppata per essere responsive, e quindi fruibile sia in modalità web che mobile. Fa affidamento, tra le varie, 
-sulle seguenti librerie npm:
+The frontend is implemented with Angular as a Single Page Application (SPA) and is responsive for desktop and mobile devices. Main frontend libraries:
 
-- auth0/angular-jwt: modulo Angular che semplifica l'integrazione di JSON Web Token (JWT)
-- ng-bootstrap: libreria di componenti Angular basata su Bootstrap
-- leaflet: libreria JavaScript leggera e flessibile per la creazione di mappe interattive, utilizzata in questo contesto per
-  l'aggiunta di mappe tramite le API OSM (Open Street Map).
+- auth0/angular-jwt — JWT handling for Angular
+- ng-bootstrap — Bootstrap components for Angular
+- leaflet — Interactive maps, used with OpenStreetMap (OSM) tiles
 
-## BackEnd 
+## Backend
 
-Il backend dell'applicativo è stato realizzato sfruttando il framework open-source SpringBoot, in particolar il modo il suo modulo 
-web per lo sviluppo di API REST. Per quanto riguarda la persistenza dei dati, il servizio web fornito fa affidamento sulle 
-JPA (Java Persistence API) per comunicare con il database SQL Server sottostante.
+The backend is built with Spring Boot and exposes REST APIs for the platform. Data persistence is handled via Spring Data JPA and a relational database (SQL Server in the current setup). Notable dependencies include:
 
-Il backend fa affidamento, tra le varie, sulle seguenti librerie:
+- spring-boot-starter-web
+- spring-boot-starter-security
+- spring-boot-starter-data-jpa
+- jjwt (JWT support)
 
-- spring-boot-starter-web: dipendenze per lo sviluppo di applicazioni web con Spring Boot
+## Security
 
-- spring-boot-starter-security: dipendenze per l'integrazione di Spring Security in un'applicazione Spring Boot.
+Security is a priority. Highlights:
 
-- spring-boot-starter-data-jpa: abilita l'integrazione di Spring Data JPA, che semplifica l'accesso e la gestione dei
-   dati in un'applicazione attraverso Java Persistence API (JPA).
+- Authentication & Authorization: implemented with Spring Security and JWT-based tokens.
+- Passwords: stored using bcrypt hashing.
+- SQL safety: JPA/ORM reduces direct SQL usage and helps mitigate injection risks when used correctly.
+- CORS & development proxy: the frontend includes a proxy configuration (`proxy.conf.json`) to simplify local development. For production, configure CORS and reverse proxy rules at the server or gateway level.
 
-- jjwt: libreria per la gestione di JSON Web Token (JWT).
+## API documentation
 
-## Sicurezza 🔐
+Swagger UI is available when the backend runs locally at:
 
-- Trasferimento dati: Il trasferimento dei dati tra le classi Java nel backend e le tabelle del database relazionale può comportare
-  rischi di sicurezza, specialmente se si restituiscono all'utente informazioni sensibili come la password durante l'autenticazione.
+http://localhost:8080/swagger-ui/index.html
 
-- SQL injection: l'utilizzo delle JPA (Java Persistence API) lato backend permette una mappatura ORM (Object-Relational Mapping)
-  uno a uno tra le classi Java e le tabelle relazionali della base di dati, e una generazione automatica delle query da parte del
-  framework, rimuovendo la necessità di scrivere ed eseguire manualmente query SQL con conseguenti vulnerabilità di SQL Injection.
+## Getting started (development)
 
-- Gestione delle password: le password degli utenti vengono opportunamente protette con l'algoritmo bcrypt
+- Start the backend (Spring Boot) on port 8080.
+- Serve the Angular frontend (it uses `proxy.conf.json` to forward API requests to the backend during development).
 
-- Richieste cross-origin: per evitare problemi di CORS durante lo sviluppo, il client Angular è stato configurato in modo da inoltrare
-  le richieste che vengono effettuate al backend tramite proxy (vedi proxy.conf.json); questa configurazione ha lo scopo di facilitare
- lo sviluppo dati i fini didattici del progetto, mentre in un reale ambiente di produzione è necessario configurare correttamente il
-  server per gestire le autorizzazioni CORS.
-
-- Autenticazione e autorizzazioni: vengono gestite grazie al framework Spring Security e fanno affidamento sullo standard JWT (JSON Web Token),
-   che ci consente di generare token crittograficamente sicuri inclusi in ogni richiesta del client.
-
-Per Testare le API fornite, è stata aggiunta la dipendenza Swagger  (http://localhost:8080/swagger-ui/index.html).
+Refer to the project folders `backend/` and `frontend/` for build and run instructions.
